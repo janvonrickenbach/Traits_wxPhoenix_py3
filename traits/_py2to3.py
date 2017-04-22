@@ -1,7 +1,7 @@
 """ Helper module, providing a common API for tasks that require a different implementation in python 2 and 3.
 """
 
-from __future__ import division, absolute_import
+
 
 import sys
 

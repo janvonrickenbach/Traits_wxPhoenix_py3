@@ -61,9 +61,7 @@ class FooLike(HasTraits):
 AbstractFoo.register(FooLike)
 
 
-class AbstractBar(object):
-    __metaclass__ = abc.ABCMeta
-
+class AbstractBar(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def bar(self):
         raise NotImplementedError()
@@ -84,8 +82,7 @@ class TestABC(unittest.TestCase):
         self.assertTrue(isinstance(foolike, AbstractFoo))
 
     def test_post_hoc_mixing(self):
-        class TraitedBar(HasTraits, AbstractBar):
-            __metaclass__ = ABCMetaHasTraits
+        class TraitedBar(HasTraits, AbstractBar, metaclass=ABCMetaHasTraits):
             x = Int(10)
 
             def bar(self):

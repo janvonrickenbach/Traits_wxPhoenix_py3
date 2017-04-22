@@ -6,9 +6,9 @@
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-from __future__ import absolute_import
 
-from cPickle import dumps, loads
+
+from pickle import dumps, loads
 from traits.testing.unittest_tools import unittest
 
 from ..api import Dict, HasTraits, Int, List
@@ -31,5 +31,5 @@ class PickleValidatedDictTestCase(unittest.TestCase):
         x = dumps(C())
         try:
             loads(x)
-        except AttributeError, e:
+        except AttributeError as e:
             self.fail('Unpickling raised an AttributeError: %s' % e)

@@ -6,7 +6,7 @@
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-from __future__ import absolute_import
+
 
 from traits.testing.unittest_tools import unittest
 
@@ -16,7 +16,7 @@ from ..api import HasTraits, Int, Range, Long, TraitError
 class A(HasTraits):
     i = Int
     l = Long
-    r = Range(2L, 9223372036854775807L)
+    r = Range(2, 9223372036854775807)
 
 
 class TraitIntRangeLong(unittest.TestCase):
@@ -24,21 +24,21 @@ class TraitIntRangeLong(unittest.TestCase):
         "Test to make sure it is legal to set an Int trait to a long value"
         a = A()
         a.i = 1
-        a.i = 10L
+        a.i = 10
 
     def test_long(self):
         "Test if it is legal to set a Long trait to an int value"
         a = A()
         a.l = 10
-        a.l = 100L
+        a.l = 100
 
     def test_range(self):
         "Test a range trait with longs being set to an int value"
         a = A()
         a.r = 256
-        a.r = 20L
-        self.assertRaises(TraitError, a.trait_set, r=1L)
-        self.assertRaises(TraitError, a.trait_set, r=9223372036854775808L)
+        a.r = 20
+        self.assertRaises(TraitError, a.trait_set, r=1)
+        self.assertRaises(TraitError, a.trait_set, r=9223372036854775808)
 
 if __name__ == '__main__':
     unittest.main()

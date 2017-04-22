@@ -14,7 +14,7 @@
 """ Unit test case for testing HasTraits 'on_trait_change' support.
 """
 
-from __future__ import absolute_import
+
 
 from traits.testing.unittest_tools import unittest
 

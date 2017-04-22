@@ -22,7 +22,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from __future__ import absolute_import
+
 
 from types import FunctionType
 
@@ -147,7 +147,7 @@ class InterfaceChecker ( HasTraits ):
 
         if len( missing ) > 0:
             return self._handle_error( MISSING_TRAIT %
-                       ( self._class_name( cls ), `list( missing )`[1:-1],
+                       ( self._class_name( cls ), repr(list( missing ))[1:-1],
                          self._class_name( interface ) ), error_mode )
 
         return True
@@ -163,7 +163,7 @@ class InterfaceChecker ( HasTraits ):
             if c is HasTraits:
                 break
 
-            for name, value in c.__dict__.items():
+            for name, value in list(c.__dict__.items()):
                 if ((not name.startswith( '_' )) and
                         (type( value ) is FunctionType)):
                     if name not in public_methods:

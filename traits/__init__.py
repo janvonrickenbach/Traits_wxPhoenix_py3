@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 
 from traits._version import full_version as __version__
 

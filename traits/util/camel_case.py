@@ -3,6 +3,7 @@
 
 # Standard library imports.
 import re
+from functools import reduce
 
 ###############################################################################
 # Classes

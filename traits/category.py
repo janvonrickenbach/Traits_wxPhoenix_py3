@@ -29,7 +29,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from __future__ import absolute_import
+
 
 from .has_traits import MetaHasTraits, MetaHasTraitsObject
 
@@ -43,8 +43,7 @@ class MetaCategory ( MetaHasTraits ):
 
         # Make sure the correct usage is being applied:
         if len( bases ) > 2:
-            raise TypeError, \
-                  "Correct usage is: class FooCategory(Category,Foo):"
+            raise TypeError("Correct usage is: class FooCategory(Category,Foo):")
 
         # Process any traits-related information in the class dictionary:
         MetaCategoryObject( cls, class_name, bases, class_dict, True )
@@ -53,7 +52,7 @@ class MetaCategory ( MetaHasTraits ):
         # dictionary:
         if len( bases ) == 2:
             category_class = bases[1]
-            for name, value in class_dict.items():
+            for name, value in list(class_dict.items()):
                 if not hasattr( category_class, name ):
                     setattr( category_class, name, value )
                     del class_dict[ name ]
@@ -88,7 +87,7 @@ class MetaCategoryObject ( MetaHasTraitsObject ):
 #  'Category' class:
 #-------------------------------------------------------------------------------
 
-class Category ( object ):
+class Category ( object, metaclass=MetaCategory ):
     """ Used for defining "category" extensions to existing classes.
 
     To define a class as a category, specify "Category," followed by the name
@@ -105,6 +104,4 @@ class Category ( object ):
         class BaseExtra(Category, Base):
             z = Str("BaseExtra z")
     """
-
-    __metaclass__ = MetaCategory
 

@@ -78,7 +78,7 @@ class CachedAdapterFactory(HasTraits):
         """ Trait property getter. """
 
         if not self._factory_loaded:
-            if isinstance(self._factory, basestring):
+            if isinstance(self._factory, str):
                 self._factory = import_symbol(self._factory)
 
             self._factory_loaded = True

@@ -22,7 +22,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from __future__ import absolute_import
+
 
 import datetime
 import operator
@@ -82,8 +82,8 @@ try:
     from numpy import integer, floating, complexfloating, bool_
 
     int_fast_validate     = ( 11, int, integer )
-    long_fast_validate    = ( 11, long, None, int, integer )
-    float_fast_validate   = ( 11, float, floating, None, int, long, integer )
+    long_fast_validate    = ( 11, int, None, int, integer )
+    float_fast_validate   = ( 11, float, floating, None, int, int, integer )
     complex_fast_validate = ( 11, complex, complexfloating, None,
                                   float, floating, int, integer )
     bool_fast_validate    = ( 11, bool, None, bool_ )
@@ -92,8 +92,8 @@ try:
 except ImportError:
     # The standard python definitions (without numpy):
     int_fast_validate     = ( 11, int )
-    long_fast_validate    = ( 11, long,    None, int )
-    float_fast_validate   = ( 11, float,   None, int, long )
+    long_fast_validate    = ( 11, int,    None, int )
+    float_fast_validate   = ( 11, float,   None, int, int )
     complex_fast_validate = ( 11, complex, None, float, int )
     bool_fast_validate    = ( 11, bool )
     # Tuple or single type suitable for an isinstance check.
@@ -167,7 +167,7 @@ class BaseInt ( TraitType ):
         """
         if type(value) is int:
             return value
-        elif type(value) is long:
+        elif type(value) is int:
             return int(value)
 
         try:
@@ -202,10 +202,10 @@ class BaseLong ( TraitType ):
     """
 
     #: The function to use for evaluating strings to this type:
-    evaluate = long
+    evaluate = int
 
     #: The default value for the trait:
-    default_value = 0L
+    default_value = 0
 
     #: A description of the type of value this trait accepts:
     info_text = 'a long'
@@ -215,18 +215,18 @@ class BaseLong ( TraitType ):
 
             Note: The 'fast validator' version performs this check in C.
         """
-        if isinstance( value, long ):
+        if isinstance( value, int ):
             return value
 
         if isinstance( value, int ):
-            return long( value )
+            return int( value )
 
         self.error( object, name, value )
 
     def create_editor ( self ):
         """ Returns the default traits UI editor for this type of trait.
         """
-        return default_text_editor( self, long )
+        return default_text_editor( self, int )
 
 
 class Long ( BaseLong ):
@@ -261,7 +261,7 @@ class BaseFloat ( TraitType ):
         if isinstance( value, float ):
             return value
 
-        if isinstance( value, ( int, long ) ):
+        if isinstance( value, int ):
             return float( value )
 
         self.error( object, name, value )
@@ -343,7 +343,7 @@ class BaseStr ( TraitType ):
 
             Note: The 'fast validator' version performs this check in C.
         """
-        if isinstance( value, basestring ):
+        if isinstance( value, str ):
             return value
 
         self.error( object, name, value )
@@ -366,7 +366,7 @@ class Str ( BaseStr ):
     """
 
     #: The C-level fast validator to use:
-    fast_validate = ( 11, basestring )
+    fast_validate = ( 11, str )
 
 
 class Title ( Str ):
@@ -392,7 +392,7 @@ class BaseUnicode ( TraitType ):
     """
 
     #: The default value for the trait:
-    default_value = u''
+    default_value = ''
 
     #: A description of the type of value this trait accepts:
     info_text = 'a unicode string'
@@ -402,11 +402,11 @@ class BaseUnicode ( TraitType ):
 
             Note: The 'fast validator' version performs this check in C.
         """
-        if isinstance( value, unicode ):
+        if isinstance( value, str ):
             return value
 
         if isinstance( value, str ):
-            return unicode( value )
+            return str( value )
 
         self.error( object, name, value )
 
@@ -428,7 +428,7 @@ class Unicode ( BaseUnicode ):
     """
 
     #: The C-level fast validator to use:
-    fast_validate = ( 11, unicode, None, str )
+    fast_validate = ( 11, str, None, str )
 
 
 #-------------------------------------------------------------------------------
@@ -562,7 +562,7 @@ class BaseCLong ( BaseLong ):
     """
 
     #: The function to use for evaluating strings to this type:
-    evaluate = long
+    evaluate = int
 
     def validate ( self, object, name, value ):
         """ Validates that a specified value is valid for this trait.
@@ -570,7 +570,7 @@ class BaseCLong ( BaseLong ):
             Note: The 'fast validator' version performs this check in C.
         """
         try:
-            return long( value )
+            return int( value )
         except:
             self.error( object, name, value )
 
@@ -581,7 +581,7 @@ class CLong ( BaseCLong ):
     """
 
     #: The C-level fast validator to use:
-    fast_validate = ( 12, long )
+    fast_validate = ( 12, int )
 
 #-------------------------------------------------------------------------------
 #  'BaseCFloat' and 'CFloat' traits:
@@ -664,7 +664,7 @@ class BaseCStr ( BaseStr ):
             return str( value )
         except:
             try:
-                return unicode( value )
+                return str( value )
             except:
                 self.error( object, name, value )
 
@@ -676,7 +676,7 @@ class CStr ( BaseCStr ):
     """
 
     #: The C-level fast validator to use:
-    fast_validate = ( 7, ( ( 12, str ), ( 12, unicode ) ) )
+    fast_validate = ( 7, ( ( 12, str ), ( 12, str ) ) )
 
 #-------------------------------------------------------------------------------
 #  'BaseCUnicode' and 'CUnicode' traits:
@@ -693,7 +693,7 @@ class BaseCUnicode ( BaseUnicode ):
             Note: The 'fast validator' version performs this check in C.
         """
         try:
-            return unicode( value )
+            return str( value )
         except:
             self.error( object, name, value )
 
@@ -705,7 +705,7 @@ class CUnicode ( BaseCUnicode ):
     """
 
     #: The C-level fast validator to use:
-    fast_validate = ( 12, unicode )
+    fast_validate = ( 12, str )
 
 #-------------------------------------------------------------------------------
 #  'BaseCBytes' and 'CBytes' traits:
@@ -778,7 +778,7 @@ class String ( TraitType ):
         specified regular expression.
     """
 
-    def __init__ ( self, value = '', minlen = 0, maxlen = sys.maxint,
+    def __init__ ( self, value = '', minlen = 0, maxlen = sys.maxsize,
                    regex = '', **metadata ):
         """ Creates a String trait.
 
@@ -807,9 +807,9 @@ class String ( TraitType ):
         self._validate = 'validate_all'
         if self.regex != '':
             self.match = re.compile( self.regex ).match
-            if (self.minlen == 0) and (self.maxlen == sys.maxint):
+            if (self.minlen == 0) and (self.maxlen == sys.maxsize):
                 self._validate = 'validate_regex'
-        elif (self.minlen == 0) and (self.maxlen == sys.maxint):
+        elif (self.minlen == 0) and (self.maxlen == sys.maxsize):
             self._validate = 'validate_str'
         else:
             self._validate = 'validate_len'
@@ -873,10 +873,10 @@ class String ( TraitType ):
         """ Returns a description of the trait.
         """
         msg = ''
-        if (self.minlen != 0) and (self.maxlen != sys.maxint):
+        if (self.minlen != 0) and (self.maxlen != sys.maxsize):
             msg = ' between %d and %d characters long' % (
                   self.minlen, self.maxlen )
-        elif self.maxlen != sys.maxint:
+        elif self.maxlen != sys.maxsize:
             msg = ' <= %d characters long' % self.maxlen
         elif self.minlen != 0:
             msg = ' >= %d characters long' % self.minlen
@@ -1211,8 +1211,7 @@ class Constant ( TraitType ):
             because those types have mutable values.
         """
         if type( value ) in MutableTypes:
-            raise TraitError, \
-                  "Cannot define a constant using a mutable list or dictionary"
+            raise TraitError("Cannot define a constant using a mutable list or dictionary")
 
         super( Constant, self ).__init__( value, **metadata )
 
@@ -1532,7 +1531,7 @@ class File ( BaseFile ):
         """
         if not exists:
             # Define the C-level fast validator to use:
-            fast_validate = ( 11, basestring )
+            fast_validate = ( 11, str )
 
         super( File, self ).__init__( value, filter, auto_set, entries, exists,
                                       **metadata )
@@ -1622,7 +1621,7 @@ class Directory ( BaseDirectory ):
         # Define the C-level fast validator to use if the directory existence
         #: test is not required:
         if not exists:
-            self.fast_validate = ( 11, basestring )
+            self.fast_validate = ( 11, str )
 
         super( Directory, self ).__init__( value, auto_set, entries, exists,
                                            **metadata )
@@ -1673,12 +1672,12 @@ class BaseRange ( TraitType ):
 
         vtype = type( high )
         if ((low is not None) and
-            (not issubclass( vtype, ( float, basestring ) ))):
+            (not issubclass( vtype, ( float, str ) ))):
             vtype = type( low )
 
-        is_static = (not issubclass( vtype, basestring ))
+        is_static = (not issubclass( vtype, str ))
         if is_static and (vtype not in RangeTypes):
-            raise TraitError, ("Range can only be use for int, long or float "
+            raise TraitError("Range can only be use for int, long or float "
                                "values, but a value of type %s was specified." %
                                vtype)
 
@@ -1695,14 +1694,14 @@ class BaseRange ( TraitType ):
             if high is not None:
                 high = float( high )
 
-        elif vtype is long:
+        elif vtype is int:
             self._validate  = 'long_validate'
             self._type_desc = 'a long integer'
             if low is not None:
-                low = long( low )
+                low = int( low )
 
             if high is not None:
-                high = long( high )
+                high = int( high )
 
         elif vtype is int:
             self._validate  = 'int_validate'
@@ -1718,19 +1717,19 @@ class BaseRange ( TraitType ):
             self._vtype     = None
             self._type_desc = 'a number'
 
-            if isinstance( high, basestring ):
+            if isinstance( high, str ):
                 self._high_name = high = 'object.' + high
             else:
                 self._vtype = type( high )
             high = compile( str( high ), '<string>', 'eval' )
 
-            if isinstance( low, basestring ):
+            if isinstance( low, str ):
                 self._low_name = low = 'object.' + low
             else:
                 self._vtype = type( low )
             low = compile( str( low ), '<string>', 'eval' )
 
-            if isinstance( value, basestring ):
+            if isinstance( value, str ):
                 value = 'object.' + value
             self._value = compile( str( value ), '<string>', 'eval' )
 
@@ -1744,7 +1743,7 @@ class BaseRange ( TraitType ):
         if exclude_high:
             exclude_mask |= 2
 
-        if is_static and (vtype is not long):
+        if is_static and (vtype is not int):
             self.init_fast_validator( kind, low, high, exclude_mask )
 
         #: Assign type-corrected arguments to handler attributes:
@@ -1842,7 +1841,7 @@ class BaseRange ( TraitType ):
     def _set ( self, object, name, value ):
         """ Sets the current value of a dynamic range trait.
         """
-        if not isinstance( value, basestring ):
+        if not isinstance( value, str ):
             try:
                 low  = eval( self._low )
                 high = eval( self._high )
@@ -1971,7 +1970,7 @@ class BaseEnum ( TraitType ):
         values[0]
         """
         values = metadata.pop( 'values', None )
-        if isinstance( values, basestring ):
+        if isinstance( values, str ):
             n = len( args )
             if n == 0:
                 default_value = None
@@ -2279,7 +2278,7 @@ class List ( TraitType ):
     _items_event       = None
 
     def __init__ ( self, trait = None, value = None, minlen = 0,
-                   maxlen = sys.maxint, items = True, **metadata ):
+                   maxlen = sys.maxsize, items = True, **metadata ):
         """ Returns a List trait.
 
         Parameters
@@ -2342,12 +2341,12 @@ class List ( TraitType ):
         """ Returns a description of the trait.
         """
         if self.minlen == 0:
-            if self.maxlen == sys.maxint:
+            if self.maxlen == sys.maxsize:
                 size = 'items'
             else:
                 size = 'at most %d items' % self.maxlen
         else:
-            if self.maxlen == sys.maxint:
+            if self.maxlen == sys.maxsize:
                 size = 'at least %d items' % self.minlen
             else:
                 size = 'from %s to %s items' % (
@@ -2805,7 +2804,7 @@ class BaseInstance ( BaseClass ):
         self.adapt       = AdaptMap[ adapt ]
         self.module      = module or get_module_name()
 
-        if isinstance( klass, basestring ):
+        if isinstance( klass, str ):
             self.klass = klass
         else:
             if not isinstance( klass, ClassTypes ):
@@ -2829,7 +2828,7 @@ class BaseInstance ( BaseClass ):
                 raise TraitError( "The 'kw' argument must be a dictionary." )
 
             if ((not callable( factory )) and
-                (not isinstance( factory, basestring ))):
+                (not isinstance( factory, str ))):
                 if (len( args ) > 0) or (len( kw ) > 0):
                     raise TraitError( "'factory' must be callable" )
             else:
@@ -2850,7 +2849,7 @@ class BaseInstance ( BaseClass ):
 
             self.validate_failed( object, name, value )
 
-        if isinstance( self.klass, basestring ):
+        if isinstance( self.klass, str ):
             self.resolve_class( object, name, value )
 
         if self.adapt == 0:
@@ -2886,7 +2885,7 @@ class BaseInstance ( BaseClass ):
         """ Returns a description of the trait.
         """
         klass = self.klass
-        if not isinstance( klass, basestring ):
+        if not isinstance( klass, str ):
             klass = klass.__name__
 
         if self.adapt == 0:
@@ -2929,10 +2928,10 @@ class BaseInstance ( BaseClass ):
 
     def create_default_value ( self, *args, **kw ):
         klass = args[0]
-        if isinstance( klass, basestring ):
+        if isinstance( klass, str ):
             klass = self.validate_class( self.find_class( klass ) )
             if klass is None:
-                raise TraitError, 'Unable to locate class: ' + args[0]
+                raise TraitError('Unable to locate class: ' + args[0])
 
         return klass( *args[1:], **kw )
 
@@ -3094,7 +3093,7 @@ class Type ( BaseClass ):
         elif klass is None:
             klass = value
 
-        if isinstance( klass, basestring ):
+        if isinstance( klass, str ):
             self.validate = self.resolve
 
         elif not isinstance( klass, ClassTypes ):
@@ -3123,7 +3122,7 @@ class Type ( BaseClass ):
             class, then resets the trait so that future calls will be handled by
             the normal validate method.
         """
-        if isinstance( self.klass, basestring ):
+        if isinstance( self.klass, str ):
             self.resolve_class( object, name, value )
             del self.validate
 
@@ -3133,7 +3132,7 @@ class Type ( BaseClass ):
         """ Returns a description of the trait.
         """
         klass = self.klass
-        if not isinstance( klass, basestring ):
+        if not isinstance( klass, str ):
             klass = klass.__name__
 
         result = 'a subclass of ' + klass
@@ -3147,7 +3146,7 @@ class Type ( BaseClass ):
         """ Returns a tuple of the form: ( default_value_type, default_value )
             which describes the default value for this trait.
         """
-        if not isinstance( self.default_value, basestring ):
+        if not isinstance( self.default_value, str ):
             return super( Type, self ).get_default_value()
 
         return ( 7, ( self.resolve_default_value, (), None ) )
@@ -3156,7 +3155,7 @@ class Type ( BaseClass ):
         """ Resolves a class name into a class so that it can be used to
             return the class as the default value of the trait.
         """
-        if isinstance( self.klass, basestring ):
+        if isinstance( self.klass, str ):
             try:
                 self.resolve_class( None, None, None )
                 del self.validate
@@ -3345,7 +3344,7 @@ class Symbol ( TraitType ):
                 object.__dict__[ cache ] = ref = \
                     object.trait( name ).default_value_for( object, name )
 
-            if isinstance( ref, basestring ):
+            if isinstance( ref, str ):
                 object.__dict__[ name ] = value = self._resolve( ref )
 
         return value
@@ -3353,7 +3352,7 @@ class Symbol ( TraitType ):
     def set ( self, object, name, value ):
         dict = object.__dict__
         old  = dict.get( name, Undefined )
-        if isinstance( value, basestring ):
+        if isinstance( value, str ):
             dict.pop( name, None )
             dict[ TraitsCache + name ] = value
             object.trait_property_changed( name, old )
@@ -3523,7 +3522,7 @@ ListFloat = List( float )
 ListStr = List( str )
 
 #: List of Unicode string values; default value is [].
-ListUnicode = List( unicode )
+ListUnicode = List( str )
 
 #: List of complex values; default value is [].
 ListComplex = List( complex )
@@ -3565,7 +3564,7 @@ DictStrInt = Dict( str, int )
 
 #: Only a dictionary of string:long-integer values can be assigned; only string
 #: keys with long-integer values can be inserted. The default value is {}.
-DictStrLong = Dict( str, long )
+DictStrLong = Dict( str, int )
 
 #: Only a dictionary of string:float values can be assigned; only string keys
 #: with float values can be inserted. The default value is {}.

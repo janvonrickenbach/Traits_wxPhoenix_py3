@@ -24,12 +24,12 @@ from traits import trait_notifiers
 
 
 CHANGEMSG = (
-    u"{time} {direction:-{direction}{length}} {name!r} changed from "
-    u"{old!r} to {new!r} in {class_name!r}\n")
-CALLINGMSG = u"{time} {action:>{gap}}: {handler!r} in {source}\n"
+    "{time} {direction:-{direction}{length}} {name!r} changed from "
+    "{old!r} to {new!r} in {class_name!r}\n")
+CALLINGMSG = "{time} {action:>{gap}}: {handler!r} in {source}\n"
 EXITMSG = (
-    u"{time} {direction:-{direction}{length}} "
-    u"EXIT: {handler!r}{exception}\n")
+    "{time} {direction:-{direction}{length}} "
+    "EXIT: {handler!r}{exception}\n")
 SPACES_TO_ALIGN_WITH_CHANGE_MESSAGE = 9
 
 
@@ -39,8 +39,8 @@ class SentinelRecord(object):
     """
     __slots__ = ()
 
-    def __unicode__(self):
-        return u'\n'
+    def __str__(self):
+        return '\n'
 
 
 class ChangeMessageRecord(object):
@@ -64,7 +64,7 @@ class ChangeMessageRecord(object):
         #: The name of the class that the trait change took place.
         self.class_name = class_name
 
-    def __unicode__(self):
+    def __str__(self):
         length = self.indent * 2
         return CHANGEMSG.format(
             time=self.time,
@@ -94,7 +94,7 @@ class CallingMessageRecord(object):
         #: The source file where the handler was defined.
         self.source = source
 
-    def __unicode__(self):
+    def __str__(self):
         gap = self.indent * 2 + SPACES_TO_ALIGN_WITH_CHANGE_MESSAGE
         return CALLINGMSG.format(
             time=self.time,
@@ -121,7 +121,7 @@ class ExitMessageRecord(object):
         #: The exception type (if one took place)
         self.exception = exception
 
-    def __unicode__(self):
+    def __str__(self):
         length = self.indent * 2
         return EXITMSG.format(
             time=self.time,
@@ -155,7 +155,7 @@ class RecordContainer(object):
         """
         with open(filename, 'w') as fh:
             for record in self._records:
-                fh.write(unicode(record))
+                fh.write(str(record))
 
 
 class MultiThreadRecordContainer(object):
@@ -195,7 +195,7 @@ class MultiThreadRecordContainer(object):
         """
         with self._creation_lock:
             containers = self._record_containers
-            for thread_name, container in containers.iteritems():
+            for thread_name, container in containers.items():
                 filename = os.path.join(
                     directory_name, '{0}.trace'.format(thread_name))
                 container.save_to_file(filename)

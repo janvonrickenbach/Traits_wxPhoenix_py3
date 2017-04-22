@@ -18,7 +18,7 @@ This file is equivalent to test_interfaces.py, only using the deprecated
 
 """
 
-from __future__ import absolute_import
+
 
 import sys
 

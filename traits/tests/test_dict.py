@@ -7,7 +7,7 @@
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 """ Test cases for dictionary (Dict) traits. """
 
-from __future__ import absolute_import
+
 
 from traits.testing.unittest_tools import unittest
 

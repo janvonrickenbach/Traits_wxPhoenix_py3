@@ -8,7 +8,7 @@
 #  license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-from __future__ import absolute_import
+
 
 from traits.testing.unittest_tools import unittest
 

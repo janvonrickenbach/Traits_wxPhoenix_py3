@@ -22,7 +22,7 @@ class TestMessageRecords(unittest.TestCase):
         record = SentinelRecord()
 
         # Check unicode output
-        self.assertEqual(unicode(record), u'\n')
+        self.assertEqual(str(record), '\n')
 
         # Check initialization
         self.assertRaises(TypeError, SentinelRecord, sdd=0)
@@ -34,8 +34,8 @@ class TestMessageRecords(unittest.TestCase):
 
         # Check unicode output
         self.assertEqual(
-            unicode(record),
-            u"1 -----> 'john' changed from 1 to 1 in 'MyClass'\n")
+            str(record),
+            "1 -----> 'john' changed from 1 to 1 in 'MyClass'\n")
 
         # Check initialization
         self.assertRaises(TypeError, ChangeMessageRecord, sdd=0)
@@ -46,7 +46,7 @@ class TestMessageRecords(unittest.TestCase):
 
         # Check unicode output
         self.assertEqual(
-            unicode(record), u"7 <--------- EXIT: 'john'sssss\n")
+            str(record), "7 <--------- EXIT: 'john'sssss\n")
 
         # Check initialization
         self.assertRaises(TypeError, ExitMessageRecord, sdd=0)
@@ -57,7 +57,7 @@ class TestMessageRecords(unittest.TestCase):
 
         # Check unicode output
         self.assertEqual(
-            unicode(record), u"7             CALLING: 'john' in sssss\n")
+            str(record), "7             CALLING: 'john' in sssss\n")
 
         # Check initialization
         self.assertRaises(TypeError, CallingMessageRecord, sdd=0)

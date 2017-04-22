@@ -7,7 +7,7 @@ Please don't import anything from this module!
 
 """
 
-from __future__ import absolute_import
+
 
 from types import FunctionType
 

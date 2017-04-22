@@ -24,7 +24,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from __future__ import absolute_import
+
 
 from .trait_base import is_str
 from .has_traits import HasTraits
@@ -66,7 +66,7 @@ class UStr ( TraitType ):
     def validate ( self, object, name, value ):
         """ Ensures that a value being assigned to a trait is a unique string.
         """
-        if isinstance( value, basestring ):
+        if isinstance( value, str ):
             names    = self.names
             old_name = getattr( object, name )
             if names.get( old_name ) is object:
@@ -167,7 +167,7 @@ class HasUniqueStrings ( HasTraits ):
         """
         super( HasUniqueStrings, self ).traits_init()
 
-        for name, trait in self.traits( unique_string = is_str ).items():
+        for name, trait in list(self.traits( unique_string = is_str ).items()):
             for str_name in trait.unique_string.split( ',' ):
                 self._ustr_traits.append( UStr( self, name, str_name.strip() ) )
 

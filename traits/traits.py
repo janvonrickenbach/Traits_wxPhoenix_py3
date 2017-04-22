@@ -46,7 +46,7 @@ Visualization:
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from __future__ import absolute_import
+
 
 import sys
 from types import FunctionType, MethodType
@@ -446,9 +446,9 @@ ctraits._ctrait( CTrait )
 #  Constants:
 #-------------------------------------------------------------------------------
 
-ConstantTypes    = ( NoneType, int, long, float, complex, str, unicode )
+ConstantTypes    = ( NoneType, int, int, float, complex, str, str )
 
-PythonTypes      = ( str, unicode, int, long, float, complex, list, tuple,
+PythonTypes      = ( str, str, int, int, float, complex, list, tuple,
                      dict, FunctionType, MethodType, type, NoneType )
 
 if sys.version_info[0] < 3:
@@ -462,9 +462,9 @@ TraitTypes       = ( TraitHandler, CTrait )
 
 DefaultValues = {
     str:  '',
-    unicode: u'',
+    str: '',
     int:     0,
-    long:    0L,
+    int:    0,
     float:   0.0,
     complex: 0j,
     list:    [],
@@ -824,7 +824,7 @@ class _TraitMaker ( object ):
                 else:
                     typeValue = type( default_value )
 
-                    if isinstance(default_value, basestring):
+                    if isinstance(default_value, str):
                         string_options = self.extract( metadata, 'min_len',
                                                        'max_len', 'regex' )
                         if len( string_options ) == 0:
@@ -901,9 +901,9 @@ class _TraitMaker ( object ):
                     for i, item in enumerate( other ):
                         if isinstance( item, CTrait ):
                             if item.type != 'trait':
-                                raise TraitError, ("Cannot create a complex "
+                                raise TraitError("Cannot create a complex "
                                     "trait containing %s trait." %
-                                    add_article( item.type ) )
+                                    add_article( item.type ))
                             handler = item.handler
                             if handler is None:
                                 break

@@ -14,7 +14,7 @@
 """ Test whether HasTraits objects with cycles can be garbage collected.
 """
 
-from __future__ import absolute_import
+
 
 import gc
 import time

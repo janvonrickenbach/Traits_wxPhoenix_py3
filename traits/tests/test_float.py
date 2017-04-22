@@ -51,7 +51,7 @@ class CommonFloatTests(object):
     @unittest.skipUnless(sys.version_info < (3,), "Not applicable to Python 3")
     def test_accepts_small_long(self):
         a = self.test_class()
-        a.value = long(2)
+        a.value = int(2)
         self.assertIs(type(a.value), float)
         self.assertEqual(a.value, 2.0)
 

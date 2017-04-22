@@ -12,7 +12,7 @@
 #
 #------------------------------------------------------------------------------
 
-from __future__ import absolute_import
+
 
 from traits.testing.unittest_tools import unittest
 
@@ -22,7 +22,7 @@ from ..trait_base import strx
 
 # Validation via function
 def validator(object, name, value):
-    if isinstance(value, basestring):
+    if isinstance(value, str):
         # arbitrary rule for testing
         if value.find('fail') < 0:
             return value

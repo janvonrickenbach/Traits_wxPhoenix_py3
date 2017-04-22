@@ -6,19 +6,19 @@
 TraitSetObjects.
 """
 
-from __future__ import absolute_import
+
 
 import copy
-from cPickle import dumps, loads
+from pickle import dumps, loads
 
 from ..has_traits import HasTraits, on_trait_change
 from ..trait_types import Dict, List, Set, Str, Int, Instance
 
 
 class A(HasTraits):
-    alist = List(Int, range(5))
+    alist = List(Int, list(range(5)))
     adict = Dict(Str, Int, dict(a=1, b=2))
-    aset = Set(Int, range(5))
+    aset = Set(Int, list(range(5)))
 
     events = List()
 

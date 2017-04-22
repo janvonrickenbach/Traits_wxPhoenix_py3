@@ -10,7 +10,7 @@
 #  available online at http://www.enthought.com/licenses/BSD.txt
 #
 #  Thanks for using Enthought open source!
-from __future__ import absolute_import
+
 
 from contextlib import contextmanager
 import logging

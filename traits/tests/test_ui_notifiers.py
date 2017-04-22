@@ -29,7 +29,7 @@ else:
     QT_FOUND = True
 
 
-import thread
+import _thread
 from threading import Thread
 import time
 
@@ -70,7 +70,7 @@ class BaseTestUINotifiers(object):
         qt4_app.processEvents()
 
     def on_foo_notifications(self, obj, name, old, new):
-        thread_id = thread.get_ident()
+        thread_id = _thread.get_ident()
         event = (thread_id, (obj, name, old, new))
         self.notifications.append(event)
 

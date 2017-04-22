@@ -22,11 +22,11 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from __future__ import absolute_import
+
 
 from threading import local as thread_local
 from threading import Thread
-from thread import get_ident
+from _thread import get_ident
 import traceback
 from types import MethodType
 import weakref
@@ -312,7 +312,7 @@ class AbstractStaticChangeNotifyWrapper(object):
     arguments_transforms = {}
 
     def __init__ ( self, handler ):
-        arg_count = handler.func_code.co_argcount
+        arg_count = handler.__code__.co_argcount
         if arg_count > 4:
             raise TraitNotificationError(
                 ('Invalid number of arguments for the static anytrait change '
@@ -417,13 +417,13 @@ class TraitChangeNotifyWrapper(object):
         # If target is not None and handler is a function then the handler
         # will be removed when target is deleted.
         if type( handler ) is MethodType:
-            func   = handler.im_func
-            object = handler.im_self
+            func   = handler.__func__
+            object = handler.__self__
             if object is not None:
                 self.object = weakref.ref( object, self.listener_deleted )
                 self.name   = handler.__name__
                 self.owner  = owner
-                arg_count   = func.func_code.co_argcount - 1
+                arg_count   = func.__code__.co_argcount - 1
                 if arg_count > 4:
                     raise TraitNotificationError(
                         ('Invalid number of arguments for the dynamic trait '
@@ -443,7 +443,7 @@ class TraitChangeNotifyWrapper(object):
             self.object = weakref.ref( target, self.listener_deleted )
             self.owner = owner
 
-        arg_count = handler.func_code.co_argcount
+        arg_count = handler.__code__.co_argcount
         if arg_count > 4:
             raise TraitNotificationError(
                 ('Invalid number of arguments for the dynamic trait change '
@@ -485,9 +485,9 @@ class TraitChangeNotifyWrapper(object):
         if handler is self:
             return True
 
-        if (type( handler ) is MethodType) and (handler.im_self is not None):
+        if (type( handler ) is MethodType) and (handler.__self__ is not None):
             return ((handler.__name__ == self.name) and
-                    (handler.im_self is self.object()))
+                    (handler.__self__ is self.object()))
 
         return ((self.name is None) and (handler == self.handler))
 
