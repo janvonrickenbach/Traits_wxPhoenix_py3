@@ -6,8 +6,6 @@
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import (HasTraits, Any, Bool, Delegate, Event, Instance, Property,
@@ -81,20 +79,18 @@ class TestCopyableTraitNames(unittest.TestCase):
 
 
 class TestCopyableTraitNameQueries(unittest.TestCase):
-
     def setUp(self):
         self.foo = Foo()
 
     def test_type_query(self):
-        names = self.foo.copyable_trait_names(**{
-            'type': 'trait'
-        })
+        names = self.foo.copyable_trait_names(**{'type': 'trait'})
 
         self.assertEqual(['a', 'b', 'i', 's'], sorted(names))
 
-        names = self.foo.copyable_trait_names(**{
-            'type': lambda t: t in ('trait', 'property',)
-        })
+        names = self.foo.copyable_trait_names(
+            **{'type': lambda t: t in (
+                'trait',
+                'property', )})
 
         self.assertEqual(['a', 'b', 'i', 'p', 's'], sorted(names))
 
@@ -106,9 +102,8 @@ class TestCopyableTraitNameQueries(unittest.TestCase):
         self.assertEqual(['p'], names)
 
     def test_unmodified_query(self):
-        names = self.foo.copyable_trait_names(**{
-            'is_trait_type': lambda f: f(Str)
-        })
+        names = self.foo.copyable_trait_names(
+            **{'is_trait_type': lambda f: f(Str)})
 
         self.assertEqual(['s'], names)
 
@@ -119,14 +114,13 @@ class TestCopyableTraitNameQueries(unittest.TestCase):
 
         eval_true = lambda x: True
 
-        names = self.foo.copyable_trait_names(property=eval_true,
-                                              type=eval_true,
-                                              transient=eval_true)
+        names = self.foo.copyable_trait_names(
+            property=eval_true, type=eval_true, transient=eval_true)
 
-        self.assertEqual(['a', 'b', 'd', 'e', 'i', 'p',
-                           'p_ro', 'p_wo', 's',
-                           'trait_added',
-                           'trait_modified'
-                           ], sorted(names))
+        self.assertEqual([
+            'a', 'b', 'd', 'e', 'i', 'p', 'p_ro', 'p_wo', 's', 'trait_added',
+            'trait_modified'
+        ], sorted(names))
+
 
 ### EOF

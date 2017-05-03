@@ -7,8 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import Delegate, HasTraits, Instance, Str
@@ -333,6 +331,7 @@ class DelegateTestCase(unittest.TestCase):
         # Do not expect '_u_changed' to be called.
         self.assertEqual(baz_u_handler_self, None)
         return
+
 
 if __name__ == '__main__':
     unittest.main()

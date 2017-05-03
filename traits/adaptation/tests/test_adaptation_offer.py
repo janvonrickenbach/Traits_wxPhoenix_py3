@@ -1,6 +1,5 @@
 """ Test the adaptation offers. """
 
-
 import sys
 
 from traits.adaptation.adaptation_offer import AdaptationOffer
@@ -17,10 +16,9 @@ class TestAdaptationOffer(unittest.TestCase):
             del sys.modules[LAZY_EXAMPLES]
 
         offer = AdaptationOffer(
-            factory       =(LAZY_EXAMPLES + '.IBarToIFoo'),
-            from_protocol =(LAZY_EXAMPLES + '.IBar'),
-            to_protocol   =(LAZY_EXAMPLES + '.IFoo'),
-        )
+            factory=(LAZY_EXAMPLES + '.IBarToIFoo'),
+            from_protocol=(LAZY_EXAMPLES + '.IBar'),
+            to_protocol=(LAZY_EXAMPLES + '.IFoo'), )
 
         self.assertNotIn(LAZY_EXAMPLES, sys.modules)
 
@@ -31,14 +29,12 @@ class TestAdaptationOffer(unittest.TestCase):
         from traits.adaptation.tests.lazy_examples import IBarToIFoo
         self.assertIs(factory, IBarToIFoo)
 
-
         del sys.modules[LAZY_EXAMPLES]
 
         from_protocol = offer.from_protocol
 
         from traits.adaptation.tests.lazy_examples import IBar
         self.assertIs(from_protocol, IBar)
-
 
         del sys.modules[LAZY_EXAMPLES]
 

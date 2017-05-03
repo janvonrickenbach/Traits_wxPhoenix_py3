@@ -29,6 +29,7 @@ class GraphicShape(HasTraits):
     line_color = standard_color
     fill_color = red_color
 
+
 #--[Example*]------------------------------------------------------------------
 
 my_shape1 = GraphicShape()

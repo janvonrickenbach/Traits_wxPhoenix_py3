@@ -9,6 +9,7 @@ from traits.api import HasTraits, Instance
 #--[Code]----------------------------------------------------------------------
 # Shows the incorrect way of defining a self-referencing class.
 try:
+
     class Employee(HasTraits):
 
         # This won't work.

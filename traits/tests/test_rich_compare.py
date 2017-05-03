@@ -12,8 +12,6 @@
 #
 #------------------------------------------------------------------------------
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Any, Str
@@ -28,7 +26,6 @@ class RichCompare(HasTraits):
 
 
 class RichCompareTests:
-
     def bar_changed(self, object, trait, old, new):
         self.changed_object = object
         self.changed_trait = trait
@@ -174,7 +171,6 @@ class Foo(HasTraits):
 
 
 class RichCompareHasTraitsTestCase(unittest.TestCase, RichCompareTests):
-
     def setUp(self):
         self.a = Foo(name='a')
         self.same_as_a = Foo(name='a')
@@ -188,4 +184,6 @@ class RichCompareHasTraitsTestCase(unittest.TestCase, RichCompareTests):
         self.assertEqual(self.a.name, self.same_as_a.name)
         self.assertNotEqual(self.a.name, self.different_from_a.name)
         return
+
+
 ### EOF

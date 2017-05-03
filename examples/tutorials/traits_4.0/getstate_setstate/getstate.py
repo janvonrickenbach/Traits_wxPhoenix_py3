@@ -144,6 +144,7 @@ class Session(HasTraits):
     def _name_changed(self):
         self.created = time()
 
+
 #--[Example*]------------------------------------------------------------------
 
 # The following shows an example of pickling and unpickling a Session object.

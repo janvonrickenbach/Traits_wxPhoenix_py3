@@ -1,7 +1,6 @@
 ##############################################################################
 # Copyright 2014 Enthought, Inc.
 ##############################################################################
-
 """ Tests for the static notifiers. """
 from traits.api import Float, HasTraits
 from traits.testing.unittest_tools import unittest

@@ -21,5 +21,4 @@ class PersonINameAdapter(Adapter):
 
     # Implement the 'IName' interface on behalf of its client:
     def get_name(self):
-        return ('%s %s' % (self.adaptee.first_name,
-                           self.adaptee.last_name))
+        return ('%s %s' % (self.adaptee.first_name, self.adaptee.last_name))

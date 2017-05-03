@@ -32,6 +32,7 @@ class BaseFloatModel(HasTraits):
 
 class CommonFloatTests(object):
     """ Common tests for Float and BaseFloat """
+
     def test_default(self):
         a = self.test_class()
         self.assertEqual(a.value, 0.0)
@@ -48,14 +49,16 @@ class CommonFloatTests(object):
         self.assertIs(type(a.value), float)
         self.assertEqual(a.value, 2.0)
 
-    @unittest.skipUnless(sys.version_info < (3,), "Not applicable to Python 3")
+    @unittest.skipUnless(sys.version_info < (3, ),
+                         "Not applicable to Python 3")
     def test_accepts_small_long(self):
         a = self.test_class()
         a.value = int(2)
         self.assertIs(type(a.value), float)
         self.assertEqual(a.value, 2.0)
 
-    @unittest.skipUnless(sys.version_info < (3,), "Not applicable to Python 3")
+    @unittest.skipUnless(sys.version_info < (3, ),
+                         "Not applicable to Python 3")
     def test_accepts_large_long(self):
         a = self.test_class()
         # Value large enough to be a long on Python 2.

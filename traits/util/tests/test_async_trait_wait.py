@@ -27,21 +27,20 @@ class TrafficLights(HasStrictTraits):
 class TestAsyncTraitWait(unittest.TestCase):
     def test_wait_for_condition_success(self):
         lights = TrafficLights(colour='Green')
-        t = threading.Thread(target=lights.make_random_changes, args=(2,))
+        t = threading.Thread(target=lights.make_random_changes, args=(2, ))
         t.start()
 
         wait_for_condition(
             condition=lambda l: l.colour == 'Red',
             obj=lights,
-            trait='colour',
-        )
+            trait='colour', )
 
         self.assertEqual(lights.colour, 'Red')
         t.join()
 
     def test_wait_for_condition_failure(self):
         lights = TrafficLights(colour='Green')
-        t = threading.Thread(target=lights.make_random_changes, args=(2,))
+        t = threading.Thread(target=lights.make_random_changes, args=(2, ))
         t.start()
 
         self.assertRaises(
@@ -50,8 +49,7 @@ class TestAsyncTraitWait(unittest.TestCase):
             condition=lambda l: l.colour == 'RedAndAmber',
             obj=lights,
             trait='colour',
-            timeout=5.0,
-            )
+            timeout=5.0, )
         t.join()
 
     def test_traits_handler_cleaned_up(self):
@@ -60,13 +58,13 @@ class TestAsyncTraitWait(unittest.TestCase):
         # condition after the 'wait_for_condition' call had returned.
 
         self.lights = TrafficLights(colour='Green')
-        t = threading.Thread(target=self.lights.make_random_changes, args=(3,))
+        t = threading.Thread(
+            target=self.lights.make_random_changes, args=(3, ))
         t.start()
         wait_for_condition(
             condition=lambda l: self.lights.colour == 'Red',
             obj=self.lights,
-            trait='colour',
-        )
+            trait='colour', )
         del self.lights
 
         # If the condition gets evaluated again past this point, we'll

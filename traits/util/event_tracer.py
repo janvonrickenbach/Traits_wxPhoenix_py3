@@ -22,14 +22,11 @@ from datetime import datetime
 
 from traits import trait_notifiers
 
-
-CHANGEMSG = (
-    "{time} {direction:-{direction}{length}} {name!r} changed from "
-    "{old!r} to {new!r} in {class_name!r}\n")
+CHANGEMSG = ("{time} {direction:-{direction}{length}} {name!r} changed from "
+             "{old!r} to {new!r} in {class_name!r}\n")
 CALLINGMSG = "{time} {action:>{gap}}: {handler!r} in {source}\n"
-EXITMSG = (
-    "{time} {direction:-{direction}{length}} "
-    "EXIT: {handler!r}{exception}\n")
+EXITMSG = ("{time} {direction:-{direction}{length}} "
+           "EXIT: {handler!r}{exception}\n")
 SPACES_TO_ALIGN_WITH_CHANGE_MESSAGE = 9
 
 
@@ -73,8 +70,7 @@ class ChangeMessageRecord(object):
             old=self.old,
             new=self.new,
             class_name=self.class_name,
-            length=length,
-        )
+            length=length, )
 
 
 class CallingMessageRecord(object):
@@ -128,8 +124,7 @@ class ExitMessageRecord(object):
             direction='<',
             handler=self.handler,
             exception=self.exception,
-            length=length,
-        )
+            length=length, )
 
 
 class RecordContainer(object):
@@ -196,8 +191,8 @@ class MultiThreadRecordContainer(object):
         with self._creation_lock:
             containers = self._record_containers
             for thread_name, container in containers.items():
-                filename = os.path.join(
-                    directory_name, '{0}.trace'.format(thread_name))
+                filename = os.path.join(directory_name,
+                                        '{0}.trace'.format(thread_name))
                 container.save_to_file(filename)
 
 
@@ -232,18 +227,14 @@ class ChangeEventRecorder(object):
                 name=name,
                 old=old,
                 new=new,
-                class_name=obj.__class__.__name__,
-            ),
-        )
+                class_name=obj.__class__.__name__, ), )
 
         container.record(
             CallingMessageRecord(
                 time=time,
                 indent=indent,
                 handler=handler.__name__,
-                source=inspect.getsourcefile(handler),
-            ),
-        )
+                source=inspect.getsourcefile(handler), ), )
         self.indent += 1
 
     def post_tracer(self, obj, name, old, new, handler, exception=None):
@@ -265,9 +256,7 @@ class ChangeEventRecorder(object):
                 time=time,
                 indent=indent,
                 handler=handler.__name__,
-                exception=exception_msg,
-            ),
-        )
+                exception=exception_msg, ), )
 
         if indent == 1:
             container.record(SentinelRecord())
@@ -325,8 +314,7 @@ class MultiThreadChangeEventRecorder(object):
             thread = threading.current_thread().name
             if thread not in self.tracers:
                 container = self.container
-                thread_container = container.get_change_event_collector(
-                    thread)
+                thread_container = container.get_change_event_collector(thread)
                 tracer = ChangeEventRecorder(thread_container)
                 self.tracers[thread] = tracer
                 return tracer

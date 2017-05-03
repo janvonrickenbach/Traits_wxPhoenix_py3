@@ -9,6 +9,7 @@ from functools import reduce
 # Classes
 ###############################################################################
 
+
 class CamelCaseToPython:
     """ Simple functor class to convert names from camel case to idiomatic
     Python variable names.
@@ -41,12 +42,14 @@ class CamelCaseToPython:
         else:
             return '_' + g1 + g2
 
+
 ###############################################################################
 # Functions
 ###############################################################################
 
 # Instantiate a converter.
 camel_case_to_python = CamelCaseToPython()
+
 
 def camel_case_to_words(s):
     """ Convert a camel case string into words separated by spaces.

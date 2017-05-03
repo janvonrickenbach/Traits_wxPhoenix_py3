@@ -5,7 +5,6 @@ any performance criteria - but in the future we might be ;^).
 
 """
 
-
 import abc
 from pprint import pprint
 import time
@@ -13,10 +12,9 @@ import time
 from traits.adaptation.adaptation_manager import AdaptationManager
 from traits.api import Adapter, HasTraits, Interface, provides
 
-
-N_SOURCES    = 3
+N_SOURCES = 3
 N_ITERATIONS = 100
-N_PROTOCOLS  = 50
+N_PROTOCOLS = 50
 
 # Create some classes to adapt.
 create_classes_to_adapt = """
@@ -48,7 +46,6 @@ for source in range(N_SOURCES):
     for target in range(N_PROTOCOLS):
         exec(create_traits_adapter_class.format(source=source, target=target))
 
-
 #### traits.adaptation with Interfaces ########################################
 
 adaptation_manager = AdaptationManager()
@@ -75,7 +72,6 @@ for _ in range(N_ITERATIONS):
     adaptation_manager.adapt(foo, I0)
 time_per_iter = (time.time() - start_time) / float(N_ITERATIONS) * 1000.0
 print('apptools using Interfaces: %.3f msec per iteration' % time_per_iter)
-
 
 #### traits.adaptation with ABCs ##############################################
 

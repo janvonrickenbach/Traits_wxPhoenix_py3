@@ -6,8 +6,6 @@
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-
-
 from pickle import dumps, loads
 from traits.testing.unittest_tools import unittest
 

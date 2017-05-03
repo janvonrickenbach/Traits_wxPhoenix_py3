@@ -12,5 +12,5 @@ boolean_map = Trait('true',
                         'true': 1,
                         'yes': 1,
                         'false': 0,
-                        'no': 0})
-                    )
+                        'no': 0
+                    }))

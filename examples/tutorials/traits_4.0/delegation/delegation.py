@@ -110,6 +110,7 @@ class Child(HasTraits):
     first_name = Str
     last_name = Delegate('father')
 
+
 #--[Example*]------------------------------------------------------------------
 
 mom = Parent(first_name='Julia', last_name='Wilson')
@@ -119,6 +120,7 @@ son = Child(mother=mom, father=dad, first_name='John')
 
 def name_changed(name):
     print 'Your last name has been changed to %s.' % name
+
 
 # Set up a change notification handler on the son's last name:
 son.on_trait_change(name_changed, 'last_name')

@@ -152,8 +152,8 @@ class Corporation(HasTraits):
     # Define a corporate 'whistle blower' method:
     @on_trait_change('departments:employees.sick_days')
     def sick_again(self, object, name, old, new):
-        print '%s just took sick day number %d for this year!' % (
-              object.name, new)
+        print '%s just took sick day number %d for this year!' % (object.name,
+                                                                  new)
 
 
 #--[Example*]------------------------------------------------------------------
@@ -169,18 +169,15 @@ bob = Employee(name='Bob', sick_days=1)
 alphonse = Employee(name='Alphonse', sick_days=5)
 
 # Create some sample departments:
-accounting = Department(name='accounting',
-                        employees=[millie, ralph, tom])
+accounting = Department(name='accounting', employees=[millie, ralph, tom])
 
-sales = Department(name='Sales',
-                   employees=[slick, marcelle, reggie])
+sales = Department(name='Sales', employees=[slick, marcelle, reggie])
 
-development = Department(name='Development',
-                         employees=[dave, bob, alphonse])
+development = Department(name='Development', employees=[dave, bob, alphonse])
 
 # Create a sample corporation:
-acme = Corporation(name='Acme, Inc.',
-                   departments=[accounting, sales, development])
+acme = Corporation(
+    name='Acme, Inc.', departments=[accounting, sales, development])
 
 # Now let's try out our 'reporting' system:
 slick.sick_days += 1

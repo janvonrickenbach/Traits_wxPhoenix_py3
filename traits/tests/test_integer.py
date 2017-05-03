@@ -16,8 +16,6 @@ Tests for the Int trait type.
 
 """
 
-
-
 import decimal
 import sys
 

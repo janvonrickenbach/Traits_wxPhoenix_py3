@@ -6,8 +6,6 @@
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Int, Range, Long, TraitError
@@ -39,6 +37,7 @@ class TraitIntRangeLong(unittest.TestCase):
         a.r = 20
         self.assertRaises(TraitError, a.trait_set, r=1)
         self.assertRaises(TraitError, a.trait_set, r=9223372036854775808)
+
 
 if __name__ == '__main__':
     unittest.main()

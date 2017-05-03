@@ -25,6 +25,7 @@ class Person(HasTraits):
 class Apartment(HasTraits):
     renter = Instance(IName)
 
+
 william = Person(first_name='William', last_name='Adams')
 apt1 = Apartment(renter=william)
 print 'Renter is: ', apt1.renter.get_name()

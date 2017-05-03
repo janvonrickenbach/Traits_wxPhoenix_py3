@@ -12,7 +12,6 @@
 #------------------------------------------------------------------------------
 """ Manages all registered adaptations. """
 
-
 from heapq import heappop, heappush
 import inspect
 import itertools
@@ -135,8 +134,8 @@ class AdaptationManager(HasTraits):
 
         if result is None:
             if default is AdaptationError:
-                raise AdaptationError(
-                    'Could not adapt %r to %r' % (adaptee, to_protocol))
+                raise AdaptationError('Could not adapt %r to %r' %
+                                      (adaptee, to_protocol))
             else:
                 result = default
 
@@ -145,9 +144,8 @@ class AdaptationManager(HasTraits):
     def register_offer(self, offer):
         """ Register an offer to adapt from one protocol to another. """
 
-        offers = self._adaptation_offers.setdefault(
-            offer.from_protocol_name, []
-        )
+        offers = self._adaptation_offers.setdefault(offer.from_protocol_name,
+                                                    [])
         offers.append(offer)
 
         return
@@ -164,18 +162,17 @@ class AdaptationManager(HasTraits):
 
         self.register_offer(
             AdaptationOffer(
-                factory       = factory,
-                from_protocol = from_protocol,
-                to_protocol   = to_protocol
-            )
-        )
+                factory=factory,
+                from_protocol=from_protocol,
+                to_protocol=to_protocol))
 
         return
 
     def register_provides(self, provider_protocol, protocol):
         """ Register that a protocol provides another. """
 
-        self.register_factory(no_adapter_necessary, provider_protocol, protocol)
+        self.register_factory(no_adapter_necessary, provider_protocol,
+                              protocol)
 
         return
 
@@ -268,8 +265,8 @@ class AdaptationManager(HasTraits):
                 edges.sort(cmp=_by_weight_then_from_protocol_specificity)
             else:
                 # functools.cmp_to_key is available from 2.7 and 3.2
-                edges.sort(key=functools.cmp_to_key(_by_weight_then_from_protocol_specificity))
-
+                edges.sort(key=functools.cmp_to_key(
+                    _by_weight_then_from_protocol_specificity))
 
             # At this point, the first edges are the shortest ones. Within
             # edges with the same distance, interfaces which are subclasses
@@ -299,12 +296,9 @@ class AdaptationManager(HasTraits):
                     # Push the new path on the priority queue.
                     adapter_weight, mro_weight, _ = weight
                     new_weight = (adapter_weight + 1,
-                                  mro_weight + mro_distance,
-                                  next(counter))
-                    heappush(
-                        offer_queue,
-                        (new_weight, new_path, offer.to_protocol)
-                    )
+                                  mro_weight + mro_distance, next(counter))
+                    heappush(offer_queue,
+                             (new_weight, new_path, offer.to_protocol))
 
         return None
 
@@ -322,11 +316,11 @@ class AdaptationManager(HasTraits):
 
         edges = []
 
-        for from_protocol_name, offers in list(self._adaptation_offers.items()):
+        for from_protocol_name, offers in list(self._adaptation_offers.items(
+        )):
             from_protocol = offers[0].from_protocol
-            mro_distance = self.mro_distance_to_protocol(
-                current_protocol, from_protocol
-            )
+            mro_distance = self.mro_distance_to_protocol(current_protocol,
+                                                         from_protocol)
 
             if mro_distance is not None:
 
@@ -337,6 +331,7 @@ class AdaptationManager(HasTraits):
                         edges.append((mro_distance, offer))
 
         return edges
+
 
 def _by_weight_then_from_protocol_specificity(edge_1, edge_2):
     """ Comparison function for graph edges.
@@ -409,6 +404,7 @@ def get_global_adaptation_manager():
 # If you add a public method to the adaptation manager protocol then don't
 # forget to add a convenience function here!
 
+
 def adapt(adaptee, to_protocol, default=AdaptationError):
     """ Attempt to adapt an object to a given protocol. """
     manager = get_global_adaptation_manager()
@@ -442,5 +438,6 @@ def supports_protocol(obj, protocol):
 def provides_protocol(type_, protocol):
     """ Does the given type provide (i.e implement) a given protocol? """
     return AdaptationManager.provides_protocol(type_, protocol)
+
 
 #### EOF ######################################################################

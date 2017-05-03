@@ -1,14 +1,13 @@
 #  Copyright (c) 2007, Enthought, Inc.
 #  License: BSD Style.
 
-
 #--[Imports]-------------------------------------------------------------------
 from traits.api import HasTraits, Instance
-
 
 #--[Code]----------------------------------------------------------------------
 # Shows the incorrect way of defining mutually-referring classes.
 try:
+
     class Chicken(HasTraits):
 
         # Won't work: 'Egg' not defined yet:

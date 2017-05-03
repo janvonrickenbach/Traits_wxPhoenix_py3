@@ -11,11 +11,7 @@
 #  Thanks for using Enthought open source!
 #
 #------------------------------------------------------------------------------
-
 """ Tests for protocols usage. """
-
-
-
 
 # Standard library imports.
 import os
@@ -63,15 +59,18 @@ class Person(HasTraits):
     age = Int
 
 
-@unittest.skipUnless(sys.version_info < (3,),
+@unittest.skipUnless(sys.version_info < (3, ),
                      "The 'adapts' and 'implements' class advisors "
                      "are not supported in Python 3.")
 class ProtocolsUsageTestCase(unittest.TestCase):
     """ Tests for protocols usage. """
+
     def test_adapts(self):
         """ adapts """
+
         class IFoo(Interface):
             """ A simple interface. """
+
             def foo(self):
                 """ The only method for the IFoo interface. """
 

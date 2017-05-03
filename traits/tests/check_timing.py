@@ -12,8 +12,6 @@
 # Description: Perform timing tests on various trait styles to determine the
 #              amount of overhead that traits add.
 
-
-
 from time import time
 from ..api import Any, DelegatesTo, HasTraits, Int, Range
 
@@ -33,7 +31,6 @@ def measure(func):
 
 #  'Old style' Python attribute get/set:
 class old_style_value:
-
     def measure(self, reference_get=1.0, reference_set=1.0):
         global t0
         self.init()
@@ -67,7 +64,6 @@ class old_style_value:
 
 #  'New style' Python attribute get/set:
 class new_style_value(object):
-
     def measure(self):
         global t0
         self.init()
@@ -101,7 +97,6 @@ class new_style_value(object):
 
 #  Python 'property' get/set:
 class property_value(new_style_value):
-
     def get_value(self):
         return self._value
 
@@ -113,7 +108,6 @@ class property_value(new_style_value):
 
 #  Python 'global' get/set:
 class global_value(new_style_value):
-
     def init(self):
         global gvalue
         gvalue = -1
@@ -149,14 +143,12 @@ class range_value(any_value):
 
 #  Executes method when float trait is changed:
 class change_value(int_value):
-
     def _value_changed(self, old, new):
         pass
 
 
 #  Notifies handler when float trait is changed:
 class monitor_value(int_value):
-
     def init(self):
         self.on_trait_change(self.on_value_change, 'value')
 
@@ -176,7 +168,6 @@ class delegate_value(HasTraits, new_style_value):
 
 #  Float trait is delegated through one object to another object:
 class delegate_2_value(delegate_value):
-
     def init(self):
         delegate = delegate_value()
         delegate.init()
@@ -185,7 +176,6 @@ class delegate_2_value(delegate_value):
 
 #  Float trait is delegated through two objects to another object:
 class delegate_3_value(delegate_value):
-
     def init(self):
         delegate = delegate_2_value()
         delegate.init()
@@ -204,16 +194,14 @@ def report(name, get_time, set_time, ref_get_time, ref_set_time):
 
     template = (
         '{name:^30}: Get {get_time:02.3f} us (x {get_speed_up:02.3f}), '
-        'Set {set_time:02.3f} us (x {set_speed_up:02.3f})'
-        )
+        'Set {set_time:02.3f} us (x {set_speed_up:02.3f})')
 
     report = template.format(
         name=name,
         get_time=get_time,
         get_speed_up=ref_get_time / get_time,
         set_time=set_time,
-        set_speed_up=ref_set_time / set_time,
-        )
+        set_speed_up=ref_set_time / set_time, )
 
     return report
 
@@ -221,31 +209,22 @@ def report(name, get_time, set_time, ref_get_time, ref_set_time):
 def run_benchmark(klass, ref_get_time, ref_set_time):
     benchmark_name = klass.__name__
     get_time, set_time = klass().measure()
-    print(report(benchmark_name,
-                 get_time, set_time,
-                 ref_get_time, ref_set_time))
+    print(
+        report(benchmark_name, get_time, set_time, ref_get_time, ref_set_time))
 
 
 def main():
     ref_get_time, ref_set_time = new_style_value().measure()
 
     benchmarks = [
-        global_value,
-        old_style_value,
-        new_style_value,
-        property_value,
-        any_value,
-        int_value,
-        range_value,
-        change_value,
-        monitor_value,
-        delegate_value,
-        delegate_2_value,
-        delegate_3_value
+        global_value, old_style_value, new_style_value, property_value,
+        any_value, int_value, range_value, change_value, monitor_value,
+        delegate_value, delegate_2_value, delegate_3_value
     ]
 
     for benchmark in benchmarks:
         run_benchmark(benchmark, ref_get_time, ref_set_time)
+
 
 if __name__ == '__main__':
     main()

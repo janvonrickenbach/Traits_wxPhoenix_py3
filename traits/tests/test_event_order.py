@@ -8,8 +8,6 @@
 #  license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Str, Instance, Any
@@ -21,6 +19,7 @@ class TestEventOrder(unittest.TestCase):
 
     Baz receives the "effect" event before it receives the "cause" event.
     """
+
     def setUp(self):
         foo = Foo(cause='ORIGINAL')
         bar = Bar(foo=foo, test=self)
@@ -31,17 +30,17 @@ class TestEventOrder(unittest.TestCase):
         return
 
     def test_lifo_order(self):
-        lifo = ['Bar._caused_changed',
-                'Baz._effect_changed',
-                'Baz._caused_changed']
+        lifo = [
+            'Bar._caused_changed', 'Baz._effect_changed', 'Baz._caused_changed'
+        ]
 
         self.assertEqual(self.events_delivered, lifo)
         return
 
     def test_not_fifo_order(self):
-        fifo = ['Bar._caused_changed',
-                'Baz._caused_changed',
-                'Baz._effect_changed']
+        fifo = [
+            'Bar._caused_changed', 'Baz._caused_changed', 'Baz._effect_changed'
+        ]
 
         self.assertNotEqual(self.events_delivered, fifo)
         return
@@ -77,10 +76,10 @@ class Baz(HasTraits):
 
     def _bar_changed(self, obj, old, new):
         if old is not None and old is not new:
-            old.on_trait_change(self._effect_changed, name='effect',
-                                remove=True)
-            old.foo.on_trait_change(self._cause_changed, name='cause',
-                                    remove=True)
+            old.on_trait_change(
+                self._effect_changed, name='effect', remove=True)
+            old.foo.on_trait_change(
+                self._cause_changed, name='cause', remove=True)
 
         if new is not None:
             new.foo.on_trait_change(self._cause_changed, name='cause')
@@ -95,5 +94,6 @@ class Baz(HasTraits):
     def _effect_changed(self, obj, name, old, new):
         self.test.events_delivered.append('Baz._effect_changed')
         return
+
 
 ### EOF #######################################################################

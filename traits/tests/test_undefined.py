@@ -12,8 +12,6 @@
 #
 #------------------------------------------------------------------------------
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Str, Undefined, ReadOnly, Float
@@ -75,5 +73,6 @@ class UndefinedTestCase(unittest.TestCase):
         self.assertEqual(f.original_name, 'first')
 
         return
+
 
 ### EOF #######################################################################

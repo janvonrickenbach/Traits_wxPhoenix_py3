@@ -14,6 +14,7 @@ class Dummy(HasTraits):
 def _create_subclass():
     class Subclass(HasTraits):
         pass
+
     return Subclass
 
 
@@ -74,7 +75,6 @@ class ListUpdatesTest(HasTraits):
 
 
 class TestRegression(unittest.TestCase):
-
     def test_default_value_for_no_cache(self):
         """ Make sure that CTrait.default_value_for() does not cache the
         result.
@@ -101,8 +101,10 @@ class TestRegression(unittest.TestCase):
 
     def test_leaked_property_tuple(self):
         """ the property ctrait constructor shouldn't leak a tuple. """
+
         class A(HasTraits):
             prop = Property()
+
         a = A()
         self.assertEqual(sys.getrefcount(a.trait('prop').property()), 1)
 
@@ -157,7 +159,7 @@ class TestRegression(unittest.TestCase):
             counts.append(len(gc.get_objects()))
 
         # All the counts beyond the warmup period should be the same.
-        self.assertEqual(counts[warmup:-1], counts[warmup+1:])
+        self.assertEqual(counts[warmup:-1], counts[warmup + 1:])
 
     def test_delegation_refleak(self):
         warmup = 5
@@ -170,7 +172,7 @@ class TestRegression(unittest.TestCase):
             counts.append(len(gc.get_objects()))
 
         # All the counts should be the same.
-        self.assertEqual(counts[warmup:-1], counts[warmup+1:])
+        self.assertEqual(counts[warmup:-1], counts[warmup + 1:])
 
 
 if __name__ == '__main__':

@@ -18,8 +18,6 @@ This file is equivalent to test_interfaces.py, only using the deprecated
 
 """
 
-
-
 import sys
 
 from traits.testing.unittest_tools import unittest
@@ -28,44 +26,34 @@ from traits.adaptation.api import get_global_adaptation_manager, \
 from traits.api import HasTraits, Adapter, adapts, AdaptsTo, \
     implements, Instance, Int, Interface, List, Supports, TraitError
 
-
 # Using the deprecated class advisor "adapts", the registration of adapters
 # occurs globally at class definition time. Since other tests will reset the
 # global adaptation manager, the registration will be lost.
 # That's why we save a reference to the current global adaptation manager.
 _adaptation_manager = get_global_adaptation_manager()
 
-
 #------------------------------------------------------------------------------
 #  Test 'Interface' definitions:
 #------------------------------------------------------------------------------
 
 # 'adapts' and 'implements' are not supported in Python 3.
-if sys.version_info < (3,):
+if sys.version_info < (3, ):
 
     class IFoo(Interface):
-
         def get_foo(self):
             """ Returns the current foo. """
 
-
     class IFooPlus(IFoo):
-
         def get_foo_plus(self):
             """ Returns even more foo. """
 
-
     class IAverage(Interface):
-
         def get_average(self):
             """ Returns the average value for the object. """
 
-
     class IList(Interface):
-
         def get_list(self):
             """ Returns the list value for the object. """
-
 
     class Sample(HasTraits):
         s1 = Int(1, sample=True)
@@ -75,7 +63,6 @@ if sys.version_info < (3,):
         i2 = Int(5)
         i3 = Int(6)
 
-
     class SampleList(HasTraits):
 
         implements(IList)
@@ -84,7 +71,6 @@ if sys.version_info < (3,):
 
         def get_list(self):
             return self.data
-
 
     class SampleAverage(HasTraits):
 
@@ -105,10 +91,8 @@ if sys.version_info < (3,):
                 average += item
             return (average / len(value))
 
-
     class SampleBad(HasTraits):
         pass
-
 
     class TraitsHolder(HasTraits):
 
@@ -122,15 +106,14 @@ if sys.version_info < (3,):
         foo_adapts_to = AdaptsTo(IFoo)
         foo_plus_adapts_to = AdaptsTo(IFooPlus)
 
-
     class SampleListAdapter(Adapter):
         adapts(Sample, IList)
 
         def get_list(self):
             obj = self.adaptee
-            return [getattr(obj, name)
-                    for name in obj.trait_names(sample=True)]
-
+            return [
+                getattr(obj, name) for name in obj.trait_names(sample=True)
+            ]
 
     class ListAverageAdapter(Adapter):
 
@@ -146,7 +129,6 @@ if sys.version_info < (3,):
                 average += item
             return (average / len(value))
 
-
     class SampleFooAdapter(HasTraits):
 
         adapts(Sample, IFoo)
@@ -160,9 +142,7 @@ if sys.version_info < (3,):
             object = self.object
             return (object.s1 + object.s2 + object.s3)
 
-
     class FooPlusAdapter(object):
-
         def __init__(self, obj):
             self.obj = obj
 
@@ -175,7 +155,7 @@ if sys.version_info < (3,):
     adapts(FooPlusAdapter, IFoo, IFooPlus)
 
 
-@unittest.skipUnless(sys.version_info < (3,),
+@unittest.skipUnless(sys.version_info < (3, ),
                      "The 'adapts' and 'implements' class advisors "
                      "are not supported in Python 3.")
 class InterfacesTest(unittest.TestCase):
@@ -202,6 +182,7 @@ class InterfacesTest(unittest.TestCase):
     def test_implements_extended(self):
         """ Ensure that subclasses of Interfaces imply the superinterface.
         """
+
         class Test(HasTraits):
             implements(IFooPlus)
 
@@ -319,6 +300,7 @@ class InterfacesTest(unittest.TestCase):
     def implements_bad(self):
         class Test(HasTraits):
             implements(Sample)
+
 
 # Run the unit tests (if invoked from the command line):
 if __name__ == '__main__':

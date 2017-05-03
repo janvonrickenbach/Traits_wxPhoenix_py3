@@ -157,10 +157,11 @@ class DiceRoll(TraitType):
     # dice roll:
     def validate(self, object, name, value):
         if (isinstance(value, tuple) and (len(value) == 2) and
-                (1 <= value[0] <= 6) and (1 <= value[1] <= 6)):
+            (1 <= value[0] <= 6) and (1 <= value[1] <= 6)):
             return value
 
         self.error(object, name, value)
+
 
 #--[RandInt Property]----------------------------------------------------------
 
@@ -184,7 +185,8 @@ class RandInt(TraitType):
     # Define the type's type information:
     def info(self):
         return ('a random integer in the range from %d to %d' %
-               (self.low, self.high))
+                (self.low, self.high))
+
 
 #--[Craps Class]---------------------------------------------------------------
 
@@ -194,6 +196,7 @@ class Craps(HasTraits):
 
     rolls = List(DiceRoll)
     die = RandInt(1, 6)
+
 
 #--[Example*]------------------------------------------------------------------
 

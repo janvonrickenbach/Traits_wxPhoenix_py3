@@ -11,5 +11,4 @@ from custom_traithandler import TraitOddInteger
 #--[Code]----------------------------------------------------------------------
 class AnOddClass(HasTraits):
     oddball = Trait(1, TraitOddInteger())
-    very_odd = Trait(-1, TraitOddInteger(),
-                     TraitRange(-10, -1))
+    very_odd = Trait(-1, TraitOddInteger(), TraitRange(-10, -1))

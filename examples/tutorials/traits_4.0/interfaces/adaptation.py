@@ -233,8 +233,7 @@ from traits.api import *
 
 #--[IName Interface]-----------------------------------------------------------
 # Define the 'IName' interface:
-class IName (Interface):
-
+class IName(Interface):
     def get_name(self):
         """ Returns the name of an object. """
 

@@ -12,8 +12,6 @@
 #
 #------------------------------------------------------------------------------
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Trait, TraitError, TraitHandler
@@ -60,7 +58,6 @@ class Bar(HasTraits):
 
 
 class StrHandlerCase(unittest.TestCase):
-
     def test_validator_function(self):
         f = Foo()
         self.assertEqual(f.s, '')
@@ -84,5 +81,6 @@ class StrHandlerCase(unittest.TestCase):
         self.assertEqual(b.s, 'ok')
 
         return
+
 
 ### EOF

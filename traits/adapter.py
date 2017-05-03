@@ -14,27 +14,20 @@
 #  Date:   07/18/2007
 #
 #-------------------------------------------------------------------------------
-
 """ An extension to PyProtocols to simplify the declaration of adapters.
 """
-
-
-
-
 
 import traits.adaptation.adapter
 from .util.deprecated import deprecated
 
 
 class Adapter(traits.adaptation.adapter.Adapter):
-
     @deprecated("use 'Adapter' in 'traits.api' instead")
     def __init__(self, adaptee, **traits):
         super(Adapter, self).__init__(adaptee, **traits)
 
 
 adapts = deprecated("use 'adapts' in 'traits.api' instead")(
-    traits.adaptation.adapter.adapts
-)
+    traits.adaptation.adapter.adapts)
 
 #### EOF ######################################################################

@@ -17,7 +17,6 @@ class E(HasTraits):
 
 
 class TestPropertyDelete(unittest.TestCase):
-
     def test_property_delete(self):
         e = E()
         with self.assertRaises(TraitError):

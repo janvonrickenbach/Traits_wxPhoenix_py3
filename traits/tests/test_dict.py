@@ -7,8 +7,6 @@
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 """ Test cases for dictionary (Dict) traits. """
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..trait_types import Dict, Event, Str, TraitDictObject
@@ -55,7 +53,6 @@ class TestDict(unittest.TestCase):
     """ Test cases for dictionary (Dict) traits. """
 
     def test_modified_event(self):
-
         class Foo(HasTraits):
             name = Str
             modified = Event

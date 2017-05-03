@@ -6,8 +6,6 @@
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Instance, Str
@@ -81,7 +79,6 @@ class TestCopyTraitsSetup(CopyTraitsBase):
 
 
 class CopyTraits(object):
-
     def test_baz2_s(self):
         self.assertEqual(self.baz2.s, 'baz')
         self.assertEqual(self.baz2.s, self.baz.s)
@@ -163,8 +160,7 @@ class CopyTraitsSharedCopyNone(object):
         self.assertIsNot(self.baz2.shared, self.baz2.bar.foo.shared)
 
 
-class TestCopyTraitsSharedCopyNone(CopyTraits,
-                                   CopyTraitsSharedCopyNone):
+class TestCopyTraitsSharedCopyNone(CopyTraits, CopyTraitsSharedCopyNone):
     __test__ = False
 
     def setUp(self):
@@ -180,7 +176,7 @@ class TestCopyTraitsCopyNotSpecified(CopyTraitsBase,
     __test__ = True
 
     def setUp(self):
-#        super(TestCopyTraitsCopyNotSpecified,self).setUp()
+        #        super(TestCopyTraitsCopyNotSpecified,self).setUp()
         CopyTraitsBase.setUp(self)
         TestCopyTraitsSharedCopyNone.setUp(self)
         self.baz2.copy_traits(self.baz)
@@ -191,7 +187,7 @@ class TestCopyTraitsCopyShallow(CopyTraitsBase, TestCopyTraitsSharedCopyNone):
     __test__ = True
 
     def setUp(self):
-#        super(TestCopyTraitsCopyShallow,self).setUp()
+        #        super(TestCopyTraitsCopyShallow,self).setUp()
         CopyTraitsBase.setUp(self)
         TestCopyTraitsSharedCopyNone.setUp(self)
         self.baz2.copy_traits(self.baz, copy='shallow')
@@ -202,7 +198,7 @@ class TestCopyTraitsCopyDeep(CopyTraitsBase, TestCopyTraitsSharedCopyNone):
     __test__ = True
 
     def setUp(self):
-#        super(TestCopyTraitsCopyDeep,self).setUp()
+        #        super(TestCopyTraitsCopyDeep,self).setUp()
         CopyTraitsBase.setUp(self)
         TestCopyTraitsSharedCopyNone.setUp(self)
         self.baz2.copy_traits(self.baz, copy='deep')
@@ -235,8 +231,7 @@ class CopyTraitsSharedCopyRef(object):
         self.assertIs(self.baz2.shared, self.baz2.bar.foo.shared)
 
 
-class TestCopyTraitsSharedCopyRef(CopyTraits,
-                                  CopyTraitsSharedCopyRef):
+class TestCopyTraitsSharedCopyRef(CopyTraits, CopyTraitsSharedCopyRef):
     __test__ = False
 
     def setUp(self):
@@ -279,4 +274,6 @@ class TestCopyTraitsCopyDeepSharedRef(CopyTraitsBase,
         TestCopyTraitsSharedCopyRef.setUp(self)
         self.baz2.copy_traits(self.baz, copy='deep')
         return
+
+
 ### EOF

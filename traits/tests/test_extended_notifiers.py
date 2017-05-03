@@ -15,24 +15,23 @@ from traits import trait_notifiers
 
 
 class ExtendedNotifiers(HasTraits):
-
     def __init__(self, **traits):
         # Set up the 'extended' internal notifiers (see module docstring)
 
-        ok_listeners = [self.method_listener_0,
-                        self.method_listener_1,
-                        self.method_listener_2,
-                        self.method_listener_3,
-                        self.method_listener_4]
+        ok_listeners = [
+            self.method_listener_0, self.method_listener_1,
+            self.method_listener_2, self.method_listener_3,
+            self.method_listener_4
+        ]
 
         for listener in ok_listeners:
             self._on_trait_change(listener, 'ok', dispatch='extended')
 
-        fail_listeners = [self.failing_method_listener_0,
-                          self.failing_method_listener_1,
-                          self.failing_method_listener_2,
-                          self.failing_method_listener_3,
-                          self.failing_method_listener_4]
+        fail_listeners = [
+            self.failing_method_listener_0, self.failing_method_listener_1,
+            self.failing_method_listener_2, self.failing_method_listener_3,
+            self.failing_method_listener_4
+        ]
 
         for listener in fail_listeners:
             self._on_trait_change(listener, 'fail', dispatch='extended')
@@ -97,11 +96,13 @@ calls_0 = []
 def function_listener_0():
     calls_0.append(True)
 
+
 calls_1 = []
 
 
 def function_listener_1(new):
     calls_1.append(new)
+
 
 calls_2 = []
 
@@ -109,11 +110,13 @@ calls_2 = []
 def function_listener_2(name, new):
     calls_2.append((name, new))
 
+
 calls_3 = []
 
 
 def function_listener_3(obj, name, new):
     calls_3.append((obj, name, new))
+
 
 calls_4 = []
 
@@ -193,7 +196,7 @@ class TestExtendedNotifiers(unittest.TestCase):
         obj.fail = 1
 
         _py2to3.assertCountEqual(self, [0, 1, 2, 3, 4], obj.exceptions_from)
-        self.assertEqual([(obj, 'fail', 0, 1)]*5, self.exceptions)
+        self.assertEqual([(obj, 'fail', 0, 1)] * 5, self.exceptions)
 
     def test_extended_notifiers_functions(self):
         obj = ExtendedNotifiers()
@@ -222,16 +225,16 @@ class TestExtendedNotifiers(unittest.TestCase):
     def test_extended_notifiers_functions_failing(self):
         obj = ExtendedNotifiers()
 
-        obj._on_trait_change(failing_function_listener_0, 'fail',
-                             dispatch='extended')
-        obj._on_trait_change(failing_function_listener_1, 'fail',
-                             dispatch='extended')
-        obj._on_trait_change(failing_function_listener_2, 'fail',
-                             dispatch='extended')
-        obj._on_trait_change(failing_function_listener_3, 'fail',
-                             dispatch='extended')
-        obj._on_trait_change(failing_function_listener_4, 'fail',
-                             dispatch='extended')
+        obj._on_trait_change(
+            failing_function_listener_0, 'fail', dispatch='extended')
+        obj._on_trait_change(
+            failing_function_listener_1, 'fail', dispatch='extended')
+        obj._on_trait_change(
+            failing_function_listener_2, 'fail', dispatch='extended')
+        obj._on_trait_change(
+            failing_function_listener_3, 'fail', dispatch='extended')
+        obj._on_trait_change(
+            failing_function_listener_4, 'fail', dispatch='extended')
 
         obj.fail = 1
 

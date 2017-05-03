@@ -16,5 +16,6 @@ class SimpleEmployee(HasTraits):
     employee_number = Str
     salary = Int
 
+
 sam = SimpleEmployee()
 sam.configure_traits()

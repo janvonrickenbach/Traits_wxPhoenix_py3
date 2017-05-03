@@ -28,7 +28,6 @@ except Exception:
 else:
     QT_FOUND = True
 
-
 import _thread
 from threading import Thread
 import time
@@ -76,8 +75,8 @@ class BaseTestUINotifiers(object):
 
     #### Tests ################################################################
 
-    @unittest.skipIf(
-        not QT_FOUND, "Qt event loop not found, UI dispatch not possible.")
+    @unittest.skipIf(not QT_FOUND,
+                     "Qt event loop not found, UI dispatch not possible.")
     def test_notification_from_main_thread(self):
 
         obj = self.obj_factory()
@@ -94,8 +93,8 @@ class BaseTestUINotifiers(object):
         ui_thread = trait_notifiers.ui_thread
         self.assertEqual(thread_id, ui_thread)
 
-    @unittest.skipIf(
-        not QT_FOUND, "Qt event loop not found, UI dispatch not possible.")
+    @unittest.skipIf(not QT_FOUND,
+                     "Qt event loop not found, UI dispatch not possible.")
     def test_notification_from_separate_thread(self):
 
         obj = self.obj_factory()
@@ -104,7 +103,7 @@ class BaseTestUINotifiers(object):
         def set_foo_to_3(obj):
             obj.foo = 3
 
-        Thread(target=set_foo_to_3, args=(obj,)).start()
+        Thread(target=set_foo_to_3, args=(obj, )).start()
 
         # Wait for a while to make sure the function has finished.
         time.sleep(0.1)

@@ -3,19 +3,17 @@
 
 # compound.py -- Example of multiple criteria in a trait definition
 
-
 #--[Imports]-------------------------------------------------------------------
 from traits.api import HasTraits, Range, Trait, TraitError
-
 
 #--[Code]----------------------------------------------------------------------
 # Shows the definition of a compound trait.
 
+
 class Die(HasTraits):
 
     # Define a compound trait definition:
-    value = Trait(1, Range(1, 6),
-                  'one', 'two', 'three', 'four', 'five', 'six')
+    value = Trait(1, Range(1, 6), 'one', 'two', 'three', 'four', 'five', 'six')
 
 
 #--[Example*]------------------------------------------------------------------

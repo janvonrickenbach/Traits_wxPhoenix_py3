@@ -25,7 +25,7 @@ def import_symbol(symbol_path):
         symbol = eval(symbol_name, module.__dict__)
 
     else:
-        components  = symbol_path.split('.')
+        components = symbol_path.split('.')
         module_name = '.'.join(components[:-1])
         symbol_name = components[-1]
 
@@ -33,5 +33,6 @@ def import_symbol(symbol_path):
         symbol = getattr(module, symbol_name)
 
     return symbol
+
 
 #### EOF ######################################################################

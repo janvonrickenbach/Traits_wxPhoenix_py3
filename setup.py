@@ -30,8 +30,9 @@ def git_version():
         env['LANG'] = 'C'
         env['LC_ALL'] = 'C'
         out = subprocess.Popen(
-            cmd, stdout=subprocess.PIPE, env=env,
-        ).communicate()[0]
+            cmd,
+            stdout=subprocess.PIPE,
+            env=env, ).communicate()[0]
         return out
 
     try:
@@ -90,10 +91,12 @@ if not is_released:
         fullversion += '.dev{0}'.format(dev_num)
 
     with open(filename, "wt") as fp:
-        fp.write(template.format(version=VERSION,
-                                 full_version=fullversion,
-                                 git_revision=git_rev,
-                                 is_released=IS_RELEASED))
+        fp.write(
+            template.format(
+                version=VERSION,
+                full_version=fullversion,
+                git_revision=git_rev,
+                is_released=IS_RELEASED))
 
 
 def check_python_version():
@@ -102,17 +105,12 @@ def check_python_version():
 
     Raise SystemExit for unsupported Python versions.
     """
-    supported_python_version = (
-        (2, 7) <= sys.version_info < (3,)
-        or (3, 4) <= sys.version_info
-    )
+    supported_python_version = ((2, 7) <= sys.version_info < (3, ) or
+                                (3, 4) <= sys.version_info)
     if not supported_python_version:
-        sys.exit(
-            (
-                "Python version {0} is not supported by Traits. "
-                "Traits requires Python >= 2.7 or Python >= 3.4."
-            ).format(sys.version_info)
-        )
+        sys.exit(("Python version {0} is not supported by Traits. "
+                  "Traits requires Python >= 2.7 or Python >= 3.4.").format(
+                      sys.version_info))
 
 
 if __name__ == "__main__":
@@ -123,13 +121,12 @@ if __name__ == "__main__":
     ctraits = Extension(
         'traits.ctraits',
         sources=['traits/ctraits.c'],
-        extra_compile_args=['-DNDEBUG=1', '-O3'],
-        )
+        extra_compile_args=['-DNDEBUG=1', '-O3'], )
 
     def additional_commands():
         # Pygments 2 isn't supported on Python 3 versions earlier than 3.3, so
         # don't make the documentation command available there.
-        if (3,) <= sys.version_info < (3, 3):
+        if (3, ) <= sys.version_info < (3, 3):
             return {}
 
         try:
@@ -145,7 +142,9 @@ if __name__ == "__main__":
         url='http://docs.enthought.com/traits',
         author='David C. Morrill, et. al.',
         author_email='info@enthought.com',
-        classifiers=[c.strip() for c in """\
+        classifiers=[
+            c.strip()
+            for c in """\
             Development Status :: 5 - Production/Stable
             Intended Audience :: Developers
             Intended Audience :: Science/Research
@@ -167,7 +166,8 @@ if __name__ == "__main__":
             Topic :: Scientific/Engineering
             Topic :: Software Development
             Topic :: Software Development :: Libraries
-            """.splitlines() if len(c.strip()) > 0],
+            """.splitlines() if len(c.strip()) > 0
+        ],
         description='explicitly typed attributes for Python',
         long_description=open('README.rst').read(),
         download_url='https://github.com/enthought/traits',
@@ -183,5 +183,4 @@ if __name__ == "__main__":
         # traits_listener.ListenerItem has a trait *next* which gets
         # wrongly renamed
         use_2to3_exclude_fixers=['lib2to3.fixes.fix_next'],
-        cmdclass=additional_commands(),
-    )
+        cmdclass=additional_commands(), )

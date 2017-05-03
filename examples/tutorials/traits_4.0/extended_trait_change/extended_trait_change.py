@@ -292,24 +292,21 @@ bob = Employee(name='Bob', sick_days=1)
 alphonse = Employee(name='Alphonse', sick_days=5)
 
 # Create some sample departments:
-accounting = Department(name='accounting',
-                        employees=[millie, ralph, tom])
+accounting = Department(name='accounting', employees=[millie, ralph, tom])
 
-sales = Department(name='Sales',
-                   employees=[slick, marcelle, reggie])
+sales = Department(name='Sales', employees=[slick, marcelle, reggie])
 
-development = Department(name='Development',
-                         employees=[dave, bob, alphonse])
+development = Department(name='Development', employees=[dave, bob, alphonse])
 
 # Create a sample corporation:
-acme = Corporation(name='Acme, Inc.',
-                   departments=[accounting, sales, development])
+acme = Corporation(
+    name='Acme, Inc.', departments=[accounting, sales, development])
 
 
 # Define a corporate 'whistle blower' function:
 def sick_again(object, name, old, new):
-    print '%s just took sick day number %d for this year!' % (
-          object.name, new)
+    print '%s just took sick day number %d for this year!' % (object.name, new)
+
 
 # Set up the function as a listener:
 acme.on_trait_change(sick_again, 'departments.employees.sick_days')

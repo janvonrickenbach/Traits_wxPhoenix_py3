@@ -1,7 +1,6 @@
 #  Copyright (c) 2007, Enthought, Inc.
 #  License: BSD Style.
 
-
 # all_traits_features.py --- Shows primary features of the Traits
 #                            package
 
@@ -30,6 +29,7 @@ class Child(HasTraits):
     # NOTIFICATION: This method is called when 'age' changes:
     def _age_changed(self, old, new):
         print 'Age changed from %s to %s ' % (old, new)
+
 
 #--[Example*]------------------------------------------------------------------
 

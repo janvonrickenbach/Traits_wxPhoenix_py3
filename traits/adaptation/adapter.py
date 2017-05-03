@@ -18,7 +18,6 @@ constructor takes the object to be adapted as the first and only
 
 """
 
-
 from traits.has_traits import HasTraits
 from traits.trait_types import Any
 from traits.util.deprecated import deprecated
@@ -89,7 +88,8 @@ def adapts(from_, to, extra=None, factory=None, cached=False, when=''):
     else:
         adapter = None
 
-    @deprecated("use the 'register_factory' function from 'traits.api' instead")
+    @deprecated(
+        "use the 'register_factory' function from 'traits.api' instead")
     def callback(klass):
         """ Called when the class has been created. """
 
@@ -120,6 +120,7 @@ def adapts(from_, to, extra=None, factory=None, cached=False, when=''):
             adapter_factory = klass
 
             if when != '':
+
                 def _conditional_factory(adaptee, *args, **kw):
                     namespace = {'adaptee': adaptee}
 
@@ -155,5 +156,6 @@ def adapts(from_, to, extra=None, factory=None, cached=False, when=''):
 
     else:
         addClassAdvisor(callback)
+
 
 #### EOF ######################################################################

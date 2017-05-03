@@ -46,8 +46,7 @@ class TestChangeEventTracers(unittest.TestCase):
         self.post_change_events = []
         self.exceptions = []
         trait_notifiers.push_exception_handler(
-            lambda obj, name, old, new: None
-        )
+            lambda obj, name, old, new: None)
 
     def tearDown(self):
         trait_notifiers.pop_exception_handler()
@@ -70,6 +69,7 @@ class TestChangeEventTracers(unittest.TestCase):
 
         def _on_foo_baz_changed(obj, name, old, new):
             pass
+
         foo.on_trait_change(_on_foo_baz_changed, 'baz')
 
         # Set the event tracer and trigger a cascade of change events.
@@ -113,6 +113,7 @@ class TestChangeEventTracers(unittest.TestCase):
 
         def _on_foo_fuz_changed(obj, name, old, new):
             raise FuzException('function')
+
         foo.on_trait_change(_on_foo_fuz_changed, 'fuz')
 
         # Set the event tracer and trigger a cascade of change events.
@@ -143,9 +144,9 @@ class TestChangeEventTracers(unittest.TestCase):
 
         self.assertEqual(self.exceptions[:2], [None, None])
         self.assertIsInstance(self.exceptions[2], FuzException)
-        self.assertEqual(self.exceptions[2].args, ('method',))
+        self.assertEqual(self.exceptions[2].args, ('method', ))
         self.assertIsInstance(self.exceptions[3], FuzException)
-        self.assertEqual(self.exceptions[3].args, ('function',))
+        self.assertEqual(self.exceptions[3].args, ('function', ))
 
 
 if __name__ == '__main__':

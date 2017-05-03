@@ -9,8 +9,6 @@
 # Thanks for using Enthought open source!
 #------------------------------------------------------------------------------
 
-
-
 from traits.testing.unittest_tools import unittest
 
 try:
@@ -21,7 +19,6 @@ else:
     numpy_available = True
 
 from ..api import Array, Bool, HasTraits
-
 
 if numpy_available:
     # Use of `Array` requires NumPy to be installed.
@@ -44,7 +41,7 @@ class ArrayTestCase(unittest.TestCase):
         """
 
         f = Foo()
-        f.a = numpy.zeros((2,), float)
+        f.a = numpy.zeros((2, ), float)
         f.event_fired = False
 
         # Change the array.
@@ -54,5 +51,6 @@ class ArrayTestCase(unittest.TestCase):
         self.assertEqual(f.event_fired, True)
 
         return
+
 
 #### EOF ######################################################################

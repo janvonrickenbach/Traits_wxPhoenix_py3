@@ -3,12 +3,10 @@ functions correctly.
 
 """
 
-
-
 from traits.testing.unittest_tools import unittest, UnittestTools
 
-from ..api import (
-    HasTraits, Int, List, push_exception_handler, pop_exception_handler)
+from ..api import (HasTraits, Int, List, push_exception_handler,
+                   pop_exception_handler)
 
 
 class A(HasTraits):
@@ -28,7 +26,6 @@ class B(HasTraits):
 
 
 class TestSyncTraits(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         push_exception_handler(lambda *args: None, reraise_exceptions=True)
 

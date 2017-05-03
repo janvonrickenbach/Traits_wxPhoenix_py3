@@ -12,8 +12,6 @@
 # Description: <Traits component>
 #------------------------------------------------------------------------------
 
-
-
 from ..api import HasTraits, Property
 
 
@@ -33,20 +31,17 @@ class Test(HasTraits):
     __traits__['value'] = Property(__value_get, __value_set)
 
 
-class Test_1 (Test):
-
+class Test_1(Test):
     def value_changed(self, value):
         print('value_changed:', value)
 
 
-class Test_2 (Test):
-
+class Test_2(Test):
     def anytrait_changed(self, name, value):
         print('anytrait_changed for %s: %s' % (name, value))
 
 
-class Test_3 (Test_2):
-
+class Test_3(Test_2):
     def value_changed(self, value):
         print('value_changed:', value)
 

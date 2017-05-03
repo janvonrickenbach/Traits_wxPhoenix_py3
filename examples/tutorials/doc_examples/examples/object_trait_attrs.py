@@ -9,10 +9,14 @@ from traits.api import HasTraits, Range
 
 #--[Code]----------------------------------------------------------------------
 class GUISlider(HasTraits):
-
-    def __init__(self, eval=None, label='Value',
-                 trait=None, min=0.0, max=1.0,
-                 initial=None, **traits):
+    def __init__(self,
+                 eval=None,
+                 label='Value',
+                 trait=None,
+                 min=0.0,
+                 max=1.0,
+                 initial=None,
+                 **traits):
         HasTraits.__init__(self, **traits)
         if trait is None:
             if min > max:

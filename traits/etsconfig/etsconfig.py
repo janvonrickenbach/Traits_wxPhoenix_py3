@@ -1,6 +1,5 @@
 """ Enthought Tool Suite configuration information. """
 
-
 # Standard library imports.
 import sys
 import os
@@ -27,8 +26,8 @@ class ETSToolkitError(RuntimeError):
         self.message = message
         if message:
             if toolkit:
-                args = (toolkit,) + args
-            args = (message,) + args
+                args = (toolkit, ) + args
+            args = (message, ) + args
         self.args = args
 
 
@@ -59,13 +58,12 @@ class ETSConfig(object):
         # Shadow attributes for properties.
         self._application_data = None
         self._application_home = None
-        self._company          = None
-        self._toolkit          = None
-        self._kiva_backend     = None
-        self._user_data        = None
+        self._company = None
+        self._toolkit = None
+        self._kiva_backend = None
+        self._user_data = None
 
         return
-
 
     ###########################################################################
     # 'ETSConfig' interface.
@@ -99,12 +97,10 @@ class ETSConfig(object):
 
         return self._application_data
 
-
     def _get_application_data(self):
         """ Property getter, see get_application_data's docstring.
         """
         return self.get_application_data(create=True)
-
 
     def _set_application_data(self, application_data):
         """
@@ -153,21 +149,17 @@ class ETSConfig(object):
        """
         if self._application_home is None:
             self._application_home = path.join(
-                                self.get_application_data(create=create),
-                                self._get_application_dirname())
+                self.get_application_data(create=create),
+                self._get_application_dirname())
 
         return self._application_home
 
-
-
     application_data = property(_get_application_data, _set_application_data)
-
 
     def _get_application_home(self):
         """ Property getter, see get_application_home's docstring.
         """
         return self.get_application_home(create=True)
-
 
     def _set_application_home(self, application_home):
         """
@@ -179,9 +171,7 @@ class ETSConfig(object):
 
         return
 
-
     application_home = property(_get_application_home, _set_application_home)
-
 
     def _get_company(self):
         """
@@ -194,7 +184,6 @@ class ETSConfig(object):
 
         return self._company
 
-
     def _set_company(self, company):
         """
         Property setter for the company name.
@@ -205,9 +194,7 @@ class ETSConfig(object):
 
         return
 
-
     company = property(_get_company, _set_company)
-
 
     @contextmanager
     def provisional_toolkit(self, toolkit):
@@ -241,7 +228,6 @@ class ETSConfig(object):
             self._toolkit = ''
             raise
 
-
     def _get_toolkit(self):
         """
         Property getter for the GUI toolkit.  The value returned is, in order
@@ -254,7 +240,6 @@ class ETSConfig(object):
             self._toolkit = self._initialize_toolkit()
 
         return self._toolkit.split('.')[0]
-
 
     def _set_toolkit(self, toolkit):
         """
@@ -273,7 +258,6 @@ class ETSConfig(object):
 
         return
 
-
     toolkit = property(_get_toolkit, _set_toolkit)
 
     def _get_enable_toolkit(self):
@@ -289,7 +273,6 @@ class ETSConfig(object):
 
         return self.toolkit
 
-
     def _set_enable_toolkit(self, toolkit):
         """
         Deprecated.
@@ -304,7 +287,6 @@ class ETSConfig(object):
 
         return
 
-
     enable_toolkit = property(_get_enable_toolkit, _set_enable_toolkit)
 
     def _get_kiva_backend(self):
@@ -316,7 +298,9 @@ class ETSConfig(object):
         value will be a reasonable default for the given enable backend.
         """
         if self._toolkit is None:
-            raise AttributeError("The kiva_backend attribute is dependent on toolkit, which has not been set.")
+            raise AttributeError(
+                "The kiva_backend attribute is dependent on toolkit, which has not been set."
+            )
 
         if self._kiva_backend is None:
             try:
@@ -352,7 +336,6 @@ class ETSConfig(object):
 
         return self._user_data
 
-
     def _set_user_data(self, user_data):
         """
         Property setter.
@@ -363,9 +346,7 @@ class ETSConfig(object):
 
         return
 
-
     user_data = property(_get_user_data, _set_user_data)
-
 
     #### private methods #####################################################
 
@@ -401,7 +382,6 @@ class ETSConfig(object):
 
         return dirname
 
-
     def _initialize_application_data(self, create=True):
         """
         Initializes the (default) application data directory.
@@ -410,11 +390,11 @@ class ETSConfig(object):
 
         if sys.platform == 'win32':
             environment_variable = 'APPDATA'
-            directory_name       = self.company
+            directory_name = self.company
 
         else:
             environment_variable = 'HOME'
-            directory_name       = '.' + self.company.lower()
+            directory_name = '.' + self.company.lower()
 
         # Lookup the environment variable.
         parent_directory = os.environ.get(environment_variable, None)
@@ -435,15 +415,14 @@ class ETSConfig(object):
             # a directory!
             if os.path.exists(application_data):
                 if not os.path.isdir(application_data):
-                    raise ValueError('File "%s" already exists'
-                                                    % application_data)
+                    raise ValueError('File "%s" already exists' %
+                                     application_data)
 
             # Otherwise, create the directory.
             else:
                 os.makedirs(application_data)
 
         return application_data
-
 
     def _initialize_company(self):
         """
@@ -452,7 +431,6 @@ class ETSConfig(object):
         """
 
         return 'Enthought'
-
 
     def _initialize_toolkit(self):
         """
@@ -466,7 +444,6 @@ class ETSConfig(object):
 
         return toolkit
 
-
     def _initialize_user_data(self):
         """
         Initializes the (default) user data directory.
@@ -476,7 +453,6 @@ class ETSConfig(object):
         # We check what the os.path.expanduser returns
         parent_directory = os.path.expanduser('~')
         directory_name = self.company
-
 
         if sys.platform == 'win32':
             try:
@@ -519,11 +495,9 @@ class ETSConfig(object):
         return usr_dir
 
 
-
 # We very purposefully only have one object and do not export the class. We
 # could have just made everything class methods, but that always seems a bit
 # gorpy, especially with properties etc.
 ETSConfig = ETSConfig()
-
 
 #### EOF ######################################################################

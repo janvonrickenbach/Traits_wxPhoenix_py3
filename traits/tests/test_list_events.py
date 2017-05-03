@@ -16,7 +16,6 @@ Tests for List items_changed events.
 
 """
 
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Int, List

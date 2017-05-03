@@ -19,7 +19,7 @@ class AnotherPersonAdapter(object):
 
     # Implement the 'IName' interface on behalf of its client:
     def get_name(self):
-        return ('%s %s' % (self.person.first_name,
-                           self.person.last_name))
+        return ('%s %s' % (self.person.first_name, self.person.last_name))
+
 
 adapts(AnotherPersonAdapter, Person, IName)

@@ -1,6 +1,5 @@
 """ Tests the 'ETSConfig' configuration object. """
 
-
 # Standard library imports.
 import contextlib
 import os
@@ -63,6 +62,7 @@ def temporary_home_directory():
         with restore_mapping_entry(os.environ, home_var):
             os.environ[home_var] = temp_home
             yield
+
 
 @contextlib.contextmanager
 def mock_sys_argv(args):
@@ -378,6 +378,5 @@ if __name__ == '__main__':
     suite.addTest(ETSConfigTestCase('_test_default_application_home'))
 
     unittest.TextTestRunner(verbosity=2).run(suite)
-
 
 #### EOF ######################################################################

@@ -13,6 +13,7 @@
 #------------------------------------------------------------------------------
 import os
 
+
 def get_home_directory():
     """ Determine the user's home directory."""
 

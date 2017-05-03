@@ -25,5 +25,4 @@ class PersonINameAdapter(HasTraits):
 
     # Implement the 'IName' interface on behalf of its client:
     def get_name(self):
-        return ('%s %s' % (self.client.first_name,
-                self.client.last_name))
+        return ('%s %s' % (self.client.first_name, self.client.last_name))

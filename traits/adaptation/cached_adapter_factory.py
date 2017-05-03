@@ -12,7 +12,6 @@
 #------------------------------------------------------------------------------
 """ An adapter factory that caches adapters per instance. """
 
-
 import weakref
 
 from traits.api import Any, Bool, HasTraits, Property
@@ -61,12 +60,14 @@ class CachedAdapterFactory(HasTraits):
     #: This method is mostly here to help testing - the framework does not
     #: rely on it for any other purpose.
     is_empty = Property(Bool)
+
     def _get_is_empty(self):
         return len(self._adapter_cache) == 0
 
     #### Private protocol ######################################################
 
     _adapter_cache = Any
+
     def __adapter_cache_default(self):
         return weakref.WeakKeyDictionary()
 
@@ -91,5 +92,6 @@ class CachedAdapterFactory(HasTraits):
         self._factory = factory
 
         return
+
 
 #### EOF #######################################################################

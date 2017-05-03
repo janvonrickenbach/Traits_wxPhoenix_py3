@@ -12,8 +12,6 @@
 #
 #------------------------------------------------------------------------------
 
-
-
 import unittest
 
 from ..trait_types import Int
@@ -47,9 +45,7 @@ class TestTraitDefaultInitializer(unittest.TestCase):
         self.assertEqual(foo.bar, 4)
 
     def test_error_propagation_in_default_methods(self):
-
         class FooException(Foo):
-
             def _bar_default(self):
                 1 / 0
 
@@ -57,7 +53,6 @@ class TestTraitDefaultInitializer(unittest.TestCase):
         self.assertRaises(ZeroDivisionError, lambda: foo.bar)
 
         class FooKeyError(Foo):
-
             def _bar_default(self):
                 raise KeyError()
 

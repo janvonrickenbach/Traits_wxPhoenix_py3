@@ -8,6 +8,7 @@
 from .function_doc import FunctionDoc
 from .class_doc import ClassDoc
 
+
 #------------------------------------------------------------------------------
 # Extension definition
 #------------------------------------------------------------------------------
@@ -21,6 +22,7 @@ def refactor_docstring(app, what, name, obj, options, lines):
 
     if refactor is not None:
         refactor.parse()
+
 
 def setup(app):
     app.setup_extension('sphinx.ext.autodoc')

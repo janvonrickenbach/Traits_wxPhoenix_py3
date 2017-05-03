@@ -17,8 +17,6 @@
 #
 #  Thanks for using Enthought open source!
 
-
-
 import contextlib
 import io
 import sys
@@ -51,6 +49,7 @@ class GenerateEvents(HasTraits):
     age = Int
     weight = Float
 
+
 events = {}  # dict of events
 
 
@@ -77,11 +76,12 @@ class ListenEvents(HasTraits):
 
 class GenerateFailingEvents(HasTraits):
     name = Str
+
     def _name_changed(self):
         raise RuntimeError
 
-class Test_Listeners(unittest.TestCase):
 
+class Test_Listeners(unittest.TestCase):
     def test(self):
         global events
 
@@ -100,7 +100,7 @@ class Test_Listeners(unittest.TestCase):
             '_age_changed': ('age', 22, 34),
             '_weight_changed': ('weight', 152.0, 178.0),
             '_name_changed': ('name', 'Joe', 'Mike'),
-            })
+        })
 
         # Adding alternate listener
         ge.add_trait_listener(le, 'alt')
@@ -112,7 +112,7 @@ class Test_Listeners(unittest.TestCase):
             '_weight_changed': ('weight', 178.0, 108.0),
             'alt_name_changed': ('name', 'Mike', 'Gertrude'),
             'alt_weight_changed': ('weight', 178.0, 108.0),
-            })
+        })
 
         # Removing default listener
         ge.remove_trait_listener(le)
@@ -121,7 +121,7 @@ class Test_Listeners(unittest.TestCase):
         self.assertEqual(events, {
             'alt_name_changed': ('name', 'Gertrude', 'Sally'),
             'alt_weight_changed': ('weight', 108.0, 118.0),
-            })
+        })
 
         # Removing alternate listener
         ge.remove_trait_listener(le, 'alt')
@@ -135,18 +135,18 @@ class Test_Listeners(unittest.TestCase):
         import traceback
 
         from traits import trait_notifiers
-        def _handle_exception(obj,name,old,new):
+
+        def _handle_exception(obj, name, old, new):
             self.assertIsNotNone(sys.exc_info()[0])
+
         ge = GenerateFailingEvents()
         try:
             trait_notifiers.push_exception_handler(
-                _handle_exception,
-                reraise_exceptions=False,
-                main=True
-            )
+                _handle_exception, reraise_exceptions=False, main=True)
             ge.trait_set(name='John Cleese')
         finally:
             trait_notifiers.pop_exception_handler()
+
 
 class A(HasTraits):
     exception = Any
@@ -170,8 +170,7 @@ class TestRaceCondition(unittest.TestCase):
         push_exception_handler(
             handler=lambda *args: None,
             reraise_exceptions=True,
-            main=True,
-            )
+            main=True, )
 
     def tearDown(self):
         pop_exception_handler()
@@ -227,8 +226,7 @@ class TestRaceCondition(unittest.TestCase):
             event_source = GenerateEvents(age=10)
             t = threading.Thread(
                 target=worker_thread,
-                args=(event_source, start_event),
-                )
+                args=(event_source, start_event), )
             t.start()
             main_thread(event_source, start_event)
             t.join()

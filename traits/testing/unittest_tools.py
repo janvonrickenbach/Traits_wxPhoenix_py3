@@ -19,7 +19,7 @@ import sys
 import warnings
 
 from traits.api import (Any, Event, HasStrictTraits, Instance, Int, List,
-        Property, Str)
+                        Property, Str)
 from traits.util.async_trait_wait import wait_for_condition
 
 # Compatibility layer for Python 2.6: try loading unittest2
@@ -159,15 +159,13 @@ class _TraitsChangeCollector(HasStrictTraits):
     def start_collecting(self):
         self.obj.on_trait_change(
             self._event_handler,
-            self.trait,
-        )
+            self.trait, )
 
     def stop_collecting(self):
         self.obj.on_trait_change(
             self._event_handler,
             self.trait,
-            remove=True,
-        )
+            remove=True, )
 
     def _event_handler(self, new):
         with self._lock:
@@ -190,8 +188,13 @@ class UnittestTools(object):
 
     """
 
-    def assertTraitChanges(self, obj, trait, count=None, callableObj=None,
-                           *args, **kwargs):
+    def assertTraitChanges(self,
+                           obj,
+                           trait,
+                           count=None,
+                           callableObj=None,
+                           *args,
+                           **kwargs):
         """ Assert an object trait changes a given number of times.
 
         Assert that the class trait changes exactly `count` times during
@@ -272,8 +275,12 @@ class UnittestTools(object):
         with context:
             callableObj(*args, **kwargs)
 
-    def assertTraitDoesNotChange(self, obj, trait, callableObj=None,
-                                 *args, **kwargs):
+    def assertTraitDoesNotChange(self,
+                                 obj,
+                                 trait,
+                                 callableObj=None,
+                                 *args,
+                                 **kwargs):
         """ Assert an object trait does not change.
 
         Assert that the class trait does not change during
@@ -318,7 +325,7 @@ class UnittestTools(object):
         return
 
     def assertMultiTraitChanges(self, objects, traits_modified,
-            traits_not_modified):
+                                traits_not_modified):
         """ Assert that traits on multiple objects do or do not change.
 
         This combines some of the functionality of `assertTraitChanges` and
@@ -390,19 +397,17 @@ class UnittestTools(object):
                     condition=lambda obj: obj.event_count >= count,
                     obj=collector,
                     trait='event_count_updated',
-                    timeout=timeout,
-                )
+                    timeout=timeout, )
             except RuntimeError:
                 actual_event_count = collector.event_count
                 msg = ("Expected {0} event on {1} to be fired at least {2} "
                        "times, but the event was only fired {3} times "
                        "before timeout ({4} seconds).").format(
-                    trait,
-                    obj,
-                    count,
-                    actual_event_count,
-                    timeout,
-                )
+                           trait,
+                           obj,
+                           count,
+                           actual_event_count,
+                           timeout, )
                 self.fail(msg)
 
         finally:
@@ -434,16 +439,15 @@ class UnittestTools(object):
                 condition=condition,
                 obj=obj,
                 trait=trait,
-                timeout=timeout,
-            )
+                timeout=timeout, )
         except RuntimeError:
             # Helpful to know whether we timed out because the
             # condition never became true, or because the expected
             # event was never issued.
             condition_at_timeout = condition(obj)
-            self.fail(
-                "Timed out waiting for condition. "
-                "At timeout, condition was {0}.".format(condition_at_timeout))
+            self.fail("Timed out waiting for condition. "
+                      "At timeout, condition was {0}.".format(
+                          condition_at_timeout))
 
     @contextlib.contextmanager
     def _catch_warnings(self):
@@ -470,8 +474,11 @@ class UnittestTools(object):
         """
         with self._catch_warnings() as w:
             yield w
-        self.assertGreater(len(w), 0, msg="Expected a DeprecationWarning, "
-                           "but none was issued")
+        self.assertGreater(
+            len(w),
+            0,
+            msg="Expected a DeprecationWarning, "
+            "but none was issued")
 
     @contextlib.contextmanager
     def assertNotDeprecated(self):
@@ -482,5 +489,8 @@ class UnittestTools(object):
         """
         with self._catch_warnings() as w:
             yield w
-        self.assertEqual(len(w), 0, msg="Expected no DeprecationWarning, "
-                         "but at least one was issued")
+        self.assertEqual(
+            len(w),
+            0,
+            msg="Expected no DeprecationWarning, "
+            "but at least one was issued")

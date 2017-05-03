@@ -12,8 +12,6 @@
 # Description: <Traits component>
 #------------------------------------------------------------------------------
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Category, Str
@@ -30,6 +28,8 @@ class BaseExtra(Category, Base):
 
 class BasePlus(Category, Base):
     p = Str("BasePlus p")
+
+
 #   z = Str("BasePlus z")    overrides not allowed.
 
 
@@ -71,7 +71,7 @@ class CategoryTestCase(unittest.TestCase):
         try:
             x = self.base.pp
             self.fail(msg="base.pp should have thrown AttributeError "
-                          "as Category subclassing is not supported.")
+                      "as Category subclassing is not supported.")
         except AttributeError:
             pass
 
@@ -86,17 +86,18 @@ class CategoryTestCase(unittest.TestCase):
         Seems like the declaration of the subclass (BasePlusPlus) should fail.
         """
         bpp = BasePlusPlus()
-        self.assertEqual(bpp.pp, "BasePlusPlus pp",
-                         msg="pp != 'BasePlusPlus pp'")
+        self.assertEqual(
+            bpp.pp, "BasePlusPlus pp", msg="pp != 'BasePlusPlus pp'")
 
         try:
             self.assertEqual(bpp.p, "BasePlus p", msg="p != 'BasePlus p'")
             self.fail(msg="bpp.p should have thrown SystemError as "
-                          "instantiating a subclass of a category is not "
-                          "supported.")
+                      "instantiating a subclass of a category is not "
+                      "supported.")
         except SystemError:
             pass
         return
+
 
 #
 # support running this test individually, from the command-line as a script

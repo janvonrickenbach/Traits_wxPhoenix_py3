@@ -1,12 +1,9 @@
 ##############################################################################
 # Copyright 2014 Enthought, Inc.
 ##############################################################################
-
 """ Test the persistence behavior of TraitListObjects, TraitDictObjects and
 TraitSetObjects.
 """
-
-
 
 import copy
 from pickle import dumps, loads

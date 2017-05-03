@@ -12,7 +12,6 @@
 #  fixme:
 #  - Get custom tree view images.
 #  - Write a program to create a directory structure from a lesson plan file.
-
 """ A framework for creating interactive Python tutorials.
 """
 
@@ -26,13 +25,12 @@ from string \
     import capwords
 
 from traits.api import (HasPrivateTraits, HasTraits, File, Directory, Instance,
-                        Int, Str, List, Bool, Dict, Property,
-                        Button, cached_property)
+                        Int, Str, List, Bool, Dict, Property, Button,
+                        cached_property)
 
 from traitsui.api import (View, VGroup, HGroup, VSplit, HSplit, Tabbed, Item,
-                          Heading, Handler, ListEditor, CodeEditor,
-                          HTMLEditor, TreeEditor, TitleEditor, ValueEditor,
-                          ShellEditor)
+                          Heading, Handler, ListEditor, CodeEditor, HTMLEditor,
+                          TreeEditor, TitleEditor, ValueEditor, ShellEditor)
 
 from traitsui.menu import NoButtons
 from traitsui.tree_node import TreeNode
@@ -63,8 +61,7 @@ list_editor = ListEditor(
     deletable=False,
     page_name='.title',
     export='DockWindowShell',
-    dock_style='fixed',
-    )
+    dock_style='fixed', )
 
 # The standard code snippet editor used:
 snippet_editor = ListEditor(
@@ -73,8 +70,7 @@ snippet_editor = ListEditor(
     page_name='.title',
     export='DockWindowShell',
     dock_style='tab',
-    selected='snippet',
-    )
+    selected='snippet', )
 
 # Regular expressions used to match section directories:
 dir_pat1 = re.compile(r'^(\d\d\d\d)_(.*)$')
@@ -82,7 +78,7 @@ dir_pat2 = re.compile(r'^(.*)_(\d+\.\d+)$')
 
 # Regular expression used to match section header in a Python source file:
 section_pat1 = re.compile(r'^#-*\[(.*)\]')  # Normal
-section_pat2 = re.compile(r'^#-*<(.*)>')    # Hidden
+section_pat2 = re.compile(r'^#-*<(.*)>')  # Hidden
 section_pat3 = re.compile(r'^#-*\((.*)\)')  # Description
 
 # Regular expression used to extract item titles from URLs:
@@ -237,10 +233,7 @@ class StdOut(object):
 #  'NoDemo' class:
 class NoDemo(HasPrivateTraits):
 
-    view = View(
-        Heading('No demo defined for this lab.'),
-        resizable=True
-        )
+    view = View(Heading('No demo defined for this lab.'), resizable=True)
 
 
 #  'DemoPane' class:
@@ -251,15 +244,14 @@ class DemoPane(HasPrivateTraits):
     demo = Instance(HasTraits, factory=NoDemo)
 
     view = View(
-        Item('demo',
-             id='demo',
-             show_label=False,
-             style='custom',
-             resizable=True
-             ),
+        Item(
+            'demo',
+            id='demo',
+            show_label=False,
+            style='custom',
+            resizable=True),
         id='enthought.tutor.demo',
-        resizable=True
-        )
+        resizable=True)
 
 
 #  'ATutorialItem' class:
@@ -286,8 +278,7 @@ class ADescriptionItem(ATutorialItem):
     def _path_changed(self, path):
         """ Sets the title for the item based on the item's path name.
         """
-        self.title = title_for(os.path.splitext(os.path.basename(
-                                                path))[0])
+        self.title = title_for(os.path.splitext(os.path.basename(path))[0])
 
 
 #  'HTMLItem' class:
@@ -299,12 +290,9 @@ class HTMLItem(ADescriptionItem):
     url = Str
 
     view = View(
-        Item('content',
-             style='readonly',
-             show_label=False,
-             editor=HTMLEditor()
-             )
-        )
+        Item(
+            'content', style='readonly', show_label=False, editor=HTMLEditor(
+            )))
 
     def _url_changed(self, url):
         """ Sets the item title when the 'url' is changed.
@@ -357,12 +345,11 @@ class IEHTMLItem(HTMLItem):
     """
 
     view = View(
-        Item('content',
-             style='readonly',
-             show_label=False,
-             editor=IEHTMLEditor(),
-             )
-        )
+        Item(
+            'content',
+            style='readonly',
+            show_label=False,
+            editor=IEHTMLEditor(), ))
 
 
 #  'IEHTMLStrItem' class:
@@ -382,12 +369,11 @@ class FlashItem(HTMLItem):
     """
 
     view = View(
-        Item('content',
-             style='readonly',
-             show_label=False,
-             editor=FlashEditor(),
-             )
-        )
+        Item(
+            'content',
+            style='readonly',
+            show_label=False,
+            editor=FlashEditor(), ))
 
 
 #  'TextItem' class:
@@ -396,13 +382,12 @@ class TextItem(ADescriptionItem):
     """
 
     view = View(
-        Item('content',
-             style='readonly',
-             show_label=False,
-             editor=CodeEditor(show_line_numbers=False,
-                               selected_color=0xFFFFFF)
-             )
-        )
+        Item(
+            'content',
+            style='readonly',
+            show_label=False,
+            editor=CodeEditor(
+                show_line_numbers=False, selected_color=0xFFFFFF)))
 
     @cached_property
     def _get_content(self):
@@ -439,12 +424,11 @@ class CodeItem(ATutorialItem):
     hidden = Bool
 
     view = View(
-        Item('content',
-             style='custom',
-             show_label=False,
-             editor=CodeEditor(selected_line='selected_line')
-             )
-        )
+        Item(
+            'content',
+            style='custom',
+            show_label=False,
+            editor=CodeEditor(selected_line='selected_line')))
 
 
 #  'ASection' abstract base class:
@@ -511,25 +495,25 @@ class ASection(HasPrivateTraits):
             if os.path.isdir(dir):
                 match = dir_pat1.match(name)
                 if match is not None:
-                    dirs.append((float(match.group(1)),
-                                 match.group(2), dir))
+                    dirs.append((float(match.group(1)), match.group(2), dir))
                 else:
                     match = dir_pat2.match(name)
                     if match is not None:
-                        dirs.append((float(match.group(2)),
-                                     match.group(1), dir))
+                        dirs.append((float(match.group(2)), match.group(1),
+                                     dir))
 
         # Sort the directories by their index value:
         dirs.sort(lambda l, r: cmp(l[0], r[0]))
 
         # Create the appropriate type of section for each valid directory:
         self._subsections = [
-            sf.section for sf in [
-                SectionFactory(title=title_for(title),
-                               parent=self).trait_set(path=dir)
+            sf.section
+            for sf in [
+                SectionFactory(
+                    title=title_for(title), parent=self).trait_set(path=dir)
                 for index, title, dir in dirs
-                ] if sf.section is not None
-            ]
+            ] if sf.section is not None
+        ]
 
     def _load_toc(self):
         """ Defines the section's subsections by finding matches for the items
@@ -577,14 +561,14 @@ class ASection(HasPrivateTraits):
                         continue
 
                 # Otherwise, create a section from the list of matching files:
-                subsections[i] = SectionFactory(title=title,
-                                                parent=self,
-                                                files=names
-                                                ).trait_set(path=path).section
+                subsections[i] = SectionFactory(
+                    title=title, parent=self,
+                    files=names).trait_set(path=path).section
 
         # Set the subsections to the non-None values that are left:
-        self._subsections = [subsection for subsection in subsections
-                             if subsection is not None]
+        self._subsections = [
+            subsection for subsection in subsections if subsection is not None
+        ]
 
 
 #  'Lecture' class:
@@ -602,13 +586,12 @@ class Lecture(ASection):
     is_runnable = False
 
     view = View(
-        Item('descriptions',
-             style='custom',
-             show_label=False,
-             editor=list_editor
-             ),
-        id='enthought.tutor.lecture'
-        )
+        Item(
+            'descriptions',
+            style='custom',
+            show_label=False,
+            editor=list_editor),
+        id='enthought.tutor.lecture')
 
 
 #  'LabHandler' class:
@@ -664,64 +647,58 @@ class Lab(ASection):
     view = View(
         VSplit(
             VGroup(
-                Item('visible_snippets',
-                     style='custom',
-                     show_label=False,
-                     editor=snippet_editor
-                     ),
+                Item(
+                    'visible_snippets',
+                    style='custom',
+                    show_label=False,
+                    editor=snippet_editor),
                 HGroup(
-                    Item('run',
-                         style='custom',
-                         show_label=False,
-                         tooltip='Run the Python code'
-                         ),
+                    Item(
+                        'run',
+                        style='custom',
+                        show_label=False,
+                        tooltip='Run the Python code'),
                     '_',
-                    Item('message',
-                         springy=True,
-                         show_label=False,
-                         editor=TitleEditor()
-                         ),
+                    Item(
+                        'message',
+                        springy=True,
+                        show_label=False,
+                        editor=TitleEditor()),
                     '_',
-                    Item('visible',
-                         label='View hidden sections'
-                         ),
-                    ),
-                ),
+                    Item(
+                        'visible', label='View hidden sections'), ), ),
             Tabbed(
-                Item('values',
-                     id='values_1',
-                     label='Shell',
-                     editor=ShellEditor(share=True),
-                     dock='tab',
-                     export='DockWindowShell',
-                     ),
-                Item('values',
-                     id='values_2',
-                     editor=ValueEditor(),
-                     dock='tab',
-                     export='DockWindowShell',
-                     ),
-                Item('output',
-                     style='readonly',
-                     editor=CodeEditor(show_line_numbers=False,
-                                       selected_color=0xFFFFFF),
-                     dock='tab',
-                     export='DockWindowShell',
-                     ),
-                Item('demo',
-                     id='demo',
-                     style='custom',
-                     resizable=True,
-                     dock='tab',
-                     export='DockWindowShell',
-                     ),
-                show_labels=False,
-                ),
-            id='splitter',
-            ),
+                Item(
+                    'values',
+                    id='values_1',
+                    label='Shell',
+                    editor=ShellEditor(share=True),
+                    dock='tab',
+                    export='DockWindowShell', ),
+                Item(
+                    'values',
+                    id='values_2',
+                    editor=ValueEditor(),
+                    dock='tab',
+                    export='DockWindowShell', ),
+                Item(
+                    'output',
+                    style='readonly',
+                    editor=CodeEditor(
+                        show_line_numbers=False, selected_color=0xFFFFFF),
+                    dock='tab',
+                    export='DockWindowShell', ),
+                Item(
+                    'demo',
+                    id='demo',
+                    style='custom',
+                    resizable=True,
+                    dock='tab',
+                    export='DockWindowShell', ),
+                show_labels=False, ),
+            id='splitter', ),
         id='enthought.tutor.lab',
-        handler=LabHandler
-        )
+        handler=LabHandler)
 
     def _run_changed(self):
         """ Runs the current set of snippet code.
@@ -803,7 +780,7 @@ class Lab(ASection):
 
                     # Display the syntax error message:
                     self.message = '%s in column %s of line %s' % (
-                                   excp.msg.capitalize(), excp.offset, line)
+                        excp.msg.capitalize(), excp.offset, line)
                 else:
                     # Display the syntax error message without line # info:
                     self.message = excp.msg.capitalize()
@@ -826,78 +803,72 @@ class Lesson(Lab):
 
     view = View(
         HSplit(
-            Item('descriptions',
-                 label='Lesson',
-                 style='custom',
-                 show_label=False,
-                 dock='horizontal',
-                 editor=list_editor,
-                 ),
+            Item(
+                'descriptions',
+                label='Lesson',
+                style='custom',
+                show_label=False,
+                dock='horizontal',
+                editor=list_editor, ),
             VSplit(
                 VGroup(
-                    Item('visible_snippets',
-                         style='custom',
-                         show_label=False,
-                         editor=snippet_editor,
-                         ),
+                    Item(
+                        'visible_snippets',
+                        style='custom',
+                        show_label=False,
+                        editor=snippet_editor, ),
                     HGroup(
-                        Item('run',
-                             style='custom',
-                             show_label=False,
-                             tooltip='Run the Python code',
-                             ),
+                        Item(
+                            'run',
+                            style='custom',
+                            show_label=False,
+                            tooltip='Run the Python code', ),
                         '_',
-                        Item('message',
-                             springy=True,
-                             show_label=False,
-                             editor=TitleEditor(),
-                             ),
+                        Item(
+                            'message',
+                            springy=True,
+                            show_label=False,
+                            editor=TitleEditor(), ),
                         '_',
-                        Item('visible',
-                             label='View hidden sections',
-                             ),
-                        ),
+                        Item(
+                            'visible',
+                            label='View hidden sections', ), ),
                     label='Lab',
-                    dock='horizontal',
-                    ),
+                    dock='horizontal', ),
                 Tabbed(
-                    Item('values',
-                         id='values_1',
-                         label='Shell',
-                         editor=ShellEditor(share=True),
-                         dock='tab',
-                         export='DockWindowShell',
-                         ),
-                    Item('values',
-                         id='values_2',
-                         editor=ValueEditor(),
-                         dock='tab',
-                         export='DockWindowShell',
-                         ),
-                    Item('output',
-                         style='readonly',
-                         editor=CodeEditor(show_line_numbers=False,
-                                           selected_color=0xFFFFFF),
-                         dock='tab',
-                         export='DockWindowShell',
-                         ),
-                    Item('demo',
-                         id='demo',
-                         style='custom',
-                         resizable=True,
-                         dock='tab',
-                         export='DockWindowShell',
-                         ),
-                    show_labels=False,
-                    ),
+                    Item(
+                        'values',
+                        id='values_1',
+                        label='Shell',
+                        editor=ShellEditor(share=True),
+                        dock='tab',
+                        export='DockWindowShell', ),
+                    Item(
+                        'values',
+                        id='values_2',
+                        editor=ValueEditor(),
+                        dock='tab',
+                        export='DockWindowShell', ),
+                    Item(
+                        'output',
+                        style='readonly',
+                        editor=CodeEditor(
+                            show_line_numbers=False, selected_color=0xFFFFFF),
+                        dock='tab',
+                        export='DockWindowShell', ),
+                    Item(
+                        'demo',
+                        id='demo',
+                        style='custom',
+                        resizable=True,
+                        dock='tab',
+                        export='DockWindowShell', ),
+                    show_labels=False, ),
                 label='Lab',
-                dock='horizontal',
-                ),
-            id='splitter',
-            ),
+                dock='horizontal', ),
+            id='splitter', ),
         id='enthought.tutor.lesson',
-        handler=LabHandler,
-        )
+        handler=LabHandler, )
 
 
 #  'Demo' class:
@@ -909,26 +880,24 @@ class Demo(Lesson):
 
     view = View(
         HSplit(
-            Item('descriptions',
-                 label='Lesson',
-                 style='custom',
-                 show_label=False,
-                 dock='horizontal',
-                 editor=list_editor,
-                 ),
-            Item('demo',
-                 id='demo',
-                 style='custom',
-                 show_label=False,
-                 resizable=True,
-                 dock='horizontal',
-                 export='DockWindowShell',
-                 ),
-            id='splitter',
-            ),
+            Item(
+                'descriptions',
+                label='Lesson',
+                style='custom',
+                show_label=False,
+                dock='horizontal',
+                editor=list_editor, ),
+            Item(
+                'demo',
+                id='demo',
+                style='custom',
+                show_label=False,
+                resizable=True,
+                dock='horizontal',
+                export='DockWindowShell', ),
+            id='splitter', ),
         id='enthought.tutor.demo',
-        handler=LabHandler,
-        )
+        handler=LabHandler, )
 
 
 #  'SectionFactory' class:
@@ -1005,8 +974,10 @@ class SectionFactory(HasPrivateTraits):
         # type of section:
         if len(self.descriptions) > 0:
             if len(self.snippets) > 0:
-                if len([snippet for snippet in self.snippets
-                        if (not snippet.hidden)]) > 0:
+                if len([
+                        snippet for snippet in self.snippets
+                        if (not snippet.hidden)
+                ]) > 0:
                     self.section = Lesson(
                         title=self.title,
                         path=path,
@@ -1014,8 +985,7 @@ class SectionFactory(HasPrivateTraits):
                         parent=self.parent,
                         descriptions=self.descriptions,
                         snippets=self.snippets,
-                        auto_run=self.auto_run,
-                        )
+                        auto_run=self.auto_run, )
                 else:
                     self.section = Demo(
                         title=self.title,
@@ -1024,16 +994,14 @@ class SectionFactory(HasPrivateTraits):
                         parent=self.parent,
                         descriptions=self.descriptions,
                         snippets=self.snippets,
-                        auto_run=True,
-                        )
+                        auto_run=True, )
             else:
                 self.section = Lecture(
                     title=self.title,
                     path=path,
                     toc=self.toc,
                     parent=self.parent,
-                    descriptions=self.descriptions,
-                    )
+                    descriptions=self.descriptions, )
         elif len(self.snippets) > 0:
             self.section = Lab(
                 title=self.title,
@@ -1041,8 +1009,7 @@ class SectionFactory(HasPrivateTraits):
                 toc=self.toc,
                 parent=self.parent,
                 snippets=self.snippets,
-                auto_run=self.auto_run,
-                )
+                auto_run=self.auto_run, )
         else:
             # No descriptions or code snippets were found. Create a lecture
             # anyway:
@@ -1050,8 +1017,7 @@ class SectionFactory(HasPrivateTraits):
                 title=self.title,
                 path=path,
                 toc=self.toc,
-                parent=self.parent,
-                )
+                parent=self.parent, )
 
             # If the lecture has subsections, then return the lecture and add
             # a default item containing a description of the subsections of the
@@ -1059,10 +1025,10 @@ class SectionFactory(HasPrivateTraits):
             if len(section.subsections) > 0:
                 self._create_html_item(
                     path=path,
-                    content=DefaultLecture % ('\n'.join(
-                        ['<li>%s</li>' % subsection.title
-                         for subsection in section.subsections]))
-                    )
+                    content=DefaultLecture % ('\n'.join([
+                        '<li>%s</li>' % subsection.title
+                        for subsection in section.subsections
+                    ])))
                 section.descriptions = self.descriptions
                 self.section = section
 
@@ -1128,8 +1094,10 @@ class SectionFactory(HasPrivateTraits):
         """
         data = read_file(path)
         if data is not None:
-            for url in [line for line in data.split('\n')
-                        if line.strip()[:1] not in ('', '#')]:
+            for url in [
+                    line for line in data.split('\n')
+                    if line.strip()[:1] not in ('', '#')
+            ]:
                 self._create_html_item(url=url.strip())
 
     def _add_rst_item(self, path):
@@ -1163,8 +1131,8 @@ class SectionFactory(HasPrivateTraits):
         # text file, then let docutils convert it to HTML:
         is_file = os.path.isfile(html)
         if ((not is_file) or
-                (os.path.getmtime(path) > os.path.getmtime(html)) or
-                (os.path.getmtime(css_path) > os.path.getmtime(html))):
+            (os.path.getmtime(path) > os.path.getmtime(html)) or
+            (os.path.getmtime(css_path) > os.path.getmtime(html))):
 
             # Delete the current HTML file (if any):
             if is_file:
@@ -1172,9 +1140,10 @@ class SectionFactory(HasPrivateTraits):
 
             # Let docutils create a new HTML file from the restructured text
             # file:
-            publish_cmdline(writer_name='html',
-                            argv=[path, html],
-                            settings_overrides=settings)
+            publish_cmdline(
+                writer_name='html',
+                argv=[path, html],
+                settings_overrides=settings)
 
         if os.path.isfile(html):
             # If there is now a valid HTML file, use it:
@@ -1194,14 +1163,14 @@ class SectionFactory(HasPrivateTraits):
         """ Creates a description item for a QuickTime movie file.
         """
         path2 = path.replace(':', '|')
-        self._create_html_item(path=path,
-                               content=QTMovieTemplate % (path2, path2))
+        self._create_html_item(
+            path=path, content=QTMovieTemplate % (path2, path2))
 
     def _add_wmv_item(self, path):
         """ Creates a description item for a Windows movie file.
         """
-        self._create_html_item(path=path,
-                               content=WMVMovieTemplate % (path, path))
+        self._create_html_item(
+            path=path, content=WMVMovieTemplate % (path, path))
 
     def _add_avi_item(self, path):
         """ Creates a description item for an AVI movie file.
@@ -1211,8 +1180,7 @@ class SectionFactory(HasPrivateTraits):
     def _add_jpg_item(self, path):
         """ Creates a description item for a JPEG image file.
         """
-        self._create_html_item(path=path,
-                               content=ImageTemplate % path)
+        self._create_html_item(path=path, content=ImageTemplate % path)
 
     def _add_jpeg_item(self, path):
         """ Creates a description item for a JPEG image file.
@@ -1227,8 +1195,7 @@ class SectionFactory(HasPrivateTraits):
     def _add_mp3_item(self, path):
         """ Creates a description item for an mp3 audio file.
         """
-        self._create_html_item(path=path,
-                               content=MP3Template % path)
+        self._create_html_item(path=path, content=MP3Template % path)
 
     def _add_desc_item(self, path):
         """ Creates a section title from a description file.
@@ -1285,19 +1252,19 @@ class SectionFactory(HasPrivateTraits):
                 title = title[:-1].strip()
 
             # Extract out just the lines we will use:
-            content_lines = lines[start_line: end_line + 1]
+            content_lines = lines[start_line:end_line + 1]
 
             if type == IsDescription:
                 # Add the new restructured text description:
                 self._add_description(content_lines, title)
             else:
                 # Add the new code snippet:
-                self.snippets.append(CodeItem(
-                    title=title or 'Code',
-                    path=path,
-                    hidden=(type == IsHiddenCode),
-                    content='\n'.join(content_lines)
-                    ))
+                self.snippets.append(
+                    CodeItem(
+                        title=title or 'Code',
+                        path=path,
+                        hidden=(type == IsHiddenCode),
+                        content='\n'.join(content_lines)))
 
     def _add_description(self, lines, title):
         """ Converts a restructured text string to HTML and adds it as
@@ -1317,7 +1284,7 @@ class SectionFactory(HasPrivateTraits):
         if content[:3] in ('"""', "'''"):
             content = content[3:]
 
-        if content[-3:] in('"""', "'''"):
+        if content[-3:] in ('"""', "'''"):
             content = content[:-3]
 
         content = content.strip()
@@ -1326,8 +1293,7 @@ class SectionFactory(HasPrivateTraits):
         try:
             from docutils.core import publish_string
         except:
-            self.descriptions.append(TextStrItem(content=content,
-                                                 title=title))
+            self.descriptions.append(TextStrItem(content=content, title=title))
             return
 
         # Try to find a CSS style sheet, and set up the docutil overrides if
@@ -1341,8 +1307,8 @@ class SectionFactory(HasPrivateTraits):
             settings['stylesheet'] = None
 
         # Convert it from restructured text to HTML:
-        html = publish_string(content, writer_name='html',
-                              settings_overrides=settings)
+        html = publish_string(
+            content, writer_name='html', settings_overrides=settings)
 
         # Choose the right HTML renderer:
         if is_windows:
@@ -1393,19 +1359,19 @@ class SectionFactory(HasPrivateTraits):
                     break
 
                 if (len(clines) > 0) or (len_line > 1):
-                    clines.append(line[pad: -1])
+                    clines.append(line[pad:-1])
 
                 start += 1
 
             # Add the new code snippet:
-            self.snippets.append(CodeItem(
-                title=title or 'Code',
-                content='\n'.join(clines)
-                ))
+            self.snippets.append(
+                CodeItem(
+                    title=title or 'Code', content='\n'.join(clines)))
 
             break
 
         return start
+
 
 #  Tutor tree editor:
 
@@ -1422,13 +1388,11 @@ tree_editor = TreeEditor(
             auto_open=True,
             auto_close=False,
             node_for=[ASection],
-            icon_group='<group>'
-            )
-        ],
+            icon_group='<group>')
+    ],
     editable=False,
     auto_open=1,
-    selected='section'
-    )
+    selected='section')
 
 
 #  'Tutor' class:
@@ -1473,60 +1437,56 @@ class Tutor(HasPrivateTraits):
     view = View(
         VGroup(
             HGroup(
-                Item('previous',
-                     style='custom',
-                     enabled_when='previous_section is not None',
-                     tooltip='Go to previous section',
-                     ),
-                Item('parent',
-                     style='custom',
-                     enabled_when='(section is not None) and '
-                                  '(section.parent is not None)',
-                     tooltip='Go up one level',
-                     ),
-                Item('next',
-                     style='custom',
-                     enabled_when='next_section is not None',
-                     tooltip='Go to next section',
-                     ),
+                Item(
+                    'previous',
+                    style='custom',
+                    enabled_when='previous_section is not None',
+                    tooltip='Go to previous section', ),
+                Item(
+                    'parent',
+                    style='custom',
+                    enabled_when='(section is not None) and '
+                    '(section.parent is not None)',
+                    tooltip='Go up one level', ),
+                Item(
+                    'next',
+                    style='custom',
+                    enabled_when='next_section is not None',
+                    tooltip='Go to next section', ),
                 '_',
-                Item('title',
-                     springy=True,
-                     editor=TitleEditor(),
-                     ),
+                Item(
+                    'title',
+                    springy=True,
+                    editor=TitleEditor(), ),
                 '_',
-                Item('reload',
-                     style='custom',
-                     tooltip='Reload the tutorial',
-                     ),
-                show_labels=False,
-                ),
+                Item(
+                    'reload',
+                    style='custom',
+                    tooltip='Reload the tutorial', ),
+                show_labels=False, ),
             '_',
             HSplit(
-                Item('root',
-                     label='Table of Contents',
-                     editor=tree_editor,
-                     dock='horizontal',
-                     export='DockWindowShell',
-                     ),
-                Item('section',
-                     id='section',
-                     label='Current Lesson',
-                     style='custom',
-                     resizable=True,
-                     dock='horizontal',
-                     ),
+                Item(
+                    'root',
+                    label='Table of Contents',
+                    editor=tree_editor,
+                    dock='horizontal',
+                    export='DockWindowShell', ),
+                Item(
+                    'section',
+                    id='section',
+                    label='Current Lesson',
+                    style='custom',
+                    resizable=True,
+                    dock='horizontal', ),
                 id='splitter',
-                show_labels=False,
-                )
-            ),
+                show_labels=False, )),
         title='Python Tutor',
         id='dmorrill.tutor.tutor:1.0',
         buttons=NoButtons,
         resizable=True,
         width=0.8,
-        height=0.8,
-        )
+        height=0.8, )
 
     def _path_changed(self, path):
         """ Handles the tutorial root path being changed.
@@ -1609,6 +1569,7 @@ class Tutor(HasPrivateTraits):
         section = SectionFactory(title=title).trait_set(path=path).section
         if section is not None:
             self.section = self.root = section
+
 
 #  Run the program:
 

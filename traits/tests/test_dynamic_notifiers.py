@@ -85,6 +85,7 @@ class DynamicNotifiers(HasTraits):
     def high_priority_second(self):
         self.prioritized_notifications.append(3)
 
+
 # 'ok' function listeners
 
 calls_0 = []
@@ -193,7 +194,7 @@ class TestDynamicNotifiers(unittest.TestCase):
         obj.fail = 1
 
         _py2to3.assertCountEqual(self, [0, 1, 2, 3, 4], obj.exceptions_from)
-        self.assertEqual([(obj, 'fail', 0, 1)]*5, self.exceptions)
+        self.assertEqual([(obj, 'fail', 0, 1)] * 5, self.exceptions)
 
     def test_dynamic_notifiers_functions(self):
         obj = DynamicNotifiers()
@@ -227,11 +228,11 @@ class TestDynamicNotifiers(unittest.TestCase):
         expected_low = set([0, 2])
 
         obj.on_trait_change(obj.low_priority_first, 'priority_test')
-        obj.on_trait_change(obj.high_priority_first, 'priority_test',
-                            priority=True)
+        obj.on_trait_change(
+            obj.high_priority_first, 'priority_test', priority=True)
         obj.on_trait_change(obj.low_priority_second, 'priority_test')
-        obj.on_trait_change(obj.high_priority_second, 'priority_test',
-                            priority=True)
+        obj.on_trait_change(
+            obj.high_priority_second, 'priority_test', priority=True)
 
         obj.priority_test = None
 
@@ -240,7 +241,6 @@ class TestDynamicNotifiers(unittest.TestCase):
 
         self.assertSetEqual(expected_high, high)
         self.assertSetEqual(expected_low, low)
-
 
     def test_dynamic_notifiers_functions_failing(self):
         obj = DynamicNotifiers()

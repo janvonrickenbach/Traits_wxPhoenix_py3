@@ -14,7 +14,6 @@
 #
 #  Thanks for using Enthought open source!
 #
-
 """ Unit test case for testing trait types created by subclassing TraitType.
 """
 
@@ -24,7 +23,6 @@ from traits.api import Float, TraitType
 
 
 class TraitTypesTest(unittest.TestCase):
-
     def test_traits_shared_transient(self):
         # Regression test for a bug in traits where the same _metadata
         # dictionary was shared between different trait types.

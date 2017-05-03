@@ -16,15 +16,12 @@
 #  Refactored into a separate module: 07/04/2003
 #
 #------------------------------------------------------------------------------
-
 """ Defines common, low-level capabilities needed by the Traits package.
 """
 
 #-------------------------------------------------------------------------------
 #  Imports:
 #-------------------------------------------------------------------------------
-
-
 
 import os
 import sys
@@ -39,19 +36,19 @@ enumerate = enumerate
 
 # Set the Python version being used:
 vi = sys.version_info
-python_version = vi[0] + (float( vi[1] ) / 10.0)
+python_version = vi[0] + (float(vi[1]) / 10.0)
 
 #-------------------------------------------------------------------------------
 #  Constants:
 #-------------------------------------------------------------------------------
 
-ClassTypes    = _py2to3.ClassTypes
+ClassTypes = _py2to3.ClassTypes
 
-SequenceTypes = ( list, tuple )
+SequenceTypes = (list, tuple)
 
-ComplexTypes  = ( float, int )
+ComplexTypes = (float, int)
 
-TypeTypes     = ( str,  str, int, int, float, complex, list, tuple, dict, bool )
+TypeTypes = (str, str, int, int, float, complex, list, tuple, dict, bool)
 
 TraitNotifier = '__trait_notifier__'
 
@@ -62,6 +59,7 @@ TraitsCache = '_traits_cache_'
 #  Singleton 'Uninitialized' object:
 #-------------------------------------------------------------------------------
 Uninitialized = None
+
 
 class _Uninitialized(object):
     """ The singleton value of this class represents the uninitialized state
@@ -83,6 +81,7 @@ class _Uninitialized(object):
     def __reduce_ex__(self, protocol):
         return (_Uninitialized, ())
 
+
 #: When the first reference to a trait is a 'get' reference, the default value of
 #: the trait is implicitly assigned and returned as the value of the trait.
 #: Because of this implicit assignment, a trait change notification is
@@ -98,9 +97,11 @@ Uninitialized = _Uninitialized()
 
 Undefined = None
 
+
 class _Undefined(object):
     """ Singleton 'Undefined' object (used as undefined trait name and/or value)
     """
+
     def __new__(cls):
         if Undefined is not None:
             return Undefined
@@ -123,6 +124,7 @@ class _Undefined(object):
     def __ne__(self, other):
         return type(self) is not type(other)
 
+
 #: Singleton object that indicates that a trait attribute has not yet had a
 #: value set (i.e., its value is undefined). This object is used instead of
 #: None, because None often has other meanings, such as that a value is not
@@ -133,17 +135,20 @@ Undefined = _Undefined()
 
 # Tell the C-base code about singleton 'Undefined' and 'Uninitialized' objects:
 from . import ctraits
-ctraits._undefined( Undefined, Uninitialized )
+ctraits._undefined(Undefined, Uninitialized)
 
 #-------------------------------------------------------------------------------
 #  Singleton 'Missing' object (used as missing method argument marker):
 #-------------------------------------------------------------------------------
 
-class Missing ( object ):
+
+class Missing(object):
     """ Singleton 'Missing' object (used as missing method argument marker).
     """
-    def __repr__ ( self ):
+
+    def __repr__(self):
         return '<missing>'
+
 
 #: Singleton object that indicates that a method argument is missing from a
 #: type-checked method signature.
@@ -153,11 +158,14 @@ Missing = Missing()
 #  Singleton 'Self' object (used as object reference to current 'object'):
 #-------------------------------------------------------------------------------
 
-class Self ( object ):
+
+class Self(object):
     """ Singleton 'Self' object (used as object reference to current 'object').
     """
-    def __repr__ ( self ):
+
+    def __repr__(self):
         return '<self>'
+
 
 #: Singleton object that references the current 'object'.
 Self = Self()
@@ -166,19 +174,21 @@ Self = Self()
 #  Define a special 'string' coercion function:
 #-------------------------------------------------------------------------------
 
-def strx ( arg ):
+
+def strx(arg):
     """ Wraps the built-in str() function to raise a TypeError if the
     argument is not of a type in StringTypes.
     """
-    if isinstance( arg, StringTypes ):
-       return str( arg )
+    if isinstance(arg, StringTypes):
+        return str(arg)
     raise TypeError
+
 
 #-------------------------------------------------------------------------------
 #  Constants:
 #-------------------------------------------------------------------------------
 
-StringTypes = ( str, str, int, int, float, complex )
+StringTypes = (str, str, int, int, float, complex)
 
 #-------------------------------------------------------------------------------
 #  Define a mapping of coercable types:
@@ -186,10 +196,10 @@ StringTypes = ( str, str, int, int, float, complex )
 
 # Mapping of coercable types.
 CoercableTypes = {
-    int:    ( 11, int, int ),
-    float:   ( 11, float, int ),
-    complex: ( 11, complex, float, int ),
-    str: ( 11, str, str )
+    int: (11, int, int),
+    float: (11, float, int),
+    complex: (11, complex, float, int),
+    str: (11, str, str)
 }
 
 #-------------------------------------------------------------------------------
@@ -197,50 +207,56 @@ CoercableTypes = {
 #  article (a or an) preceding it (e.g. 'an Image', 'a PlotValue'):
 #-------------------------------------------------------------------------------
 
-def class_of ( object ):
+
+def class_of(object):
     """ Returns a string containing the class name of an object with the
     correct indefinite article ('a' or 'an') preceding it (e.g., 'an Image',
     'a PlotValue').
     """
-    if isinstance( object, str ):
-        return add_article( object )
+    if isinstance(object, str):
+        return add_article(object)
 
-    return add_article( object.__class__.__name__ )
+    return add_article(object.__class__.__name__)
+
 
 #-------------------------------------------------------------------------------
 #  Return a string containing the right article (i.e. 'a' or 'an') prefixed to
 #  a specified string:
 #-------------------------------------------------------------------------------
 
-def add_article ( name ):
+
+def add_article(name):
     """ Returns a string containing the correct indefinite article ('a' or 'an')
     prefixed to the specified string.
     """
     if name[:1].lower() in 'aeiou':
-       return 'an ' + name
+        return 'an ' + name
 
     return 'a ' + name
+
 
 #----------------------------------------------------------------------------
 #  Return a 'user-friendly' name for a specified trait:
 #----------------------------------------------------------------------------
 
-def user_name_for ( name ):
+
+def user_name_for(name):
     """ Returns a "user-friendly" version of a string, with the first letter
     capitalized and with underscore characters replaced by spaces. For example,
     ``user_name_for('user_name_for')`` returns ``'User name for'``.
     """
-    name       = name.replace( '_', ' ' )
-    result     = ''
+    name = name.replace('_', ' ')
+    result = ''
     last_lower = False
 
     for c in name:
         if c.isupper() and last_lower:
-           result += ' '
+            result += ' '
         last_lower = c.islower()
-        result    += c
+        result += c
 
     return result.capitalize()
+
 
 #-------------------------------------------------------------------------------
 #  Gets the path to the traits home directory:
@@ -248,56 +264,62 @@ def user_name_for ( name ):
 
 _traits_home = None
 
-def traits_home ( ):
+
+def traits_home():
     """ Gets the path to the Traits home directory.
     """
     global _traits_home
 
     if _traits_home is None:
-        _traits_home = verify_path( join( ETSConfig.application_data,
-                                          'traits' ) )
+        _traits_home = verify_path(join(ETSConfig.application_data, 'traits'))
 
     return _traits_home
+
 
 #-------------------------------------------------------------------------------
 #  Verify that a specified path exists, and try to create it if it doesn't:
 #-------------------------------------------------------------------------------
 
-def verify_path ( path ):
+
+def verify_path(path):
     """ Verify that a specified path exists, and try to create it if it
         does not exist.
     """
-    if not exists( path ):
+    if not exists(path):
         try:
-            os.mkdir( path )
+            os.mkdir(path)
         except:
             pass
 
     return path
 
+
 #-------------------------------------------------------------------------------
 #  Returns the name of the module the caller's caller is located in:
 #-------------------------------------------------------------------------------
 
-def get_module_name ( level = 2 ):
+
+def get_module_name(level=2):
     """ Returns the name of the module that the caller's caller is located in.
     """
-    return sys._getframe( level ).f_globals.get( '__name__', '__main__' )
+    return sys._getframe(level).f_globals.get('__name__', '__main__')
+
 
 #-------------------------------------------------------------------------------
 #  Returns a resource path calculated from the caller's stack:
 #-------------------------------------------------------------------------------
 
-def get_resource_path ( level = 2 ):
+
+def get_resource_path(level=2):
     """Returns a resource path calculated from the caller's stack.
     """
-    module = sys._getframe( level ).f_globals.get( '__name__', '__main__' )
+    module = sys._getframe(level).f_globals.get('__name__', '__main__')
 
     path = None
     if module != '__main__':
         # Return the path to the module:
         try:
-            path = dirname( getattr( sys.modules.get( module ), '__file__' ) )
+            path = dirname(getattr(sys.modules.get(module), '__file__'))
         except:
             # Apparently 'module' is not a registered module...treat it like
             # '__main__':
@@ -305,8 +327,8 @@ def get_resource_path ( level = 2 ):
 
     if path is None:
         # '__main__' is not a real module, so we need a work around:
-        for path in [ dirname( sys.argv[0] ), getcwd() ]:
-            if exists( path ):
+        for path in [dirname(sys.argv[0]), getcwd()]:
+            if exists(path):
                 break
 
     # Handle application bundlers.  Since the python source files may be placed
@@ -330,59 +352,69 @@ def get_resource_path ( level = 2 ):
 
     return path
 
+
 #-------------------------------------------------------------------------------
 #  Returns the value of an extended object attribute name of the form:
 #  name[.name2[.name3...]]:
 #-------------------------------------------------------------------------------
 
-def xgetattr( object, xname, default = Undefined ):
+
+def xgetattr(object, xname, default=Undefined):
     """ Returns the value of an extended object attribute name of the form:
         name[.name2[.name3...]].
     """
-    names = xname.split( '.' )
+    names = xname.split('.')
     for name in names[:-1]:
         if default is Undefined:
-            object = getattr( object, name )
+            object = getattr(object, name)
         else:
-            object = getattr( object, name, None )
+            object = getattr(object, name, None)
             if object is None:
                 return default
 
     if default is Undefined:
-        return getattr( object, names[-1] )
+        return getattr(object, names[-1])
 
-    return getattr( object, names[-1], default )
+    return getattr(object, names[-1], default)
+
 
 #-------------------------------------------------------------------------------
 #  Sets the value of an extended object attribute name of the form:
 #  name[.name2[.name3...]]:
 #-------------------------------------------------------------------------------
 
-def xsetattr( object, xname, value ):
+
+def xsetattr(object, xname, value):
     """ Sets the value of an extended object attribute name of the form:
         name[.name2[.name3...]].
     """
-    names = xname.split( '.' )
+    names = xname.split('.')
     for name in names[:-1]:
-        object = getattr( object, name )
+        object = getattr(object, name)
 
-    setattr( object, names[-1], value )
+    setattr(object, names[-1], value)
+
 
 #-------------------------------------------------------------------------------
 #  Traits metadata selection functions:
 #-------------------------------------------------------------------------------
 
-def is_none ( value ):
+
+def is_none(value):
     return (value is None)
 
-def not_none ( value ):
+
+def not_none(value):
     return (value is not None)
 
-def not_false ( value ):
+
+def not_false(value):
     return (value is not False)
 
-def not_event ( value ):
+
+def not_event(value):
     return (value != 'event')
 
-def is_str ( value ):
-    return isinstance( value, str )
+
+def is_str(value):
+    return isinstance(value, str)

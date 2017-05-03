@@ -31,10 +31,9 @@ class TestGlobalAdaptationManager(unittest.TestCase):
 
         # UKStandard->EUStandard.
         adaptation_manager.register_factory(
-            factory       = ex.UKStandardToEUStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.EUStandard,
-        )
+            factory=ex.UKStandardToEUStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.EUStandard, )
 
         # Create a UKPlug.
         uk_plug = ex.UKPlug()
@@ -51,10 +50,9 @@ class TestGlobalAdaptationManager(unittest.TestCase):
 
         # UKStandard->EUStandard.
         adaptation_manager.register_factory(
-            factory       = ex.UKStandardToEUStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.EUStandard
-        )
+            factory=ex.UKStandardToEUStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.EUStandard)
 
         # Create a UKPlug.
         uk_plug = ex.UKPlug()
@@ -71,10 +69,9 @@ class TestGlobalAdaptationManager(unittest.TestCase):
 
         # Global `register_factory`.
         register_factory(
-            factory       = ex.UKStandardToEUStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.EUStandard
-        )
+            factory=ex.UKStandardToEUStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.EUStandard)
 
         uk_plug = ex.UKPlug()
         # Global `adapt`.
@@ -103,10 +100,9 @@ class TestGlobalAdaptationManager(unittest.TestCase):
         ex = self.examples
 
         offer = AdaptationOffer(
-            factory       = ex.UKStandardToEUStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.EUStandard
-        )
+            factory=ex.UKStandardToEUStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.EUStandard)
 
         # Global `register_offer`.
         register_offer(offer)

@@ -1,6 +1,5 @@
 """ Test the Adapter class. """
 
-
 from traits.api import on_trait_change
 from traits.adaptation.api import Adapter
 from traits.testing.unittest_tools import unittest

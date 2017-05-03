@@ -1,6 +1,5 @@
 """ Test the cached adapter factory. """
 
-
 import sys
 
 import traits.adaptation.tests.interface_examples
@@ -11,7 +10,6 @@ from traits.testing.unittest_tools import unittest
 
 class TestCachedAdapterFactory(unittest.TestCase):
     """ Test the cached adapter factory. """
-
 
     examples = traits.adaptation.tests.interface_examples
 
@@ -38,10 +36,9 @@ class TestCachedAdapterFactory(unittest.TestCase):
         factory = CachedAdapterFactory(factory=ex.EditorToIPrintable)
 
         self.adaptation_manager.register_factory(
-            factory       = factory,
-            from_protocol = ex.Editor,
-            to_protocol   = ex.IPrintable
-        )
+            factory=factory,
+            from_protocol=ex.Editor,
+            to_protocol=ex.IPrintable)
 
         editor = ex.Editor()
 
@@ -65,10 +62,9 @@ class TestCachedAdapterFactory(unittest.TestCase):
         factory = CachedAdapterFactory(factory=ex.EditorToIPrintable)
 
         self.adaptation_manager.register_factory(
-            factory       = factory,
-            from_protocol = ex.Editor,
-            to_protocol   = ex.IPrintable
-        )
+            factory=factory,
+            from_protocol=ex.Editor,
+            to_protocol=ex.IPrintable)
 
         editor = ex.Editor()
 
@@ -92,10 +88,9 @@ class TestCachedAdapterFactory(unittest.TestCase):
         factory = CachedAdapterFactory(factory=LAZY_EXAMPLES + '.IBarToIFoo')
 
         self.adaptation_manager.register_factory(
-            factory       = factory,
-            from_protocol = LAZY_EXAMPLES + '.IBar',
-            to_protocol   = LAZY_EXAMPLES + '.IFoo',
-        )
+            factory=factory,
+            from_protocol=LAZY_EXAMPLES + '.IBar',
+            to_protocol=LAZY_EXAMPLES + '.IFoo', )
 
         self.assertNotIn(LAZY_EXAMPLES, sys.modules)
 
@@ -114,10 +109,9 @@ class TestCachedAdapterFactory(unittest.TestCase):
         factory = CachedAdapterFactory(factory=ex.EditorToIPrintable)
 
         self.adaptation_manager.register_factory(
-            factory       = factory,
-            from_protocol = ex.Editor,
-            to_protocol   = ex.IPrintable
-        )
+            factory=factory,
+            from_protocol=ex.Editor,
+            to_protocol=ex.IPrintable)
 
         editor = ex.Editor()
 
@@ -135,6 +129,7 @@ class TestCachedAdapterFactory(unittest.TestCase):
         del editor
 
         self.assertTrue(factory.is_empty)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -29,6 +29,7 @@ def b_handler():
 def c_handler():
     print "C handler"
 
+
 fred = Employee()
 mary = Employee()
 donna = Employee()
@@ -46,6 +47,6 @@ dept.on_trait_change(b_handler, 'employees_items')
 dept.on_trait_change(c_handler, '[employees]')
 
 print "Changing list items"
-dept.employees[1] = donna     # Calls B and C
+dept.employees[1] = donna  # Calls B and C
 print "Replacing list"
-dept.employees = [donna]      # Calls A and C
+dept.employees = [donna]  # Calls A and C

@@ -16,8 +16,6 @@ Tests for the ArrayOrNone TraitType.
 
 """
 
-
-
 from traits.testing.unittest_tools import unittest
 
 try:
@@ -29,7 +27,6 @@ else:
 
 from traits.testing.unittest_tools import UnittestTools
 from ..api import ArrayOrNone, HasTraits, NO_COMPARE, TraitError
-
 
 if numpy_available:
     # Use of `ArrayOrNone` requires NumPy to be installed.
@@ -52,6 +49,7 @@ class TestArrayOrNone(unittest.TestCase, UnittestTools):
     Tests for the ArrayOrNone TraitType.
 
     """
+
     def test_default(self):
         foo = Foo()
         self.assertIsNone(foo.maybe_array)
@@ -64,6 +62,7 @@ class TestArrayOrNone(unittest.TestCase, UnittestTools):
         # CArray and Array validate the default at class creation time;
         # we do the same for ArrayOrNone.
         with self.assertRaises(TraitError):
+
             class Bar(HasTraits):
                 bad_array = ArrayOrNone(shape=(None, None), value=[1, 2, 3])
 
@@ -84,7 +83,7 @@ class TestArrayOrNone(unittest.TestCase, UnittestTools):
         output_array = foo.maybe_array
         self.assertIsInstance(output_array, numpy.ndarray)
         self.assertEqual(output_array.dtype, numpy.dtype(int))
-        self.assertEqual(output_array.shape, (5,))
+        self.assertEqual(output_array.shape, (5, ))
         self.assertTrue((output_array == test_list).all())
 
     def test_setting_array_from_none(self):

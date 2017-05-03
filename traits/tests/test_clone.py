@@ -10,8 +10,6 @@
 # Author: David C. Morrill
 # Description: <Traits component>
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Instance, Str, Any, Property
@@ -276,7 +274,7 @@ class CloneTestCase(unittest.TestCase):
         # object should be the original 'ref' object, since copy was set to
         # 'ref'.
         self.assertIs(baz_copy.ref, bar_copy.ref)
-        self.assertIs(bar_copy.ref,ref)
+        self.assertIs(bar_copy.ref, ref)
 
         # Check references to objects that where cloned, they should reference
         # the new clones not the original objects, except when copy is set
@@ -290,6 +288,7 @@ class CloneTestCase(unittest.TestCase):
         # should reference the new clone.
         self.assertIsNot(bar_copy.shared, baz.shared)
         self.assertIs(bar_copy.shared, baz_copy.shared)
+
 
 #
 # support running this test individually, from the command-line as a script

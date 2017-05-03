@@ -11,7 +11,6 @@
 #
 #  Thanks for using Enthought open source!
 
-
 from contextlib import contextmanager
 import logging
 
@@ -28,7 +27,6 @@ class TraitsObject(HasTraits):
 
 
 class ListHandler(logging.Handler):
-
     def __init__(self):
         logging.Handler.__init__(self)
         self.records = []
@@ -51,7 +49,6 @@ def catch_logs(module_name):
 
 
 class TestTraitGet(UnittestTools, unittest.TestCase):
-
     def test_trait_set(self):
         obj = TraitsObject()
         obj.trait_set(string='foo')

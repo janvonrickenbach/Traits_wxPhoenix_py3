@@ -5,10 +5,7 @@
 #  license included in /LICENSE.txt and may be redistributed only
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
-
 """ Tests to help find out if we can do type-safe casting. """
-
-
 
 # Standard library imports.
 from traits.testing.unittest_tools import unittest
@@ -54,7 +51,6 @@ class InterfaceCheckerTestCase(unittest.TestCase):
         # A class that *does* implement the interface.
         @provides(IFoo)
         class Foo(object):
-
             def foo(self):
                 pass
 
@@ -173,7 +169,6 @@ class InterfaceCheckerTestCase(unittest.TestCase):
         # A class that does *not* implement the interface.
         @provides(IFoo, IBar, IBaz)
         class Foo(HasTraits):
-
             def foo(self):
                 pass
 
@@ -184,9 +179,8 @@ class InterfaceCheckerTestCase(unittest.TestCase):
             def baz(self, x):
                 pass
 
-        self.assertRaises(
-            InterfaceError, check_implements, Foo, [IFoo, IBar, IBaz], 2
-        )
+        self.assertRaises(InterfaceError, check_implements, Foo,
+                          [IFoo, IBar, IBaz], 2)
 
         return
 
@@ -209,9 +203,8 @@ class InterfaceCheckerTestCase(unittest.TestCase):
             x = Int
             y = Int
 
-        self.assertRaises(
-            InterfaceError, check_implements, Foo, [IFoo, IBar, IBaz], 2
-        )
+        self.assertRaises(InterfaceError, check_implements, Foo,
+                          [IFoo, IBar, IBaz], 2)
 
         return
 
@@ -233,16 +226,14 @@ class InterfaceCheckerTestCase(unittest.TestCase):
         # A class that does *not* implement the interface.
         @provides(IFoo, IBar, IBaz)
         class Foo(HasTraits):
-
             def foo(self):
                 pass
 
             def bar(self):
                 pass
 
-        self.assertRaises(
-            InterfaceError, check_implements, Foo, [IFoo, IBar, IBaz], 2
-        )
+        self.assertRaises(InterfaceError, check_implements, Foo,
+                          [IFoo, IBar, IBaz], 2)
 
         return
 
@@ -289,7 +280,6 @@ class InterfaceCheckerTestCase(unittest.TestCase):
         # A class that does *not* implement the interface.
         @provides(IBaz)
         class Foo(HasTraits):
-
             def foo(self):
                 pass
 
@@ -345,7 +335,6 @@ class InterfaceCheckerTestCase(unittest.TestCase):
         # A class that does *not* implement the interface.
         @provides(IBaz)
         class Foo(HasTraits):
-
             def foo(self):
                 pass
 
@@ -360,19 +349,15 @@ class InterfaceCheckerTestCase(unittest.TestCase):
         """ Subclasses with incorrect method signatures """
 
         class IFoo(Interface):
-
             def foo(self, argument):
                 pass
 
         @provides(IFoo)
         class Foo(HasTraits):
-
             def foo(self, argument):
                 pass
 
-
         class Bar(Foo):
-
             def foo(self):
                 pass
 

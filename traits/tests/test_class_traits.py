@@ -3,8 +3,6 @@ Unit tests for the `HasTraits.class_traits` class function.
 
 """
 
-
-
 from traits import _py2to3
 
 from traits.testing.unittest_tools import unittest
@@ -32,7 +30,6 @@ class C(B):
 
 
 class TestClassTraits(unittest.TestCase):
-
     def test_all_class_traits(self):
         expected = ['x', 'name', 'trait_added', 'trait_modified']
         _py2to3.assertCountEqual(self, A.class_traits(), expected)

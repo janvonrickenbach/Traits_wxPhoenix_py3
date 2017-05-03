@@ -25,15 +25,17 @@ class Child(HasTraits):
 
 
 #--[Example*]------------------------------------------------------------------
-fred = Parent(first_name='Fred',
-              family_name='Lopez',
-              favorite_first_name='Diego',
-              child_allowance=5.0)
+fred = Parent(
+    first_name='Fred',
+    family_name='Lopez',
+    favorite_first_name='Diego',
+    child_allowance=5.0)
 
-maria = Parent(first_name='Maria',
-               family_name='Gonzalez',
-               favorite_first_name='Tomas',
-               child_allowance=10.0)
+maria = Parent(
+    first_name='Maria',
+    family_name='Gonzalez',
+    favorite_first_name='Tomas',
+    child_allowance=10.0)
 
 nino = Child(father=fred, mother=maria)
 

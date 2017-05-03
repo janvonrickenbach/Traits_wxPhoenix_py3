@@ -40,7 +40,6 @@ try:
     sally.last_name = sally.mother  # ERR: string expected
 except TraitError, c:
     print 'TraitError: ', c
-
 """
 The exception printed will look similar to the following:
 

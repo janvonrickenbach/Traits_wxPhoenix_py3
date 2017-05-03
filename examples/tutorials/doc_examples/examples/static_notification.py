@@ -16,7 +16,7 @@ class Person(HasTraits):
     def _weight_kg_changed(self, old, new):
         print 'weight_kg changed from %s to %s ' % (old, new)
         if self.height_m != 0.0:
-            self.bmi = self.weight_kg / (self.height_m ** 2)
+            self.bmi = self.weight_kg / (self.height_m**2)
 
     def _anytrait_changed(self, name, old, new):
         print 'The %s trait changed from %s to %s ' % (name, old, new)

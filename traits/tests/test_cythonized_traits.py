@@ -16,7 +16,6 @@ try:
 except ImportError:
     no_cython = True
 
-
 from ..testing.unittest_tools import unittest, UnittestTools
 
 
@@ -38,6 +37,7 @@ def cython_version():
     from Cython.Compiler.Version import version
     return tuple(int(v) for v in version.split('.'))
 
+
 SKIP_TEST = has_no_compiler()
 
 
@@ -49,7 +49,6 @@ def _always_object_type(arg, context):
 
 
 class CythonizedTraitsTestCase(unittest.TestCase, UnittestTools):
-
     @unittest.skipIf(SKIP_TEST, 'Missing Cython and/or compiler')
     def test_simple_default_methods(self):
 
@@ -126,8 +125,12 @@ class Test(HasTraits):
 return Test()
 """
 
-        obj = cython.inline(code, get_type=_always_object_type, force=True,
-                            locals={}, globals={})
+        obj = cython.inline(
+            code,
+            get_type=_always_object_type,
+            force=True,
+            locals={},
+            globals={})
 
         with self.assertTraitChanges(obj, 'value', count=1):
             obj.name = 'changing_name'
@@ -151,8 +154,12 @@ class Test(HasTraits):
 return Test()
 """
 
-        obj = cython.inline(code, get_type=_always_object_type, force=True,
-                            locals={}, globals={})
+        obj = cython.inline(
+            code,
+            get_type=_always_object_type,
+            force=True,
+            locals={},
+            globals={})
 
         self.assertEqual(obj.name_len, len(obj.name))
 
@@ -177,8 +184,12 @@ class Test(HasTraits):
 return Test()
 """
 
-        obj = cython.inline(code, get_type=_always_object_type, force=True,
-                            locals={}, globals={})
+        obj = cython.inline(
+            code,
+            get_type=_always_object_type,
+            force=True,
+            locals={},
+            globals={})
 
         self.assertEqual(obj.name_len, len(obj.name))
 
@@ -208,8 +219,12 @@ class Test(HasTraits):
 return Test()
 """
 
-        obj = cython.inline(code, get_type=_always_object_type, force=True,
-                            locals={}, globals={})
+        obj = cython.inline(
+            code,
+            get_type=_always_object_type,
+            force=True,
+            locals={},
+            globals={})
 
         self.assertEqual(obj.funky_name, obj.name)
 
@@ -269,8 +284,12 @@ return Test()
 """
 
         try:
-            cython.inline(code, get_type=_always_object_type, force=True,
-                          locals={}, globals={})
+            cython.inline(
+                code,
+                get_type=_always_object_type,
+                force=True,
+                locals={},
+                globals={})
         except:
             # We suppose we have an exception. Because of the usage of the
             # skipIf decorator on the test, we can't use an expectedFailure
@@ -279,5 +298,4 @@ return Test()
         else:
             self.fail(
                 'Unexpected results. Cython was not managing lambda as regular'
-                ' functions. Behaviour changed ...'
-            )
+                ' functions. Behaviour changed ...')

@@ -9,8 +9,8 @@ and will be removed in Traits 5.0 .
 
 """
 
-
 from traits.util.api import deprecated
+
 
 @deprecated("use the 'adapt' function in 'traits.adaptation' instead")
 def adapt(*args, **kw):
@@ -18,9 +18,14 @@ def adapt(*args, **kw):
 
     return adapt(*args, **kw)
 
-@deprecated("use the 'register_factory' function in 'traits.adaptation' instead")
-def declareAdapter(factory, provides,
-                   forTypes=(), forProtocols=(), forObjects=()):
+
+@deprecated(
+    "use the 'register_factory' function in 'traits.adaptation' instead")
+def declareAdapter(factory,
+                   provides,
+                   forTypes=(),
+                   forProtocols=(),
+                   forObjects=()):
 
     from traits.adaptation.api import register_factory
     from itertools import chain
@@ -29,9 +34,12 @@ def declareAdapter(factory, provides,
         for to_protocol in provides:
             register_factory(factory, from_protocol, to_protocol)
 
-@deprecated("use the 'register_provides' function in 'traits.adaptation' instead")
+
+@deprecated(
+    "use the 'register_provides' function in 'traits.adaptation' instead")
 def declareImplementation(protocol,
-                          instancesProvide=(), instancesDoNotProvide=()):
+                          instancesProvide=(),
+                          instancesDoNotProvide=()):
 
     from traits.adaptation.api import register_provides
 

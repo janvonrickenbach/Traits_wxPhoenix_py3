@@ -132,17 +132,14 @@ class TestNotifiers(unittest.TestCase):
         obj = AnytraitStaticNotifiers3(ok=2)
         obj.ok = 3
 
-        expected = [('trait_added', 'anycalls'),
-                    ('ok', 2),
-                    ('ok', 3)]
+        expected = [('trait_added', 'anycalls'), ('ok', 2), ('ok', 3)]
         self.assertEqual(expected, obj.anycalls)
 
     def test_anytrait_static_notifiers_4(self):
         obj = AnytraitStaticNotifiers4(ok=2)
         obj.ok = 3
 
-        expected = [('trait_added', Undefined, 'anycalls'),
-                    ('ok', 0, 2),
+        expected = [('trait_added', Undefined, 'anycalls'), ('ok', 0, 2),
                     ('ok', 2, 3)]
         self.assertEqual(expected, obj.anycalls)
 

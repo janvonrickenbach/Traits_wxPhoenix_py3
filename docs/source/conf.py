@@ -52,18 +52,17 @@ def mock_modules():
     except ImportError:
         # Modules that we need to mock
         MOCK_MODULES = [
-            'traitsui', 'traitsui.api', 'traitsui.delegating_handler']
+            'traitsui', 'traitsui.api', 'traitsui.delegating_handler'
+        ]
 
         # Collect the types from traitsui that are based on HasTraits
         # We will need to mock them in a special way so that
         # TraitDocumenter can properly identify and document traits.
         from traits.api import HasTraits, HasPrivateTraits
-        MOCK_TYPES.append(
-            ('traitsui.delegating_handler',
-             'DelegatingHandler', (HasTraits,)))
-        MOCK_TYPES.append(
-            ('traitsui.view_element',
-             'ViewSubElement', (HasPrivateTraits,)))
+        MOCK_TYPES.append(('traitsui.delegating_handler', 'DelegatingHandler',
+                           (HasTraits, )))
+        MOCK_TYPES.append(('traitsui.view_element', 'ViewSubElement',
+                           (HasPrivateTraits, )))
     else:
         return
 
@@ -73,13 +72,15 @@ def mock_modules():
         if len(MOCK_MODULES) != 0:
             print(
                 'NOTE: TraitsUI is not installed and mock is not available to '
-                'mock the missing modules, some classes will not be documented')
+                'mock the missing modules, some classes will not be documented'
+            )
             return
 
     # Create the custom types for the HasTraits based traitsui objects.
     TYPES = {
         mock_type: type(mock_type, bases, {'__module__': path})
-        for path, mock_type, bases in MOCK_TYPES}
+        for path, mock_type, bases in MOCK_TYPES
+    }
 
     class DocMock(MagicMock):
         """ The special sphinx friendly mocking class to mock missing packages.
@@ -109,12 +110,13 @@ def mock_modules():
             return self.mocked_name
 
     # Add the mocked modules to sys
-    sys.modules.update(
-        (mod_name, DocMock(mocked_name=mod_name)) for mod_name in MOCK_MODULES)
+    sys.modules.update((mod_name, DocMock(mocked_name=mod_name))
+                       for mod_name in MOCK_MODULES)
 
     # Report on what was mocked.
     print 'mocking modules {0} and types {1}'.format(
         MOCK_MODULES, [mocked[1] for mocked in MOCK_TYPES])
+
 
 mock_modules()
 
@@ -123,10 +125,10 @@ mock_modules()
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['refactordoc',
-              'sphinx.ext.viewcode',
-              'sphinx.ext.autosummary',
-              'traits.util.trait_documenter']
+extensions = [
+    'refactordoc', 'sphinx.ext.viewcode', 'sphinx.ext.autosummary',
+    'traits.util.trait_documenter'
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -183,15 +185,12 @@ autodoc_default_flags = ['members']
 
 autodoc_member_order = 'bysource'
 
-
 # Options for HTML output
 # -----------------------
 
 # When using docset browsers like Dash and Zeal the side bar is redundant.
 if BUILD_DOCSET:
-    html_theme_options = {
-        'nosidebar': 'true'
-    }
+    html_theme_options = {'nosidebar': 'true'}
 
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
@@ -257,7 +256,6 @@ html_use_index = BUILD_DOCSET
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Traitsdoc'
 
-
 # Options for LaTeX output
 # ------------------------
 
@@ -270,9 +268,8 @@ htmlhelp_basename = 'Traitsdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author,
 #  document class [howto/manual]).
-latex_documents = [
-  ('index', 'Traits.tex', 'Traits 4 User Manual', 'Enthought, Inc.', 'manual'),
-]
+latex_documents = [('index', 'Traits.tex', 'Traits 4 User Manual',
+                    'Enthought, Inc.', 'manual'), ]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
@@ -299,6 +296,6 @@ latex_logo = "e-logo-rev.png"
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'traits', 'Traits 4 User Manual', 'Enthought, Inc.',
-   'Traits', 'Explicitly typed attributes for Python.', 'Python'),
+    ('index', 'traits', 'Traits 4 User Manual', 'Enthought, Inc.', 'Traits',
+     'Explicitly typed attributes for Python.', 'Python'),
 ]

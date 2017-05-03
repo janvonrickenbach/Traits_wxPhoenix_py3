@@ -64,8 +64,7 @@ class TraitDocumenter(ClassLevelDocumenter):
 
     def add_content(self, more_content, no_docstring=False):
         """ Never try to get a docstring from the trait."""
-        ClassLevelDocumenter.add_content(self, more_content,
-                                         no_docstring=True)
+        ClassLevelDocumenter.add_content(self, more_content, no_docstring=True)
 
     def import_object(self):
         """ Get the Trait object.
@@ -93,8 +92,8 @@ class TraitDocumenter(ClassLevelDocumenter):
                 self.env.app.info(traceback.format_exc().rstrip())
             msg = ('autodoc can\'t import/find {0} {r1}, it reported error: '
                    '"{2}", please check your spelling and sys.path')
-            self.directive.warn(msg.format(self.objtype, str(self.fullname),
-                                err))
+            self.directive.warn(
+                msg.format(self.objtype, str(self.fullname), err))
             self.env.note_reread()
             return False
 
@@ -105,8 +104,7 @@ class TraitDocumenter(ClassLevelDocumenter):
         """
         ClassLevelDocumenter.add_directive_header(self, sig)
         definition = self._get_trait_definition()
-        self.add_line('   :annotation: = {0}'.format(definition),
-                      '<autodoc>')
+        self.add_line('   :annotation: = {0}'.format(definition), '<autodoc>')
 
     # Private Interface #####################################################
 
@@ -158,11 +156,8 @@ def _get_definition_tokens(tokens):
         if type == token.NEWLINE:
             break
 
-        item = (type,
-                name,
-                (start[0] - first_line + 1, start[1]),
-                (stop[0] - first_line + 1, stop[1]),
-                line_text)
+        item = (type, name, (start[0] - first_line + 1, start[1]),
+                (stop[0] - first_line + 1, stop[1]), line_text)
 
         definition_tokens.append(item)
 

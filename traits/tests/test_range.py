@@ -6,8 +6,6 @@
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Int, Range, Str, TraitError
@@ -53,7 +51,6 @@ class WithDynamicRange(HasTraits):
 
 
 class RangeTestCase(unittest.TestCase):
-
     def test_non_ui_events(self):
 
         obj = WithFloatRange()

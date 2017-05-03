@@ -24,8 +24,9 @@ function_regex = re.compile(r'\w+\(.*\)\s*')
 signature_regex = re.compile('\((.*)\)')
 
 
-class DefinitionItem(collections.namedtuple(
-        'DefinitionItem', ('term', 'classifier', 'definition'))):
+class DefinitionItem(
+        collections.namedtuple('DefinitionItem',
+                               ('term', 'classifier', 'definition'))):
     """ A docstring definition item
 
     Syntax diagram::
@@ -183,10 +184,8 @@ class AttributeItem(DefinitionItem):
                "    :annotation: = {1}\n"
                "\n"
                "{2}\n\n")
-    _no_definition = (".. attribute:: {0}\n"
-                      "    :annotation: = {1}\n\n")
-    _no_classifier = (".. attribute:: {0}\n\n"
-                      "{2}\n\n")
+    _no_definition = (".. attribute:: {0}\n" "    :annotation: = {1}\n\n")
+    _no_classifier = (".. attribute:: {0}\n\n" "{2}\n\n")
     _only_term = ".. attribute:: {0}\n\n"
 
     def to_rst(self, ):
@@ -242,13 +241,9 @@ class ArgumentItem(DefinitionItem):
     """ A definition item for function argument sections.
 
     """
-    _normal = (":param {0}:\n"
-               "{2}\n"
-               ":type {0}: {1}")
-    _no_definition = (":param {0}:\n"
-                      ":type {0}: {1}")
-    _no_classifier = (":param {0}:\n"
-                      "{2}")
+    _normal = (":param {0}:\n" "{2}\n" ":type {0}: {1}")
+    _no_definition = (":param {0}:\n" ":type {0}: {1}")
+    _no_classifier = (":param {0}:\n" "{2}")
     _only_term = ":param {0}:"
 
     def to_rst(self):
@@ -302,12 +297,10 @@ class ListItem(DefinitionItem):
 
     """
 
-    _normal = ("**{0}** (*{1}*) --\n"
-               "{2}\n\n")
+    _normal = ("**{0}** (*{1}*) --\n" "{2}\n\n")
     _only_term = "**{0}**\n\n"
     _no_definition = "**{0}** (*{1}*)\n\n"
-    _no_classifier = ("**{0}** --\n"
-                      "{2}\n\n")
+    _no_classifier = ("**{0}** --\n" "{2}\n\n")
 
     def to_rst(self, prefix=None):
         """ Outputs ListItem in rst using as items in an list.
@@ -399,8 +392,15 @@ class TableLineItem(DefinitionItem):
         table_line = ''.join((first_column, second_column, third_column))
 
         lines = []
-        lines += [table_line.format(term, classifier, definition,
-                  first=columns[0], second=columns[1], third=columns[2])]
+        lines += [
+            table_line.format(
+                term,
+                classifier,
+                definition,
+                first=columns[0],
+                second=columns[1],
+                third=columns[2])
+        ]
         lines += ['']
         return lines
 
@@ -409,6 +409,7 @@ class MethodItem(DefinitionItem):
     """ A TableLineItem subclass to parse and render class methods.
 
     """
+
     @classmethod
     def is_definition(cls, line):
         """ Check if the definition header is a function signature.
@@ -480,9 +481,13 @@ class MethodItem(DefinitionItem):
         table_line = '{0:<{first}} {1:<{second}}'
 
         lines = []
-        lines += [table_line.format(method_role[:columns[0]],
-                                    definition[:columns[1]], first=columns[0],
-                                    second=columns[1])]
+        lines += [
+            table_line.format(
+                method_role[:columns[0]],
+                definition[:columns[1]],
+                first=columns[0],
+                second=columns[1])
+        ]
         return lines
 
     @property
@@ -493,6 +498,7 @@ class MethodItem(DefinitionItem):
 #------------------------------------------------------------------------------
 #  Functions to work with Definition Items
 #------------------------------------------------------------------------------
+
 
 def max_attribute_length(items, attr):
     """ Find the max length of the attribute in a list of DefinitionItems.

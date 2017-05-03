@@ -14,8 +14,6 @@
 """ Unit test case for testing interfaces and adaptation.
 """
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from traits.api import (HasTraits, Adapter, AdaptsTo, Instance, Int, Interface,
@@ -24,25 +22,21 @@ from traits.adaptation.api import reset_global_adaptation_manager
 
 
 class IFoo(Interface):
-
     def get_foo(self):
         """ Returns the current foo. """
 
 
 class IFooPlus(IFoo):
-
     def get_foo_plus(self):
         """ Returns even more foo. """
 
 
 class IAverage(Interface):
-
     def get_average(self):
         """ Returns the average value for the object. """
 
 
 class IList(Interface):
-
     def get_list(self):
         """ Returns the list value for the object. """
 
@@ -106,8 +100,7 @@ class TraitsHolder(HasTraits):
 class SampleListAdapter(Adapter):
     def get_list(self):
         obj = self.adaptee
-        return [getattr(obj, name)
-                for name in obj.trait_names(sample=True)]
+        return [getattr(obj, name) for name in obj.trait_names(sample=True)]
 
 
 class ListAverageAdapter(Adapter):
@@ -135,7 +128,6 @@ class SampleFooAdapter(HasTraits):
 
 
 class FooPlusAdapter(object):
-
     def __init__(self, obj):
         self.obj = obj
 
@@ -173,12 +165,13 @@ class InterfacesTest(unittest.TestCase):
 
     def test_provides_multi(self):
         @provides(IFoo, IAverage, IList)
-        class Test (HasTraits):
+        class Test(HasTraits):
             pass
 
     def test_provides_extended(self):
         """ Ensure that subclasses of Interfaces imply the superinterface.
         """
+
         @provides(IFooPlus)
         class Test(HasTraits):
             pass
@@ -188,6 +181,7 @@ class InterfacesTest(unittest.TestCase):
 
     def test_provides_bad(self):
         with self.assertRaises(Exception):
+
             @provides(Sample)
             class Test(HasTraits):
                 pass
@@ -298,6 +292,7 @@ class InterfacesTest(unittest.TestCase):
     def test_decorated_class_name_and_docstring(self):
         self.assertEqual(SampleList.__name__, 'SampleList')
         self.assertEqual(SampleList.__doc__, "SampleList docstring.")
+
 
 # Run the unit tests (if invoked from the command line):
 if __name__ == '__main__':

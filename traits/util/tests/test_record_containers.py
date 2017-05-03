@@ -15,12 +15,11 @@ import shutil
 import tempfile
 import threading
 import unittest
-from traits.util.event_tracer import (
-    SentinelRecord, RecordContainer, MultiThreadRecordContainer)
+from traits.util.event_tracer import (SentinelRecord, RecordContainer,
+                                      MultiThreadRecordContainer)
 
 
 class TestRecordContainers(unittest.TestCase):
-
     def setUp(self):
         self.directory = tempfile.mkdtemp()
         self.filename = os.path.join(self.directory, 'myfile')
@@ -51,8 +50,8 @@ class TestRecordContainers(unittest.TestCase):
             collector = container.get_change_event_collector(thread)
             collector.record(SentinelRecord())
 
-        thread_1 = threading.Thread(target=record, args=(container,))
-        thread_2 = threading.Thread(target=record, args=(container,))
+        thread_1 = threading.Thread(target=record, args=(container, ))
+        thread_2 = threading.Thread(target=record, args=(container, ))
         thread_1.start()
         thread_2.start()
         record(container)
@@ -61,8 +60,7 @@ class TestRecordContainers(unittest.TestCase):
 
         self.assertEqual(len(container._record_containers), 3)
         for collector in container._record_containers.values():
-            self.assertTrue(
-                isinstance(collector._records[0], SentinelRecord))
+            self.assertTrue(isinstance(collector._records[0], SentinelRecord))
             self.assertEqual(len(collector._records), 1)
 
         # save records

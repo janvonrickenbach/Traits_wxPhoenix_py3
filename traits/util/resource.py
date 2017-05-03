@@ -27,7 +27,6 @@
                          full path to the resource.
 """
 
-
 # Standard library imports.
 import inspect, os, sys
 from distutils.sysconfig import get_python_lib
@@ -66,6 +65,7 @@ def get_path(path):
 
     return path
 
+
 def create_unique_name(prefix, names, separator='_'):
     """ Creates a name starting with 'prefix' that is not in 'names'. """
 
@@ -77,6 +77,7 @@ def create_unique_name(prefix, names, separator='_'):
         i += 1
 
     return name
+
 
 def find_resource(project, resource_path, alt_path=None, return_path=False):
     """ Returns a file object or file path pointing to the desired resource.

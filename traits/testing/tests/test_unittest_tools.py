@@ -44,7 +44,6 @@ class TestObject(HasTraits):
 
 
 class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         self.test_object = TestObject()
 
@@ -105,8 +104,9 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
         test_object = self.test_object
 
         # Change event should NOT BE detected
-        with self.assertMultiTraitChanges([test_object], [],
-                ['flag', 'number', 'list_of_numbers[]']) as results:
+        with self.assertMultiTraitChanges(
+            [test_object], [],
+            ['flag', 'number', 'list_of_numbers[]']) as results:
             test_object.number = 2.0
 
         events = list(filter(bool, (result.event for result in results)))
@@ -114,9 +114,9 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
         self.assertFalse(events, msg=msg)
 
         # Change event should BE detected
-        with self.assertMultiTraitChanges(
-                [test_object], ['number', 'list_of_numbers[]'],
-                ['flag']) as results:
+        with self.assertMultiTraitChanges([test_object],
+                                          ['number', 'list_of_numbers[]'],
+                                          ['flag']) as results:
             test_object.number = 5.0
 
         events = list(filter(bool, (result.event for result in results)))
@@ -236,13 +236,14 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
                 obj.event = True
 
         threads = [
-            threading.Thread(target=thread_target, args=(a, events_per_thread))
+            threading.Thread(
+                target=thread_target, args=(a, events_per_thread))
             for _ in range(thread_count)
         ]
 
         expected_count = thread_count * events_per_thread
         with self.assertTraitChangesAsync(
-            a, 'event', expected_count, timeout=60.0):
+                a, 'event', expected_count, timeout=60.0):
             for t in threads:
                 t.start()
 
@@ -267,13 +268,14 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
                 obj.event = n
 
         threads = [
-            threading.Thread(target=thread_target, args=(a, events_per_thread))
+            threading.Thread(
+                target=thread_target, args=(a, events_per_thread))
             for _ in range(thread_count)
         ]
 
         expected_count = thread_count * events_per_thread
         with self.assertTraitChangesAsync(
-            a, 'event', expected_count, timeout=60.0) as event_collector:
+                a, 'event', expected_count, timeout=60.0) as event_collector:
             for t in threads:
                 t.start()
 
@@ -283,8 +285,7 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
         _py2to3.assertCountEqual(
             self,
             event_collector.events,
-            list(range(events_per_thread)) * thread_count,
-        )
+            list(range(events_per_thread)) * thread_count, )
 
     def test_assert_trait_changes_async_failure(self):
         # Exercise assertTraitChangesAsync.
@@ -302,7 +303,8 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
                 obj.event = True
 
         threads = [
-            threading.Thread(target=thread_target, args=(a, events_per_thread))
+            threading.Thread(
+                target=thread_target, args=(a, events_per_thread))
             for _ in range(thread_count)
         ]
 
@@ -329,8 +331,7 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
                 condition=condition,
                 obj=a,
                 trait='foo',
-                timeout=1.0,
-            )
+                timeout=1.0, )
 
     def test_assert_eventually_true_passes_when_condition_becomes_true(self):
         class A(HasTraits):
@@ -345,14 +346,13 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
             time.sleep(1.0)
             a.foo = True
 
-        t = threading.Thread(target=thread_target, args=(a,))
+        t = threading.Thread(target=thread_target, args=(a, ))
         t.start()
         self.assertEventuallyTrue(
             condition=condition,
             obj=a,
             trait='foo',
-            timeout=10.0,
-        )
+            timeout=10.0, )
         t.join()
 
     def test_assert_eventually_true_passes_when_condition_starts_true(self):
@@ -367,8 +367,7 @@ class UnittestToolsTestCase(unittest.TestCase, UnittestTools):
             condition=condition,
             obj=a,
             trait='foo',
-            timeout=10.0,
-        )
+            timeout=10.0, )
 
     def test_assert_deprecated(self):
         with self.assertDeprecated():

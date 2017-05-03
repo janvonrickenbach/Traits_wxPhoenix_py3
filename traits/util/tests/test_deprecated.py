@@ -55,5 +55,4 @@ class TestDeprecated(unittest.TestCase, UnittestTools):
         obj = ClassWithDeprecatedBits()
         with self.assertDeprecated():
             result = obj.bytes(3, 27, 65, name='Boris', age=-3.2)
-        self.assertEqual(
-            result, (3, (27, 65), {'name': 'Boris', 'age': -3.2}))
+        self.assertEqual(result, (3, (27, 65), {'name': 'Boris', 'age': -3.2}))

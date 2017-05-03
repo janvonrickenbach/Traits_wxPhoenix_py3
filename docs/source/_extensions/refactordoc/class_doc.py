@@ -40,10 +40,15 @@ class ClassDoc(BaseDoc):
     def __init__(self, lines, headers=None):
 
         if headers is None:
-            headers = {'Attributes': 'attributes', 'Methods': 'methods',
-                       'Notes': 'notes', 'Keywords': 'as_item_list',
-                       'Note': 'notes', 'Example': 'example',
-                       'Examples': 'example'}
+            headers = {
+                'Attributes': 'attributes',
+                'Methods': 'methods',
+                'Notes': 'notes',
+                'Keywords': 'as_item_list',
+                'Note': 'notes',
+                'Example': 'example',
+                'Examples': 'example'
+            }
 
         super(ClassDoc, self).__init__(lines, headers)
         return
@@ -62,7 +67,7 @@ class ClassDoc(BaseDoc):
         """
         items = self.extract_items(MethodItem)
         lines = []
-        if len(items) > 0 :
+        if len(items) > 0:
             columns = self._get_column_lengths(items)
             border = '{0:=^{1}} {0:=^{2}}'.format('', columns[0], columns[1])
             heading = '{0:<{2}} {1:<{3}}'.format('Method', 'Description',
@@ -102,7 +107,7 @@ class ClassDoc(BaseDoc):
             lines += add_indent(item.to_rst(prefix))
         return lines
 
-    def _refactor_example(self, header) :
+    def _refactor_example(self, header):
         """ Refactor the example section to sphinx friendly format.
 
         Arguments
@@ -115,7 +120,6 @@ class ClassDoc(BaseDoc):
         lines = ['.. rubric:: {0}'.format(header), '', '::', '']
         lines += add_indent(paragraph)
         return lines
-
 
     def _get_column_lengths(self, items):
         """ Helper function to estimate the column widths for the refactoring of

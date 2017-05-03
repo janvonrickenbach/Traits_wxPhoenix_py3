@@ -12,8 +12,6 @@
 #
 #------------------------------------------------------------------------------
 
-
-
 from traits.testing.unittest_tools import unittest
 
 from ..api import HasTraits, Int, Str, Undefined, ReadOnly, Float
@@ -23,19 +21,19 @@ class Foo(HasTraits):
     num = Int
     bar = Str
 
+
 class Bar(HasTraits):
     # Default is visible.
-    PubT1   = Str
+    PubT1 = Str
     # Change to invisible.
-    PubT2   = Str( visible=False )
+    PubT2 = Str(visible=False)
     # New behaviour makes private traits invisible.
-    PrivT1  = Str( private=True )
+    PrivT1 = Str(private=True)
     # Force visibility of a private trait.
-    PrivT2  = Str( private=True, visible=True )
+    PrivT2 = Str(private=True, visible=True)
 
 
 class GetTraitTestCase(unittest.TestCase):
-
     @unittest.expectedFailure
     def test_trait_set_bad(self):
         b = Foo()
@@ -46,24 +44,24 @@ class GetTraitTestCase(unittest.TestCase):
     def test_trait_set_replaced(self):
         b = Foo()
         # Overriding the trait with a new type should work.
-        b.add_trait( "num", Str() )
+        b.add_trait("num", Str())
         b.num = 'first'
         self.assertEqual(b.num, 'first')
 
     def test_trait_set_replaced_and_check(self):
         b = Foo()
-        b.add_trait( "num", Str() )
+        b.add_trait("num", Str())
         b.num = 'first'
         self.assertEqual(b.num, 'first')
 
         # Check that the "traits" call picks up the new instance trait. (See
         # #234.)
-        self.assertEqual( b.trait("num"), b.traits()["num"] )
+        self.assertEqual(b.trait("num"), b.traits()["num"])
 
     def test_trait_names_returned_by_visible_traits(self):
         b = Bar()
-        self.assertEqual( sorted(b.visible_traits()),
-                          sorted(["PubT1", "PrivT2"]) )
+        self.assertEqual(
+            sorted(b.visible_traits()), sorted(["PubT1", "PrivT2"]))
 
 
 ### EOF #######################################################################

@@ -76,10 +76,9 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # UKStandard->EUStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.UKStandardToEUStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.EUStandard
-        )
+            factory=ex.UKStandardToEUStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.EUStandard)
 
         plug = ex.UKPlug()
 
@@ -100,17 +99,15 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # UKStandard->EUStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.UKStandardToEUStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.EUStandard
-        )
+            factory=ex.UKStandardToEUStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.EUStandard)
 
         # EUStandard->JapanStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.EUStandardToJapanStandard,
-            from_protocol = ex.EUStandard,
-            to_protocol   = ex.JapanStandard
-        )
+            factory=ex.EUStandardToJapanStandard,
+            from_protocol=ex.EUStandard,
+            to_protocol=ex.JapanStandard)
 
         # Create a UKPlug.
         uk_plug = ex.UKPlug()
@@ -129,31 +126,27 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # UKStandard->EUStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.UKStandardToEUStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.EUStandard
-        )
+            factory=ex.UKStandardToEUStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.EUStandard)
 
         # EUStandard->JapanStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.EUStandardToJapanStandard,
-            from_protocol = ex.EUStandard,
-            to_protocol   = ex.JapanStandard
-        )
+            factory=ex.EUStandardToJapanStandard,
+            from_protocol=ex.EUStandard,
+            to_protocol=ex.JapanStandard)
 
         # JapanStandard->IraqStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.JapanStandardToIraqStandard,
-            from_protocol = ex.JapanStandard,
-            to_protocol   = ex.IraqStandard
-        )
+            factory=ex.JapanStandardToIraqStandard,
+            from_protocol=ex.JapanStandard,
+            to_protocol=ex.IraqStandard)
 
         # EUStandard->IraqStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.EUStandardToIraqStandard,
-            from_protocol = ex.EUStandard,
-            to_protocol   = ex.IraqStandard
-        )
+            factory=ex.EUStandardToIraqStandard,
+            from_protocol=ex.EUStandard,
+            to_protocol=ex.IraqStandard)
 
         # Create a UKPlug.
         uk_plug = ex.UKPlug()
@@ -172,31 +165,27 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # UKStandard->EUStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.UKStandardToEUStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.EUStandard
-        )
+            factory=ex.UKStandardToEUStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.EUStandard)
 
         # UKStandard->JapanStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.UKStandardToJapanStandard,
-            from_protocol = ex.UKStandard,
-            to_protocol   = ex.JapanStandard
-        )
+            factory=ex.UKStandardToJapanStandard,
+            from_protocol=ex.UKStandard,
+            to_protocol=ex.JapanStandard)
 
         # JapanStandard->IraqStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.JapanStandardToIraqStandard,
-            from_protocol = ex.JapanStandard,
-            to_protocol   = ex.IraqStandard
-        )
+            factory=ex.JapanStandardToIraqStandard,
+            from_protocol=ex.JapanStandard,
+            to_protocol=ex.IraqStandard)
 
         # EUStandard->IraqStandard.
         self.adaptation_manager.register_factory(
-            factory       = ex.EUStandardToIraqStandard,
-            from_protocol = ex.EUStandard,
-            to_protocol   = ex.IraqStandard
-        )
+            factory=ex.EUStandardToIraqStandard,
+            from_protocol=ex.EUStandard,
+            to_protocol=ex.IraqStandard)
 
         # Create a UKPlug.
         uk_plug = ex.UKPlug()
@@ -206,8 +195,7 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
         self.assertIsNotNone(iraq_plug)
         self.assertIn(
             type(iraq_plug),
-            [ex.EUStandardToIraqStandard, ex.JapanStandardToIraqStandard]
-        )
+            [ex.EUStandardToIraqStandard, ex.JapanStandardToIraqStandard])
         self.assertIs(iraq_plug.adaptee.adaptee, uk_plug)
 
         return
@@ -225,10 +213,9 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
                 return None
 
         self.adaptation_manager.register_factory(
-            factory       = travel_plug_to_eu_standard,
-            from_protocol = ex.TravelPlug,
-            to_protocol   = ex.EUStandard
-        )
+            factory=travel_plug_to_eu_standard,
+            from_protocol=ex.TravelPlug,
+            to_protocol=ex.EUStandard)
 
         # Create a TravelPlug.
         travel_plug = ex.TravelPlug(mode='Europe')
@@ -242,7 +229,8 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
         travel_plug = ex.TravelPlug(mode='Asia')
 
         # Adapt it to a EUStandard.
-        eu_plug = self.adaptation_manager.adapt(travel_plug, ex.EUStandard, None)
+        eu_plug = self.adaptation_manager.adapt(travel_plug, ex.EUStandard,
+                                                None)
         self.assertIsNone(eu_plug)
 
         return
@@ -253,25 +241,24 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # FileType->IEditor.
         self.adaptation_manager.register_factory(
-            factory       = ex.FileTypeToIEditor,
-            from_protocol = ex.FileType,
-            to_protocol   = ex.IEditor
-        )
+            factory=ex.FileTypeToIEditor,
+            from_protocol=ex.FileType,
+            to_protocol=ex.IEditor)
 
         # Meanwhile, in a plugin far, far away ...
         # IScriptable->IPrintable.
         self.adaptation_manager.register_factory(
-            factory       = ex.IScriptableToIUndoable,
-            from_protocol = ex.IScriptable,
-            to_protocol   = ex.IUndoable
-        )
+            factory=ex.IScriptableToIUndoable,
+            from_protocol=ex.IScriptable,
+            to_protocol=ex.IUndoable)
 
         # Create a file type.
         file_type = ex.FileType()
 
         # Try to adapt to IPrintable: since we did not define an adapter
         # chain that goes from FileType to IPrintable, this should fail.
-        printable = self.adaptation_manager.adapt(file_type, ex.IUndoable, None)
+        printable = self.adaptation_manager.adapt(file_type, ex.IUndoable,
+                                                  None)
         self.assertIsNone(printable)
 
         return
@@ -282,17 +269,15 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # TextEditor->IPrintable.
         self.adaptation_manager.register_factory(
-            factory       = ex.TextEditorToIPrintable,
-            from_protocol = ex.TextEditor,
-            to_protocol   = ex.IPrintable
-        )
+            factory=ex.TextEditorToIPrintable,
+            from_protocol=ex.TextEditor,
+            to_protocol=ex.IPrintable)
 
         # Editor->IPrintable.
         self.adaptation_manager.register_factory(
-            factory       = ex.EditorToIPrintable,
-            from_protocol = ex.Editor,
-            to_protocol   = ex.IPrintable
-        )
+            factory=ex.EditorToIPrintable,
+            from_protocol=ex.Editor,
+            to_protocol=ex.IPrintable)
 
         # Create a text editor.
         text_editor = ex.TextEditor()
@@ -314,17 +299,15 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # Editor->IPrintable.
         self.adaptation_manager.register_factory(
-            factory       = ex.EditorToIPrintable,
-            from_protocol = ex.Editor,
-            to_protocol   = ex.IPrintable
-        )
+            factory=ex.EditorToIPrintable,
+            from_protocol=ex.Editor,
+            to_protocol=ex.IPrintable)
 
         # TextEditor->IPrintable.
         self.adaptation_manager.register_factory(
-            factory       = ex.TextEditorToIPrintable,
-            from_protocol = ex.TextEditor,
-            to_protocol   = ex.IPrintable
-        )
+            factory=ex.TextEditorToIPrintable,
+            from_protocol=ex.TextEditor,
+            to_protocol=ex.IPrintable)
 
         # Create a text editor.
         text_editor = ex.TextEditor()
@@ -349,17 +332,13 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # object->Foo
         self.adaptation_manager.register_factory(
-            factory = lambda adaptee: Foo(),
-            from_protocol = object,
-            to_protocol   = Foo
-        )
+            factory=lambda adaptee: Foo(),
+            from_protocol=object,
+            to_protocol=Foo)
 
         # Foo->object
         self.adaptation_manager.register_factory(
-            factory = lambda adaptee: [],
-            from_protocol = Foo,
-            to_protocol   = object
-        )
+            factory=lambda adaptee: [], from_protocol=Foo, to_protocol=object)
 
         # Create an object.
         obj = []
@@ -391,31 +370,27 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # IIntermediate -> ITarget.
         self.adaptation_manager.register_factory(
-            factory       = ex.IIntermediateToITarget,
-            from_protocol = ex.IIntermediate,
-            to_protocol   = ex.ITarget
-        )
+            factory=ex.IIntermediateToITarget,
+            from_protocol=ex.IIntermediate,
+            to_protocol=ex.ITarget)
 
         # IHuman -> IIntermediate.
         self.adaptation_manager.register_factory(
-            factory       = ex.IHumanToIIntermediate,
-            from_protocol = ex.IHuman,
-            to_protocol   = ex.IIntermediate
-        )
+            factory=ex.IHumanToIIntermediate,
+            from_protocol=ex.IHuman,
+            to_protocol=ex.IIntermediate)
 
         # IChild -> IIntermediate.
         self.adaptation_manager.register_factory(
-            factory       = ex.IChildToIIntermediate,
-            from_protocol = ex.IChild,
-            to_protocol   = ex.IIntermediate
-        )
+            factory=ex.IChildToIIntermediate,
+            from_protocol=ex.IChild,
+            to_protocol=ex.IIntermediate)
 
         # IPrimate -> IIntermediate.
         self.adaptation_manager.register_factory(
-            factory       = ex.IPrimateToIIntermediate,
-            from_protocol = ex.IPrimate,
-            to_protocol   = ex.IIntermediate
-        )
+            factory=ex.IPrimateToIIntermediate,
+            from_protocol=ex.IPrimate,
+            to_protocol=ex.IIntermediate)
 
         # Create a source.
         source = ex.Source()
@@ -434,17 +409,15 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
 
         # IStart -> ISpecific.
         self.adaptation_manager.register_factory(
-            factory       = ex.IStartToISpecific,
-            from_protocol = ex.IStart,
-            to_protocol   = ex.ISpecific
-        )
+            factory=ex.IStartToISpecific,
+            from_protocol=ex.IStart,
+            to_protocol=ex.ISpecific)
 
         # IGeneric -> IEnd.
         self.adaptation_manager.register_factory(
-            factory       = ex.IGenericToIEnd,
-            from_protocol = ex.IGeneric,
-            to_protocol   = ex.IEnd
-        )
+            factory=ex.IGenericToIEnd,
+            from_protocol=ex.IGeneric,
+            to_protocol=ex.IEnd)
 
         # Create a start.
         start = ex.Start()
@@ -479,14 +452,11 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
             pass
 
         self.adaptation_manager.register_factory(
-            factory=lambda adaptee: A(False), from_protocol=C, to_protocol=A
-        )
+            factory=lambda adaptee: A(False), from_protocol=C, to_protocol=A)
         self.adaptation_manager.register_factory(
-            factory=lambda adaptee: A(True),  from_protocol=D, to_protocol=A
-        )
+            factory=lambda adaptee: A(True), from_protocol=D, to_protocol=A)
         self.adaptation_manager.register_factory(
-            factory=lambda adaptee: D(),      from_protocol=C, to_protocol=D
-        )
+            factory=lambda adaptee: D(), from_protocol=C, to_protocol=D)
 
         # Conditional adapter
         def a_to_b_adapter(adaptee):
@@ -498,8 +468,7 @@ class TestAdaptationManagerWithABC(unittest.TestCase):
             return b
 
         self.adaptation_manager.register_factory(
-            factory=a_to_b_adapter, from_protocol=A, to_protocol=B
-        )
+            factory=a_to_b_adapter, from_protocol=A, to_protocol=B)
 
         # Create a A
         c = C()
@@ -583,5 +552,6 @@ class TestAdaptationManagerWithInterfaces(TestAdaptationManagerWithABC):
         self.assertEqual(bar.foo.adaptee, baz)
 
         return
+
 
 #### EOF ######################################################################

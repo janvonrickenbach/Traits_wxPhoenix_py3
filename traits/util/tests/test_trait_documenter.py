@@ -46,6 +46,7 @@ class TestTraitDocumenter(unittest.TestCase):
 
         self.assertEqual(self.source.rstrip(), string)
 
+
 if __name__ == '__main__':
     unittest.main()
 

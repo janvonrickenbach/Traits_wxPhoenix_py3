@@ -24,7 +24,6 @@ class Simple(HasStrictTraits):
 
 
 class ValidatedTupleTestCase(TupleTestMixin, unittest.TestCase):
-
     def setUp(self):
         self.trait = ValidatedTuple
 
@@ -42,7 +41,6 @@ class ValidatedTupleTestCase(TupleTestMixin, unittest.TestCase):
             simple.scalar_range = (5, 2)
 
     def test_error_during_custom_validation(self):
-
         def fvalidate(x):
             if x == (5, 2):
                 raise RuntimeError()

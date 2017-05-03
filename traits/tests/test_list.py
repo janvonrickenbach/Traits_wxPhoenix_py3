@@ -6,8 +6,6 @@
 #  under the conditions described in the aforementioned license.  The license
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 
-
-
 import sys
 
 from traits.testing.unittest_tools import unittest
@@ -45,7 +43,6 @@ class CFoo(HasTraits):
 
 
 class ListTestCase(unittest.TestCase):
-
     def test_initialized(self):
         f = Foo()
         self.assertNotEqual(f.l, None)
@@ -95,8 +92,10 @@ class ListTestCase(unittest.TestCase):
         starts = stops = [None] + list(range(-10, 11))
         steps = list(starts)
         steps.remove(0)
-        test_slices = [slice(start, stop, step)
-                       for start in starts for stop in stops for step in steps]
+        test_slices = [
+            slice(start, stop, step)
+            for start in starts for stop in stops for step in steps
+        ]
 
         for test_slice in test_slices:
             f = Foo(l=['zero', 'one', 'two', 'three', 'four'])
@@ -107,8 +106,8 @@ class ListTestCase(unittest.TestCase):
             # Plain Python list and Traits list behaviour should match.
             plain_l[test_slice] = replacements
             f.l[test_slice] = replacements
-            self.assertEqual(
-                f.l, plain_l, "failed for slice {0!r}".format(test_slice))
+            self.assertEqual(f.l, plain_l,
+                             "failed for slice {0!r}".format(test_slice))
 
     def test_slice_assignments_of_different_length(self):
         # Test slice assignments where rhs has a different length

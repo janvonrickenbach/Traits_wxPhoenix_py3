@@ -119,6 +119,7 @@ class Test(HasTraits):
     any_int = Int
     odd_int = OddInt
 
+
 #--[Example*]------------------------------------------------------------------
 
 # Create a test object:
