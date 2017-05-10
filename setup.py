@@ -178,7 +178,7 @@ if __name__ == "__main__":
         packages=find_packages(exclude=['fixers']),
         platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
         zip_safe=False,
-        use_2to3=True,
+        use_2to3=False,
         use_2to3_fixers=['fixers'],
         # traits_listener.ListenerItem has a trait *next* which gets
         # wrongly renamed
