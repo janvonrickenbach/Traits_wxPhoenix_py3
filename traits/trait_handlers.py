@@ -3372,7 +3372,7 @@ def _adapt_wrapper(*args, **kw):
     # This wrapper is called once, after which we set the ctraits callback
     # to point directly to 'adapt'.
 
-    from .traits.adaptation.api import adapt
+    from traits.adaptation.api import adapt
 
     ctraits._adapt(adapt)
     return adapt(*args, **kw)
