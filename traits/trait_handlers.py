@@ -1639,10 +1639,33 @@ class TraitEnum(TraitHandler):
         self.values = tuple(values)
         self.fast_validate = (5, self.values)
 
+    #def validate(self, object, name, value):
+    #    if value in self.values:
+    #        return value
+    #    self.error(object, name, value)
     def validate(self, object, name, value):
-        if value in self.values:
-            return value
+        try:
+            if isinstance(value, six.string_types):
+                value = value.strip()
+                col = value.rfind(".")
+                if col >= 0:
+                    module_name = value[:col]
+                    class_name = value[col + 1 :]
+                    module = sys.modules.get(module_name)
+                    if module is None:
+                        exec("import " + module_name)
+                        module = sys.modules[module_name]
+                    value = getattr(module, class_name)
+                else:
+                    value = globals().get(value)
+
+            if issubclass(value, self.aClass):
+                return value
+        except:
+            pass
+        return value
         self.error(object, name, value)
+
 
     def info(self):
         return ' or '.join([repr(x) for x in self.values])
