@@ -11,7 +11,7 @@ MAJOR = 4
 MINOR = 7
 MICRO = 0
 
-IS_RELEASED = False
+IS_RELEASED = True
 
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
@@ -89,6 +89,8 @@ if not is_released:
 
     if not IS_RELEASED:
         fullversion += '.dev{0}'.format(dev_num)
+    else:
+        fullversion += "+ansys.ch"
 
     with open(filename, "wt") as fp:
         fp.write(
