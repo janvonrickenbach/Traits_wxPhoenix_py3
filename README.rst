@@ -11,6 +11,8 @@ http://docs.enthought.com/traits
 .. image:: https://coveralls.io/repos/enthought/traits/badge.png
    :target: https://coveralls.io/r/enthought/traits
    :alt: Coverage status
+   
+This is a fork of the Traits Package that adds support wxPythonPhoenix and Python3   
 
 The Traits project is at the center of all Enthought Tool Suite development
 and has changed the mental model used at Enthought for programming in the
